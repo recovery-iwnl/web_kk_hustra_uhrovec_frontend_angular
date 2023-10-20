@@ -20,8 +20,24 @@ app-header {
   z-index: 1000;
 }
 
-.custom-btn {
-  --bs-btn-padding-y: .25rem;
-  --bs-btn-padding-x: .5rem;
-  --bs-btn-font-size: .75rem;
+.bg-dark-blue {
+  background-color: #000080; /* Use the hexadecimal color code for dark blue */
+}
+
+
+.custom-button {
+  background-color: transparent;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+
+.custom-button:hover {
+  background-color: #cccccc;
+  color: #343a40;
+  text-decoration: none;
+  cursor: pointer;
 }
