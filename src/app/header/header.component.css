@@ -12,7 +12,9 @@
     1px 1px 0 #000;
 }
 
-
+.vertical-align {
+  vertical-align: middle;
+}
 
 .bg-dark-blue {
   background-color: #000080; /* Use the hexadecimal color code for dark blue */

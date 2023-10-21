@@ -9,7 +9,7 @@ const routes: Routes = [
   // Define your routes
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
   { path: 'domov', component: HomeComponent },
-  { path: 'hraci-tim-a', component: HraciAComponent }, // Add this route
+  { path: 'hraci-a', component: HraciAComponent }, // Add this route
 ];
 
 @NgModule({
