@@ -1,0 +1,9 @@
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.a-text-custom {
+  color: black;
+  font-weight: bold;
+}

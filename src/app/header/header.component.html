@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body class="bg-dark-blue bg-gradient">
-<header class="p-2 mb-3 border-bottom">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-between">
+
+<header class="p-2 border-bottom">
+    <div class="container d-flex align-items-center justify-content-between">
       <div class="justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0  link-body-emphasis text-decoration-none ">
+        <a href="/" class="align-items-center link-body-emphasis text-decoration-none">
           <img class="logo-margin" src="assets/images/KKlogo.png" alt="KKlogo" width="110" height="90">
         </a>
       </div>
-      <div class="text-center d-flex flex-column align-items-center">
-        <a class="fs-2 text-white font-custom no-decor-text" [routerLink]="['/domov']">Kolkársky Klub HuStra Uhrovec</a>
+      <div class="fs-2 text-center ">
+        <a class="text-sm-center text-white font-custom text-decoration-none" [routerLink]="['/domov']">Kolkársky Klub HuStra Uhrovec</a>
       </div>
       <div class="dropdown text-end">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
+        <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
            data-bs-toggle="dropdown" aria-expanded="false">
           <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
@@ -27,7 +27,6 @@
         </ul>
       </div>
     </div>
-  </div>
 
   <nav class="navbar navbar-expand-lg bg-body-tertiary rounded bg-dark text-white">
     <div class="container-fluid">
@@ -39,13 +38,13 @@
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" aria-current="page" [routerLink]="['/domov']" >Domov</a>
+            <a class="nav-link custom-button custom-button:hover" [routerLink]="['/domov']">Domov</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="#">Výsledky 2023/2024</a>
+            <a class="nav-link custom-button custom-button:hover">Výsledky 2023/2024</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" aria-current="page" href="#">Tabuľka 2023/2024</a>
+            <a class="nav-link custom-button custom-button:hover" [routerLink]="['/tabulka']">Tabuľka 2023/2024</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle custom-button custom-button:hover" href="#" data-bs-toggle="dropdown"
@@ -56,7 +55,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="#">História </a>
+            <a class="nav-link custom-button custom-button:hover" href="#">História</a>
           </li>
           <li class="nav-item">
             <a class="nav-link custom-button custom-button:hover" href="#">Fotogaléria</a>
