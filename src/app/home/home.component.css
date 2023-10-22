@@ -1,7 +1,16 @@
-.fixed-header {
-  position: fixed;
-  top: 0;
-  left: 0;
+.carousel-inner img {
   width: 100%;
-  z-index: 1000;
+  height: 1080px;
+  object-fit: cover;
+  object-position: top 10% center;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -15%); /* Center both horizontally and vertically */
+  padding: 20px; /* Add padding to the caption */
+  font-size: 24px; /* Set the font size to make it bigger */
+  color: white; /* Set the text color to white */
 }

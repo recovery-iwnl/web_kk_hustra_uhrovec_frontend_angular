@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HraciAComponent } from './hraci-a/hraci-a.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HraciBComponent } from './hraci-b/hraci-b.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    HraciAComponent
+    HraciAComponent,
+    HraciBComponent
   ],
   imports: [
     BrowserModule,

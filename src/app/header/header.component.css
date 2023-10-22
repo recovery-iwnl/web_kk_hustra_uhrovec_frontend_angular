@@ -12,28 +12,10 @@
     1px 1px 0 #000;
 }
 
-.vertical-align {
-  vertical-align: middle;
+.logo-margin{
+  margin-bottom: 5px;
 }
 
-.bg-dark-blue {
-  background-color: #000080; /* Use the hexadecimal color code for dark blue */
-}
-
-
-.custom-button {
-  background-color: transparent;
-  color: #000000;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-
-.custom-button:hover {
-  background-color: #cccccc;
-  color: #343a40;
+.no-decor-text {
   text-decoration: none;
-  cursor: pointer;
 }
