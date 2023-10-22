@@ -1,16 +1,34 @@
 .carousel-inner img {
   width: 100%;
-  height: 1080px;
+  height: 490px;
   object-fit: cover;
   object-position: top 10% center;
 }
 
 .carousel-caption {
   position: absolute;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -15%); /* Center both horizontally and vertically */
-  padding: 20px; /* Add padding to the caption */
-  font-size: 24px; /* Set the font size to make it bigger */
-  color: white; /* Set the text color to white */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  padding: 20px;
+  font-size: 24px;
+  color: white;
 }
+
+.carousel-image {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.47);
+}
+.rounded-custom {
+  border-radius: 25%;
+}
+
+
