@@ -1,0 +1,27 @@
+.match-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+}
+
+.team {
+  flex: 8;
+  text-align: center;
+}
+
+.result {
+  flex: 2;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.my-team-bold {
+  font-weight: bold;
+}
+
+.bg-win {
+  background-color: rgba(3, 248, 3, 0.18);
+}

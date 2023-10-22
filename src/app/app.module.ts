@@ -9,6 +9,7 @@ import { HraciAComponent } from './hraci-a/hraci-a.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HraciBComponent } from './hraci-b/hraci-b.component';
 import { TabulkaComponent } from './tabulka/tabulka.component';
+import { VysledkyComponent } from './vysledky/vysledky.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TabulkaComponent } from './tabulka/tabulka.component';
     FooterComponent,
     HraciAComponent,
     HraciBComponent,
-    TabulkaComponent
+    TabulkaComponent,
+    VysledkyComponent
   ],
   imports: [
     BrowserModule,
