@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HraciBComponent } from './hraci-b/hraci-b.component';
 import { TabulkaComponent } from './tabulka/tabulka.component';
 import { VysledkyComponent } from './vysledky/vysledky.component';
+import { HistoriaComponent } from './historia/historia.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { VysledkyComponent } from './vysledky/vysledky.component';
     HraciAComponent,
     HraciBComponent,
     TabulkaComponent,
-    VysledkyComponent
+    VysledkyComponent,
+    HistoriaComponent
   ],
   imports: [
     BrowserModule,
