@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent {
+  selectedLeague: string = '1.KL Západ';
+
+  changeTable(league: string) {
+    this.selectedLeague = league;
+  }
 
 }

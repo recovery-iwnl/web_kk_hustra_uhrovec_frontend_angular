@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class TableComponent {
 
+  selectedLeague: string = "1.KL Západ";
+
+  changeTable(league: string) {
+    this.selectedLeague = league;
+  }
+
 }
