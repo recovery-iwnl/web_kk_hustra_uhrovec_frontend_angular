@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HraciBComponent } from './hraci-b.component';
+import { HistoryComponent } from './history.component';
 
-describe('HraciBComponent', () => {
-  let component: HraciBComponent;
-  let fixture: ComponentFixture<HraciBComponent>;
+describe('HistoryComponent', () => {
+  let component: HistoryComponent;
+  let fixture: ComponentFixture<HistoryComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HraciBComponent]
+      declarations: [HistoryComponent]
     });
-    fixture = TestBed.createComponent(HraciBComponent);
+    fixture = TestBed.createComponent(HistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

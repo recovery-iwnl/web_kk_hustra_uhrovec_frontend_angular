@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HraciAComponent } from './hraci-a.component';
+import { TableComponent } from './table.component';
 
-describe('HraciAComponent', () => {
-  let component: HraciAComponent;
-  let fixture: ComponentFixture<HraciAComponent>;
+describe('TabulkaComponent', () => {
+  let component: TableComponent;
+  let fixture: ComponentFixture<TableComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HraciAComponent]
+      declarations: [TableComponent]
     });
-    fixture = TestBed.createComponent(HraciAComponent);
+    fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

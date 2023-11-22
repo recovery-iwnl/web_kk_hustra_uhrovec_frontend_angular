@@ -5,12 +5,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from "./home/home.component";
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { HraciAComponent } from './hraci-a/hraci-a.component';
+import { PlayersAComponent } from './players-a/players-a.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HraciBComponent } from './hraci-b/hraci-b.component';
-import { TabulkaComponent } from './tabulka/tabulka.component';
-import { VysledkyComponent } from './vysledky/vysledky.component';
-import { HistoriaComponent } from './historia/historia.component';
+import { PlayersBComponent } from './players-b/players-b.component';
+import { TableComponent } from './table/table.component';
+import { ResultsComponent } from './results/results.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +18,11 @@ import { HistoriaComponent } from './historia/historia.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    HraciAComponent,
-    HraciBComponent,
-    TabulkaComponent,
-    VysledkyComponent,
-    HistoriaComponent
+    PlayersAComponent,
+    PlayersBComponent,
+    TableComponent,
+    ResultsComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
