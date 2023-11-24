@@ -1,0 +1,53 @@
+<body class="bgLogin">
+<form [formGroup]="registerForm" (submit)="register()" autocomplete="new-password">
+  <h1>Registrácia</h1>
+
+  <div class="form-control">
+    <label for="userName">Používateľské meno</label>
+    <input
+      formControlName="userName"
+      id="userName"
+      autocomplete="new-password"
+      type="text"
+    />
+    <div *ngIf="registerForm.get('userName')?.hasError('minlength') && registerForm.get('userName')?.touched"
+         class="text-danger">
+      Používateľské meno musí byť dlhé aspoň 8 znakov.
+    </div>
+    <label for="email">Email</label>
+    <input
+      formControlName="email"
+      id="email"
+      autocomplete="new-password"
+      type="email"
+    />
+    <label for="password">Heslo</label>
+    <input
+      formControlName="password"
+      id="password"
+      autocomplete="new-password"
+      type="password"
+    />
+    <div *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched"
+         class="text-danger">
+      Heslo musí byť dlhé aspoň 8 znakov.
+    </div>
+    <label for="passwordSame">Potvrď heslo</label>
+    <input
+      formControlName="passwordSame"
+      id="passwordSame"
+      autocomplete="new-password"
+      type="password"
+    />
+    <div *ngIf="registerForm.hasError('passwordMismatch') && (registerForm.get('passwordSame')?.dirty || registerForm.get('passwordSame')?.touched)"
+         class="text-danger">
+      Heslá sa nezhodujú.
+    </div>
+  </div>
+  <button type="submit">Registrovať</button>
+  <div class="text-center register">
+    <p>Máte už účet? <a href="/login">Prihláste sa</a></p>
+  </div>
+
+</form>
+<body>

@@ -8,6 +8,7 @@ import {PlayersBComponent} from "./players-b/players-b.component";
 import {HistoryComponent} from "./history/history.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
