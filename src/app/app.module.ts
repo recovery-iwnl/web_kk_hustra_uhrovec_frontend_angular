@@ -11,6 +11,8 @@ import { PlayersBComponent } from './players-b/players-b.component';
 import { TableComponent } from './table/table.component';
 import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
+import { LoginComponent } from './login/login.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,11 +24,13 @@ import { HistoryComponent } from './history/history.component';
     PlayersBComponent,
     TableComponent,
     ResultsComponent,
-    HistoryComponent
+    HistoryComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

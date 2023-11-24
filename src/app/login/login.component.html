@@ -1,0 +1,27 @@
+<body class="bgLogin">
+<form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
+  <h1>Prihlásenie</h1>
+
+  <div class="form-control">
+    <label for="email">Email</label>
+    <input
+      formControlName="email"
+      id="email"
+      autocomplete="new-password"
+      type="email"
+    />
+    <label for="password">Heslo</label>
+    <input
+      formControlName="password"
+      id="password"
+      autocomplete="new-password"
+      type="password"
+    />
+  </div>
+  <button type="submit">Prihlásiť</button>
+  <div class="text-center register">
+    <p>Ešte nemáte účet? <a href="#!">Zaregistrujte sa</a></p>
+  </div>
+
+</form>
+<body>

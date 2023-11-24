@@ -1,0 +1,57 @@
+.bgLogin {
+  background: url('src/assets/images/loginBg.png');
+  background-size: cover;
+  padding: 20px;
+}
+
+form {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 16px 16px 24px;
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  background-color: white;
+}
+h1 {
+  margin-top: 0;
+  color: #555;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.form-control {
+  margin-bottom: 16px;
+  border: white;
+}
+
+.register {
+  margin-top: 16px;
+}
+label {
+  display: block;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+input {
+  padding: 8px;
+  height: 35px;
+  border-radius: 4px;
+  width: 100%;
+  border: 2px solid #ccc;
+  background-color: white;
+}
+
+button {
+  background-color: #1c62c7;
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 1.2rem;
+}
