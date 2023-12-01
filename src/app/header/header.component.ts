@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class HeaderComponent {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router : Router) {}
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
@@ -16,6 +17,7 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigateByUrl('/domov')
   }
 
 }

@@ -9,6 +9,8 @@ import {HistoryComponent} from "./history/history.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
@@ -20,6 +22,7 @@ const routes: Routes = [
   { path: 'historia', component: HistoryComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
