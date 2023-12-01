@@ -43,6 +43,9 @@
          class="text-danger">
       Heslá sa nezhodujú.
     </div>
+    <div *ngIf="errorMessage" class="text-danger text-center">
+      {{ errorMessage }}
+    </div>
   </div>
   <button type="submit">Registrovať</button>
   <div class="text-center register">

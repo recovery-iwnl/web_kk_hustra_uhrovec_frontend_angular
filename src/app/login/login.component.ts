@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,11 +15,38 @@ export class LoginComponent {
     }
   );
 
+  errorMessage: string | null = null;
+
+
+  constructor(private http: HttpClient, private router: Router) {
+
+  }
   login() {
     if(this.loginForm.invalid) {
-      alert("Nesprávne údaje!")
+      this.errorMessage = "Nesprávne údaje!";
       return;
     }
+
+    let data = {
+      "email" : this.loginForm.value.email,
+      "password" : this.loginForm.value.password
+    };
+
+    console.log(this.loginForm.value.email);
+    console.log(this.loginForm.value.password);
+
+    this.http.post("http://localhost:8080/api/v1/user/login", data, {responseType: 'json'},).subscribe((resultData: any)=>
+    {
+      console.log(resultData);
+      if (resultData.message == "Email Doesn't Exist") {
+        this.errorMessage = "Email neexistuje";
+      } else if (resultData.message == "Login Successful") {
+        this.router.navigateByUrl('/domov');
+      } else {
+        this.errorMessage = "Nesprávne údaje!";
+      }
+
+    })
 
   }
 }
