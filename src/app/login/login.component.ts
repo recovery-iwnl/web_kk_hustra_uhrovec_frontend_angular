@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import { AuthService} from "../services/auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {
 
   }
   login() {
@@ -41,6 +42,7 @@ export class LoginComponent {
       if (resultData.message == "Email Doesn't Exist") {
         this.errorMessage = "Email neexistuje";
       } else if (resultData.message == "Login Successful") {
+        this.authService.login();
         this.router.navigateByUrl('/domov');
       } else {
         this.errorMessage = "Nesprávne údaje!";

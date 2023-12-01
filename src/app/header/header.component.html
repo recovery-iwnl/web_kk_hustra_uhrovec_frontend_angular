@@ -18,7 +18,7 @@
       <div class="fs-2 text-center ">
         <a class="text-sm-center text-white font-custom text-decoration-none" href="/domov">Kolkársky Klub HuStra Uhrovec</a>
       </div>
-      <div class="dropdown text-end">
+      <div class="dropdown text-end" *ngIf="!isLoggedIn">
         <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
            data-bs-toggle="dropdown" aria-expanded="false">
           <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -29,6 +29,16 @@
             <hr class="dropdown-divider">
           </li>
           <li><a class="dropdown-item custom-button" href="/register">Registrovať sa</a></li>
+        </ul>
+      </div>
+      <div class="dropdown text-end" *ngIf="isLoggedIn">
+        <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small">
+          <li><a class="dropdown-item custom-button" href="#">Profile</a></li>
+          <li><a class="dropdown-item custom-button" (click)="logout()">Logout</a></li>
         </ul>
       </div>
     </div>
