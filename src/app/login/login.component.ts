@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import { AuthService} from "../services/auth/auth.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -16,15 +17,20 @@ export class LoginComponent {
     }
   );
 
-  errorMessage: string | null = null;
 
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService) {
 
   }
   login() {
     if(this.loginForm.invalid) {
-      this.errorMessage = "Nesprávne údaje!";
+      this.toastr.error('', 'Login Failed!', {
+        positionClass: 'toast-center-center',
+        timeOut: 1500,
+        closeButton: true,
+        progressBar: true,
+
+      });
       return;
     }
 
@@ -40,15 +46,35 @@ export class LoginComponent {
     {
       console.log(resultData);
       if (resultData.message == "Email Doesn't Exist") {
-        this.errorMessage = "Email neexistuje";
+        this.toastr.error('', 'Email neexistuje!', {
+          positionClass: 'toast-center-center',
+          timeOut: 1500,
+          closeButton: true,
+          progressBar: true
+        });
       } else if (resultData.message == "Login Successful") {
         this.authService.login();
+        this.showSuccess();
         this.router.navigateByUrl('/domov');
       } else {
-        this.errorMessage = "Nesprávne údaje!";
+        this.toastr.error('', 'Nesprávne údaje!', {
+          positionClass: 'toast-center-center',
+          timeOut: 1500,
+          closeButton: true,
+          progressBar: true
+        });
       }
 
     })
 
   }
+  showSuccess() {
+    this.toastr.success('', 'Úspešne ste sa prihlásili!', {
+      positionClass: 'toast-bottom-right',
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true
+    });
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 
 function passwordMatchValidator(control: AbstractControl) {
@@ -23,15 +24,18 @@ export class RegisterComponent {
     passwordSame: new FormControl('', [Validators.required]),
   }, { validators: passwordMatchValidator });
 
-  errorMessage: string | null = null;
-
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
 
   }
 
   register() {
     if(this.registerForm.invalid) {
-      this.errorMessage = "Nesprávne údaje!";
+      this.toastr.error('', 'Nesprávne údaje!', {
+        positionClass: 'toast-center-center',
+        timeOut: 1500,
+        closeButton: true,
+        progressBar: true
+      });
       return;
     }
 
@@ -46,15 +50,34 @@ export class RegisterComponent {
     {
       console.log(resultData);
       if (resultData == "Username is already taken") {
-        this.errorMessage = "Uživateľ s týmto použivateľským menom už existuje";
+        this.toastr.error('', 'Uživateľ s týmto použivateľským menom už existuje!', {
+          positionClass: 'toast-center-center',
+          timeOut: 1500,
+          closeButton: true,
+          progressBar: true
+        });
       } else if (resultData == "Email is already registered") {
-        this.errorMessage = "Uživateľ s týmto emailom už existuje";
+        this.toastr.error('', 'Uživateľ s týmto emailom už existuje!', {
+          positionClass: 'toast-center-center',
+          timeOut: 1500,
+          closeButton: true,
+          progressBar: true
+        });
       } else {
-        this.errorMessage = "Úspešne ste sa zaregistrovali";
+        this.showSuccess();
         this.router.navigateByUrl('/login')
       }
 
     })
+  }
+
+  showSuccess() {
+    this.toastr.success('', 'Úspešne ste sa zaregistrovali!', {
+      positionClass: 'toast-bottom-right',
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true
+    });
   }
 
   protected readonly passwordMatchValidator = passwordMatchValidator;
