@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import { AuthService} from "../services/auth/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {UserService} from "../services/userService/user.service";
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,7 @@ export class LoginComponent {
     }
   );
 
-
-
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService : UserService) {
 
   }
   login() {
@@ -29,7 +28,6 @@ export class LoginComponent {
         timeOut: 1500,
         closeButton: true,
         progressBar: true,
-
       });
       return;
     }
@@ -42,7 +40,7 @@ export class LoginComponent {
     console.log(this.loginForm.value.email);
     console.log(this.loginForm.value.password);
 
-    this.http.post("http://localhost:8080/api/v1/user/login", data, {responseType: 'json'},).subscribe((resultData: any)=>
+    this.userService.loginUser(data).subscribe((resultData: any)=>
     {
       console.log(resultData);
       if (resultData.message == "Email Doesn't Exist") {
@@ -64,9 +62,7 @@ export class LoginComponent {
           progressBar: true
         });
       }
-
     })
-
   }
   showSuccess() {
     this.toastr.success('', 'Úspešne ste sa prihlásili!', {

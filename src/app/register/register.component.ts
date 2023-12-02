@@ -3,7 +3,7 @@ import { HttpClient} from "@angular/common/http";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-
+import {UserService} from "../services/userService/user.service";
 
 function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password')?.value;
@@ -24,7 +24,7 @@ export class RegisterComponent {
     passwordSame: new FormControl('', [Validators.required]),
   }, { validators: passwordMatchValidator });
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private userService : UserService) {
 
   }
 
@@ -46,7 +46,7 @@ export class RegisterComponent {
 
 
     };
-    this.http.post("http://localhost:8080/api/v1/user/save", data, {responseType: 'text'},).subscribe((resultData: any)=>
+    this.userService.registerUser(data).subscribe((resultData: any)=>
     {
       console.log(resultData);
       if (resultData == "Username is already taken") {
