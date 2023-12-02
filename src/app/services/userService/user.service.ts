@@ -10,6 +10,8 @@ export class UserService {
 
   API = "http://localhost:8080";
 
+
+
   public registerUser(userData : any) {
     return this.http.post(this.API + '/api/v1/user/save', userData, {responseType: 'text'})
   }
@@ -18,7 +20,8 @@ export class UserService {
     return this.http.post(this.API + '/api/v1/user/login', userData, {responseType: 'json'})
   }
 
-  public getUserDetails(userData : any) {
-    return this.http.post(this.API + '/api/v1/user/getUser', userData, {responseType: 'json'})
+  public getUserDetails(email: string) {
+    const params = { email };
+    return this.http.get(this.API + '/api/v1/user/getUser', { params });
   }
 }

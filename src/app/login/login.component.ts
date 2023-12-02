@@ -52,6 +52,7 @@ export class LoginComponent {
         });
       } else if (resultData.message == "Login Successful") {
         this.authService.login();
+        localStorage.setItem("token", <string>this.loginForm.value.email);
         this.showSuccess();
         this.router.navigateByUrl('/domov');
       } else {

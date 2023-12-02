@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {UserService} from "../services/userService/user.service";
+import { UserService } from "../services/userService/user.service";
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -8,8 +10,22 @@ import {UserService} from "../services/userService/user.service";
 })
 export class ProfileComponent {
 
+  userDetails : any;
 
-  constructor(private userService : UserService) {
+  constructor(private userService: UserService) {
+    this.getDetails()
+  }
 
+  getDetails() {
+    const email = <string>localStorage.getItem("token");
+    this.userService.getUserDetails(email).subscribe(
+      (resp) => {
+        console.log(resp);
+        this.userDetails = resp;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
