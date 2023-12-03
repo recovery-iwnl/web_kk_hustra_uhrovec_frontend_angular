@@ -32,11 +32,18 @@ export class ProfileComponent {
     ).subscribe();
   }
 
+  confirmDelete(): void {
+    const isConfirmed = window.confirm('Ste si istý, že si chcete vymazať účet?');
+    if (isConfirmed) {
+      this.deleteAccount();
+    }
+  }
+
   deleteAccount() {
     const email = <string>localStorage.getItem("token");
     this.userService.deleteUser(email).pipe(
       tap((resp: any) => {
-        console.log(resp);
+        console.log("Accout deleted");
       }),
       catchError((err) => {
         console.log(err);
