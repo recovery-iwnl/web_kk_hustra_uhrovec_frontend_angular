@@ -3,6 +3,8 @@ import { UserService } from "../services/userService/user.service";
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {AuthService} from "../services/auth/auth.service";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +14,7 @@ import {AuthService} from "../services/auth/auth.service";
 export class ProfileComponent {
 
   userDetails : any;
-
-  constructor(private userService: UserService, private authService : AuthService) {
+  constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {
     this.getDetails()
   }
 
@@ -33,10 +34,14 @@ export class ProfileComponent {
   }
 
   confirmDelete(): void {
-    const isConfirmed = window.confirm('Ste si istý, že si chcete vymazať účet?');
-    if (isConfirmed) {
-      this.deleteAccount();
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User clicked "Yes"
+        this.deleteAccount();
+      }
+    });
   }
 
   deleteAccount() {

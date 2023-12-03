@@ -1,19 +1,8 @@
 <div class="container bootstrap snippets bootdey">
   <h2 class="pb-2 py-4 dropdown border-bottom d-flex align-items-center ">Profil</h2>
   <div class="row">
-    <!-- left column -->
-    <div class="col-md-3">
-      <div class="text-center">
-        <img src="assets/images/user_profile.jpg" class="img-circle img-thumbnail" alt="avatar">
-        <h6>Upload a different photo...</h6>
-        <input type="file">
-      </div>
-    </div>
-
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
-      <h3>Personal info</h3>
-
+    <div class="col-md-9 personal-info" style="border: 1px solid #ddd; padding: 15px;border-radius: 0.5%;">
+      <h3>Uživateľské informácie</h3>
       <form class="form-horizontal" role="form">
         <div class="form-group">
           <label class="col-lg-3 control-label">Používatelské meno:</label>
@@ -33,15 +22,20 @@
             <input class="form-control" type="password" placeholder="********" readonly>
           </div>
         </div>
-        <div class="form-group">
-          <div class="col-lg-5 col-lg-offset-3 mt-4">
-            <button type="button" class="btn btn-primary">Potvrdiť zmeny</button>
-          </div>
-          <div class="col-lg-5 mt-4">
-            <button type="button" class="btn btn-danger" (click)="confirmDelete()">Zrušiť účet</button>
-          </div>
-        </div>
       </form>
+      <div class="mt-4">
+        <button type="button" class="btn btn-success">Potvrdiť zmeny</button>
+        <div class="mt-4">
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Zrušiť účet</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="text-center">
+        <img src="assets/images/user_profile.jpg" class="img-circle img-thumbnail" alt="avatar">
+        <h6>Zvoľ inú fotku...</h6>
+        <input type="file">
+      </div>
     </div>
   </div>
 </div>

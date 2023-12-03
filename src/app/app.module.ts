@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
+import {MatDialogModule} from "@angular/material/dialog";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from "./home/home.component";
@@ -18,6 +19,7 @@ import { HistoryComponent } from './history/history.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -33,13 +35,15 @@ import { ProfileComponent } from './profile/profile.component';
     HistoryComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       closeButton: true,
