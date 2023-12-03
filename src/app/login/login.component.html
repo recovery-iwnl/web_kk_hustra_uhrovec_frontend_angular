@@ -4,7 +4,7 @@
     <img src="assets/images/user_profile.jpg" class="img-circle img-thumbnail" alt="avatar" >
     <h4 class="text-center form-control" >Ste prihlásený s účtom:</h4>
      <h4 class="text-center form-control fs-4"> {{ localStorage.getItem("token") }} </h4>
-    <button type="button" class="btn btn-danger mt-4" (click)="logout(); refreshPage();">Odhlásiť sa</button>
+    <button type="button" class="btn btn-danger mt-4" (click)="logout()">Odhlásiť sa</button>
   </form>
 </div>
 <div *ngIf="!isLoggedIn">

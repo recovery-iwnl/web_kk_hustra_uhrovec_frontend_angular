@@ -29,9 +29,6 @@ export class LoginComponent {
     if(this.loginForm.invalid) {
       this.toastr.error('', 'Login Failed!', {
         positionClass: 'toast-center-center',
-        timeOut: 1500,
-        closeButton: true,
-        progressBar: true,
       });
       return;
     }
@@ -50,45 +47,23 @@ export class LoginComponent {
       if (resultData.message == "Email Doesn't Exist") {
         this.toastr.error('', 'Email neexistuje!', {
           positionClass: 'toast-center-center',
-          timeOut: 1500,
-          closeButton: true,
-          progressBar: true
         });
       } else if (resultData.message == "Login Successful") {
         this.authService.login();
         localStorage.setItem("token", <string>this.loginForm.value.email);
-        this.showSuccess();
         this.router.navigateByUrl('/domov');
       } else {
         this.toastr.error('', 'Nesprávne údaje!', {
           positionClass: 'toast-center-center',
-          timeOut: 1500,
-          closeButton: true,
-          progressBar: true
         });
       }
     })
-  }
-  showSuccess() {
-    this.toastr.success('', 'Úspešne ste sa prihlásili!', {
-      positionClass: 'toast-bottom-right',
-      timeOut: 2000,
-      closeButton: true,
-      progressBar: true
-    });
   }
 
   logout() {
     this.authService.logout();
   }
 
-  refreshPage() {
-    const currentUrl = this.router.url;
-
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
-  }
 
   protected readonly localStorage = localStorage;
 }

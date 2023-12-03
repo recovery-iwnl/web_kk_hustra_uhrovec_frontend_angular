@@ -14,13 +14,17 @@ export class AuthGuard implements CanActivate {
   }
 
   checkAuth(url: string): boolean {
+
     if (this.authService.isLoggedIn) {
       if (url === '/register') {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/domov']);
         return false;
       }
       return true;
     } else {
+      if (url === '/register') {
+        return true;
+      }
       this.router.navigate(['/login']);
       return false;
     }

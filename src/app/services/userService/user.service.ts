@@ -24,4 +24,8 @@ export class UserService {
     const params = { email };
     return this.http.get(this.API + '/api/v1/user/getUser', { params });
   }
+
+  public deleteUser(email: any) {
+    return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email);
+  }
 }

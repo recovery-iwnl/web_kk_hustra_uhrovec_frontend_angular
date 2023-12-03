@@ -41,6 +41,9 @@ import { ProfileComponent } from './profile/profile.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true
     }),
     HttpClientModule
   ],
