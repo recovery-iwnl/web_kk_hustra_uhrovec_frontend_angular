@@ -5,15 +5,21 @@
       <h3>Uživateľské informácie</h3>
       <form class="form-horizontal" role="form">
         <div class="form-group">
-          <label class="col-lg-3 control-label">Používatelské meno:</label>
+          <label class="col-lg-3 control-label">#ID :</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [value]="userDetails?.userName || ''">
+            <input class="form-control" type="number" disabled [(ngModel)]="userDetails.userID" [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Používateľské meno:</label>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="userDetails.userName"  [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Email:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [value]="userDetails?.email || ''">
+            <input class="form-control" type="text" [(ngModel)]="userDetails.email" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="form-group">
@@ -24,7 +30,7 @@
         </div>
       </form>
       <div class="mt-4">
-        <button type="button" class="btn btn-success">Potvrdiť zmeny</button>
+        <button type="button" class="btn btn-secondary" (click)="updateUser()">Potvrdiť zmeny</button>
         <div class="mt-4">
         <button type="button" class="btn btn-danger" (click)="confirmDelete()">Zrušiť účet</button>
         </div>
@@ -39,3 +45,26 @@
     </div>
   </div>
 </div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

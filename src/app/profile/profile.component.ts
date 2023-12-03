@@ -13,10 +13,13 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ProfileComponent {
 
-  userDetails : any;
-  constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {
-    this.getDetails()
+  userDetails : any = {};
+  constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.getDetails();
   }
+
 
   getDetails() {
     const email = <string>localStorage.getItem("token");
@@ -38,7 +41,6 @@ export class ProfileComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // User clicked "Yes"
         this.deleteAccount();
       }
     });
@@ -56,5 +58,17 @@ export class ProfileComponent {
       })
     ).subscribe();
     this.authService.logout();
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.userDetails).pipe(tap((resp: any) => {
+        console.log(resp);
+        localStorage.setItem("token", this.userDetails.email);
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
   }
 }
