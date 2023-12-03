@@ -18,14 +18,16 @@ export class ProfileComponent {
 
   getDetails() {
     const email = <string>localStorage.getItem("token");
-    this.userService.getUserDetails(email).subscribe(
-      (resp) => {
+    this.userService.getUserDetails(email).pipe(
+      tap((resp: any) => {
         console.log(resp);
         this.userDetails = resp;
-      },
-      (err) => {
+      }),
+      catchError((err) => {
         console.log(err);
-      }
-    );
+
+        return of(null);
+      })
+    ).subscribe();
   }
 }

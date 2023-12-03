@@ -1,4 +1,13 @@
 <body class="bgLogin">
+<div *ngIf="isLoggedIn">
+  <form>
+    <img src="assets/images/user_profile.jpg" class="img-circle img-thumbnail" alt="avatar" >
+    <h4 class="text-center form-control" >Ste prihlásený s účtom:</h4>
+     <h4 class="text-center form-control fs-4"> {{ localStorage.getItem("token") }} </h4>
+    <button type="button" class="btn btn-danger mt-4" (click)="logout(); refreshPage();">Odhlásiť sa</button>
+  </form>
+</div>
+<div *ngIf="!isLoggedIn">
 <form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
   <h1>Prihlásenie</h1>
 
@@ -24,4 +33,5 @@
   </div>
 
 </form>
+</div>
 <body>

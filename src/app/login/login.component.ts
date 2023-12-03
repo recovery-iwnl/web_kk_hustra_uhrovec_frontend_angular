@@ -18,9 +18,13 @@ export class LoginComponent {
     }
   );
 
+
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService : UserService) {
 
   }
+
+  isLoggedIn = this.authService.isLoggedIn;
+
   login() {
     if(this.loginForm.invalid) {
       this.toastr.error('', 'Login Failed!', {
@@ -74,4 +78,17 @@ export class LoginComponent {
     });
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
+  refreshPage() {
+    const currentUrl = this.router.url;
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  protected readonly localStorage = localStorage;
 }

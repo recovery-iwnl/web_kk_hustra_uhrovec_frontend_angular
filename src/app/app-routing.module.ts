@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 

@@ -4,6 +4,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
+import {AuthService} from "../services/auth/auth.service";
 
 function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password')?.value;
@@ -24,9 +25,10 @@ export class RegisterComponent {
     passwordSame: new FormControl('', [Validators.required]),
   }, { validators: passwordMatchValidator });
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private userService : UserService) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private userService : UserService, private authService : AuthService) {
 
   }
+
 
   register() {
     if(this.registerForm.invalid) {
@@ -79,6 +81,8 @@ export class RegisterComponent {
       progressBar: true
     });
   }
+
+
 
   protected readonly passwordMatchValidator = passwordMatchValidator;
 }

@@ -17,7 +17,14 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/domov')
+  }
+
+  refreshPage() {
+    const currentUrl = this.router.url;
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
 }
