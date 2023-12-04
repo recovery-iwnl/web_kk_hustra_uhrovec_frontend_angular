@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
       closeButton: true,
       progressBar: true
     }),
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

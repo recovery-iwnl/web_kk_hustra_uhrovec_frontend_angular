@@ -37,7 +37,12 @@ export class ProfileComponent {
   }
 
   confirmDelete(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Upozornenie!',
+        content: 'Naozaj chcete vymazať svoj účet?',
+      },
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -70,5 +75,20 @@ export class ProfileComponent {
         return of(null);
       })
     ).subscribe();
+  }
+
+  confirmEdit() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Upozornenie',
+        content: 'Naozaj chcete úložiť zmeny?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateUser();
+      }
+    });
   }
 }

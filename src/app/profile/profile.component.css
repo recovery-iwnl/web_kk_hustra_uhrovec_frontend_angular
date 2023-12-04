@@ -3,3 +3,7 @@ body{}
   width:100px;
   height:100px;
 }
+
+.rounded-button {
+  border-radius: 20px;
+}
