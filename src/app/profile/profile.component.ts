@@ -13,6 +13,9 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ProfileComponent {
 
+  initialUserDetails: any = {};
+  changesMade: boolean = false;
+
   userDetails : any = {};
   constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {}
 
@@ -34,6 +37,7 @@ export class ProfileComponent {
         return of(null);
       })
     ).subscribe();
+    this.initialUserDetails = { ...this.userDetails };
   }
 
   confirmDelete(): void {
@@ -69,6 +73,8 @@ export class ProfileComponent {
     this.userService.updateUser(this.userDetails).pipe(tap((resp: any) => {
         console.log(resp);
         localStorage.setItem("token", this.userDetails.email);
+        this.initialUserDetails = { ...this.userDetails };
+        this.changesMade = false;
       }),
       catchError((err) => {
         console.log(err);
@@ -91,4 +97,22 @@ export class ProfileComponent {
       }
     });
   }
+
+  isUsernameInvalid(): boolean {
+    return this.userDetails.userName && this.userDetails.userName.length < 8;
+  }
+
+  isEmailInvalid(): boolean {
+    return !this.userDetails.email || !this.validateEmail(this.userDetails.email);
+  }
+
+  private validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  areChangesMade(): boolean {
+    return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
+  }
+
 }
