@@ -14,7 +14,9 @@ import {MatDialog} from "@angular/material/dialog";
 export class ProfileComponent {
 
   initialUserDetails: any = {};
-  changesMade: boolean = false;
+
+  usernameErrorMessage: string | null = null;
+  emailErrorMessage: string | null = null;
 
   userDetails : any = {};
   constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {}
@@ -30,13 +32,14 @@ export class ProfileComponent {
       tap((resp: any) => {
         console.log(resp);
         this.userDetails = resp;
+        this.userDetails.password = localStorage.getItem("pass");
       }),
       catchError((err) => {
         console.log(err);
-
         return of(null);
       })
     ).subscribe();
+
     this.initialUserDetails = { ...this.userDetails };
   }
 
@@ -70,14 +73,28 @@ export class ProfileComponent {
   }
 
   updateUser() {
-    this.userService.updateUser(this.userDetails).pipe(tap((resp: any) => {
+    this.userService.updateUser(this.userDetails).pipe(
+      tap((resp: any) => {
         console.log(resp);
         localStorage.setItem("token", this.userDetails.email);
+        localStorage.setItem("pass", this.userDetails.password);
+        //this.userDetails.password =  localStorage.getItem("pass");
         this.initialUserDetails = { ...this.userDetails };
-        this.changesMade = false;
       }),
       catchError((err) => {
         console.log(err);
+
+        if (typeof err === 'string') {
+
+          if (err == "Email is already registered") {
+            this.emailErrorMessage = err;
+          } else if (err == "Username is already taken") {
+            this.usernameErrorMessage = err;
+          }
+        } else {
+          this.emailErrorMessage = err.error?.email || 'Something went wrong.';
+          this.usernameErrorMessage = err.error?.username || 'Something went wrong.';
+        }
         return of(null);
       })
     ).subscribe();
@@ -115,4 +132,5 @@ export class ProfileComponent {
     return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
   }
 
+  protected readonly localStorage = localStorage;
 }

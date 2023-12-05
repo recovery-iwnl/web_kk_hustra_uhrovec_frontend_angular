@@ -16,6 +16,7 @@
             <input class="form-control" type="text" [(ngModel)]="userDetails.userName"  [ngModelOptions]="{standalone: true}">
           </div>
           <div *ngIf="isUsernameInvalid()" class="text-danger">Používateľské meno musí byť dlhé aspoň 8 znakov.</div>
+          <div *ngIf="usernameErrorMessage" class="text-danger">{{ usernameErrorMessage }}</div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Email:</label>
@@ -23,11 +24,12 @@
             <input class="form-control" type="text" [(ngModel)]="userDetails.email" [ngModelOptions]="{standalone: true}">
           </div>
           <div *ngIf="isEmailInvalid()" class="text-danger">Neplatná e-mailová adresa.</div>
+          <div *ngIf="emailErrorMessage" class="text-danger">{{ emailErrorMessage }}</div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Heslo:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" placeholder="********" readonly>
+            <input class="form-control" type="password" [(ngModel)]="userDetails.password" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
       </form>

@@ -51,6 +51,7 @@ export class LoginComponent {
       } else if (resultData.message == "Login Successful") {
         this.authService.login();
         localStorage.setItem("token", <string>this.loginForm.value.email);
+        localStorage.setItem("pass", <string>this.loginForm.value.password);
         this.router.navigateByUrl('/domov');
       } else {
         this.toastr.error('', 'Nesprávne údaje!', {

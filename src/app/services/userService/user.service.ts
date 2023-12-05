@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,17 @@ export class UserService {
     return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email);
   }
 
-  public updateUser(user: any) {
-    return this.http.put(this.API + '/api/v1/user/updateUser', user);
+  public updateUser(user: any): Observable<any> {
+    return this.http.put(`${this.API}/api/v1/user/updateUser`, user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Update User Error:', error);
+
+        if (error.status === 400) {
+          return throwError(error.error);
+        } else {
+          return throwError('Something went wrong.');
+        }
+      })
+    );
   }
 }
