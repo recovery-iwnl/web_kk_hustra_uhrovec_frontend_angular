@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { UserService } from "../services/userService/user.service";
-import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {Component} from '@angular/core';
+import {UserService} from "../services/userService/user.service";
+import {tap, catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
 import {AuthService} from "../services/auth/auth.service";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,12 +14,12 @@ import {MatDialog} from "@angular/material/dialog";
 export class ProfileComponent {
 
   initialUserDetails: any = {};
-
   usernameErrorMessage: string | null = null;
   emailErrorMessage: string | null = null;
+  userDetails: any = {};
 
-  userDetails : any = {};
-  constructor(private userService: UserService, private authService : AuthService, private dialog: MatDialog) {}
+  constructor(private userService: UserService, private authService: AuthService, private dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.getDetails();
@@ -40,7 +40,7 @@ export class ProfileComponent {
       })
     ).subscribe();
 
-    this.initialUserDetails = { ...this.userDetails };
+    this.initialUserDetails = {...this.userDetails};
   }
 
   confirmDelete(): void {
@@ -79,7 +79,7 @@ export class ProfileComponent {
         localStorage.setItem("token", this.userDetails.email);
         localStorage.setItem("pass", this.userDetails.password);
         //this.userDetails.password =  localStorage.getItem("pass");
-        this.initialUserDetails = { ...this.userDetails };
+        this.initialUserDetails = {...this.userDetails};
       }),
       catchError((err) => {
         console.log(err);
@@ -87,9 +87,9 @@ export class ProfileComponent {
         if (typeof err === 'string') {
 
           if (err == "Email is already registered") {
-            this.emailErrorMessage = err;
+            this.emailErrorMessage = "Účet s týmto emailom už existuje";
           } else if (err == "Username is already taken") {
-            this.usernameErrorMessage = err;
+            this.usernameErrorMessage = "Účet s týmto používateľským menom už existuje";
           }
         } else {
           this.emailErrorMessage = err.error?.email || 'Something went wrong.';
@@ -123,6 +123,10 @@ export class ProfileComponent {
     return !this.userDetails.email || !this.validateEmail(this.userDetails.email);
   }
 
+  isPasswordInvalid(): boolean {
+    return this.userDetails.password && this.userDetails.password.length < 8;
+  }
+
   private validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -132,5 +136,15 @@ export class ProfileComponent {
     return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
   }
 
+  onEmailChange() {
+    this.emailErrorMessage = null;
+  }
+
+  onUsernameChange() {
+    this.usernameErrorMessage = null;
+  }
+
   protected readonly localStorage = localStorage;
+
+
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
+import {Component} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
@@ -10,8 +10,9 @@ function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password')?.value;
   const passwordSame = control.get('passwordSame')?.value;
 
-  return password === passwordSame ? null : { 'passwordMismatch': true };
+  return password === passwordSame ? null : {'passwordMismatch': true};
 }
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,15 +24,15 @@ export class RegisterComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     passwordSame: new FormControl('', [Validators.required]),
-  }, { validators: passwordMatchValidator });
+  }, {validators: passwordMatchValidator});
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private userService : UserService, private authService : AuthService) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private userService: UserService, private authService: AuthService) {
 
   }
 
 
   register() {
-    if(this.registerForm.invalid) {
+    if (this.registerForm.invalid) {
       this.toastr.error('', 'Nesprávne údaje!', {
         positionClass: 'toast-center-center',
         timeOut: 1500,
@@ -42,14 +43,13 @@ export class RegisterComponent {
     }
 
     let data = {
-      "userName" : this.registerForm.value.userName,
-      "email" : this.registerForm.value.email,
-      "password" : this.registerForm.value.password
+      "userName": this.registerForm.value.userName,
+      "email": this.registerForm.value.email,
+      "password": this.registerForm.value.password
 
 
     };
-    this.userService.registerUser(data).subscribe((resultData: any)=>
-    {
+    this.userService.registerUser(data).subscribe((resultData: any) => {
       console.log(resultData);
       if (resultData == "Username is already taken") {
         this.toastr.error('', 'Uživateľ s týmto použivateľským menom už existuje!', {
@@ -81,7 +81,6 @@ export class RegisterComponent {
       progressBar: true
     });
   }
-
 
 
   protected readonly passwordMatchValidator = passwordMatchValidator;

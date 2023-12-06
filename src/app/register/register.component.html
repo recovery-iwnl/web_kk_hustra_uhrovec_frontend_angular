@@ -21,6 +21,9 @@
       autocomplete="new-password"
       type="email"
     />
+    <div *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="text-danger">
+      Nevalídny email.
+    </div>
     <label for="password">Heslo</label>
     <input
       formControlName="password"

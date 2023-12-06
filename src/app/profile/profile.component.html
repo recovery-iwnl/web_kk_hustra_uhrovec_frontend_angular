@@ -7,13 +7,15 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">#ID :</label>
           <div class="col-lg-8">
-            <input class="form-control" type="number" disabled [(ngModel)]="userDetails.userID" [ngModelOptions]="{standalone: true}">
+            <input class="form-control" type="number" disabled [(ngModel)]="userDetails.userID"
+                   [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Používateľské meno:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="userDetails.userName"  [ngModelOptions]="{standalone: true}">
+            <input class="form-control" type="text" [(ngModel)]="userDetails.userName"
+                   [ngModelOptions]="{standalone: true}" (ngModelChange)="onUsernameChange()">
           </div>
           <div *ngIf="isUsernameInvalid()" class="text-danger">Používateľské meno musí byť dlhé aspoň 8 znakov.</div>
           <div *ngIf="usernameErrorMessage" class="text-danger">{{ usernameErrorMessage }}</div>
@@ -21,7 +23,8 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">Email:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="userDetails.email" [ngModelOptions]="{standalone: true}">
+            <input class="form-control" type="text" [(ngModel)]="userDetails.email"
+                   [ngModelOptions]="{standalone: true}" (ngModelChange)="onEmailChange()">
           </div>
           <div *ngIf="isEmailInvalid()" class="text-danger">Neplatná e-mailová adresa.</div>
           <div *ngIf="emailErrorMessage" class="text-danger">{{ emailErrorMessage }}</div>
@@ -29,14 +32,18 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">Heslo:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" [(ngModel)]="userDetails.password" [ngModelOptions]="{standalone: true}">
+            <input class="form-control" type="password" [(ngModel)]="userDetails.password"
+                   [ngModelOptions]="{standalone: true}">
           </div>
+          <div *ngIf="isPasswordInvalid()" class="text-danger">Heslo musí byť dlhé aspoň 8 znakov.</div>
         </div>
       </form>
       <div class="mt-4">
-        <button mat-raised-button color="primary" (click)="confirmEdit()" class="rounded-button" [disabled]="isUsernameInvalid() || isEmailInvalid() || !areChangesMade()" >Uložiť zmeny</button>
+        <button mat-raised-button color="primary" (click)="confirmEdit()" class="rounded-button"
+                [disabled]="isUsernameInvalid() || isEmailInvalid() || isPasswordInvalid() || !areChangesMade()">Uložiť zmeny
+        </button>
         <div class="mt-4">
-        <button mat-raised-button color="warn" (click)="confirmDelete()" class="rounded-button">Zrušiť účet</button>
+          <button mat-raised-button color="warn" (click)="confirmDelete()" class="rounded-button">Zrušiť účet</button>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import { AuthService} from "../services/auth/auth.service";
+import {AuthService} from "../services/auth/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
 
@@ -13,20 +13,20 @@ import {UserService} from "../services/userService/user.service";
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
     }
   );
 
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService : UserService) {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {
 
   }
 
   isLoggedIn = this.authService.isLoggedIn;
 
   login() {
-    if(this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       this.toastr.error('', 'Login Failed!', {
         positionClass: 'toast-center-center',
       });
@@ -34,15 +34,14 @@ export class LoginComponent {
     }
 
     let data = {
-      "email" : this.loginForm.value.email,
-      "password" : this.loginForm.value.password
+      "email": this.loginForm.value.email,
+      "password": this.loginForm.value.password
     };
 
     console.log(this.loginForm.value.email);
     console.log(this.loginForm.value.password);
 
-    this.userService.loginUser(data).subscribe((resultData: any)=>
-    {
+    this.userService.loginUser(data).subscribe((resultData: any) => {
       console.log(resultData);
       if (resultData.message == "Email Doesn't Exist") {
         this.toastr.error('', 'Email neexistuje!', {
