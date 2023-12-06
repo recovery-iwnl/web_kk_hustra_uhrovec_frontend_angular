@@ -18,6 +18,8 @@ export class ProfileComponent {
   emailErrorMessage: string | null = null;
   userDetails: any = {};
 
+  isProfileChanged: boolean = false;
+
   constructor(private userService: UserService, private authService: AuthService, private dialog: MatDialog) {
   }
 
@@ -39,8 +41,7 @@ export class ProfileComponent {
         return of(null);
       })
     ).subscribe();
-
-    this.initialUserDetails = {...this.userDetails};
+    this.initialUserDetails = { ...this.userDetails };
   }
 
   confirmDelete(): void {
@@ -79,7 +80,7 @@ export class ProfileComponent {
         localStorage.setItem("token", this.userDetails.email);
         localStorage.setItem("pass", this.userDetails.password);
         //this.userDetails.password =  localStorage.getItem("pass");
-        this.initialUserDetails = {...this.userDetails};
+        this.initialUserDetails = { ...this.userDetails };
       }),
       catchError((err) => {
         console.log(err);
@@ -116,7 +117,7 @@ export class ProfileComponent {
   }
 
   isUsernameInvalid(): boolean {
-    return this.userDetails.userName && this.userDetails.userName.length < 8;
+    return !this.userDetails.userName || this.userDetails.userName.length < 8;
   }
 
   isEmailInvalid(): boolean {
@@ -124,7 +125,7 @@ export class ProfileComponent {
   }
 
   isPasswordInvalid(): boolean {
-    return this.userDetails.password && this.userDetails.password.length < 8;
+    return !this.userDetails.password || this.userDetails.password.length < 8;
   }
 
   private validateEmail(email: string): boolean {
@@ -132,19 +133,23 @@ export class ProfileComponent {
     return emailRegex.test(email);
   }
 
-  areChangesMade(): boolean {
-    return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
-  }
 
   onEmailChange() {
     this.emailErrorMessage = null;
+    this.isProfileChanged = true;
   }
 
   onUsernameChange() {
     this.usernameErrorMessage = null;
+    this.isProfileChanged = true;
+  }
+
+  areChangesMade(): boolean {
+    return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
+  }
+  onPasswordChange() {
+    this.isProfileChanged = true;
   }
 
   protected readonly localStorage = localStorage;
-
-
 }

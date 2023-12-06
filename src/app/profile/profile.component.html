@@ -1,59 +1,67 @@
-<div class="container bootstrap snippets bootdey">
-  <h2 class="pb-2 py-4 dropdown border-bottom d-flex align-items-center ">Profil</h2>
+<div class="container mt-5 mb-5">
+  <h2 class="pb-2 py-4 dropdown border-bottom d-flex align-items-center">Profil</h2>
   <div class="row">
-    <div class="col-md-9 personal-info" style="border: 1px solid #ddd; padding: 15px;border-radius: 0.5%;">
-      <h3>Uživateľské informácie</h3>
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="col-lg-3 control-label">#ID :</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="number" disabled [(ngModel)]="userDetails.userID"
-                   [ngModelOptions]="{standalone: true}">
+    <div class="col-md-9">
+      <div class="personal-info border rounded p-4">
+        <h3>Uživateľské informácie</h3>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">#ID:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" disabled [(ngModel)]="userDetails.userID"
+                     [ngModelOptions]="{standalone: true}">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Používateľské meno:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="userDetails.userName"
-                   [ngModelOptions]="{standalone: true}" (ngModelChange)="onUsernameChange()">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Používateľské meno:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="userDetails.userName"
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onUsernameChange()">
+              <div *ngIf="isUsernameInvalid()" class="text-danger">Používateľské meno musí byť dlhé aspoň 8 znakov.</div>
+              <div *ngIf="usernameErrorMessage" class="text-danger">{{ usernameErrorMessage }}</div>
+            </div>
           </div>
-          <div *ngIf="isUsernameInvalid()" class="text-danger">Používateľské meno musí byť dlhé aspoň 8 znakov.</div>
-          <div *ngIf="usernameErrorMessage" class="text-danger">{{ usernameErrorMessage }}</div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Email:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="userDetails.email"
-                   [ngModelOptions]="{standalone: true}" (ngModelChange)="onEmailChange()">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="userDetails.email"
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onEmailChange()">
+              <div *ngIf="isEmailInvalid()" class="text-danger">Neplatná e-mailová adresa.</div>
+              <div *ngIf="emailErrorMessage" class="text-danger">{{ emailErrorMessage }}</div>
+            </div>
           </div>
-          <div *ngIf="isEmailInvalid()" class="text-danger">Neplatná e-mailová adresa.</div>
-          <div *ngIf="emailErrorMessage" class="text-danger">{{ emailErrorMessage }}</div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Heslo:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="password" [(ngModel)]="userDetails.password"
-                   [ngModelOptions]="{standalone: true}">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Heslo:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="password" [(ngModel)]="userDetails.password"
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onPasswordChange()">
+              <div *ngIf="isPasswordInvalid()" class="text-danger">Heslo musí byť dlhé aspoň 8 znakov.</div>
+            </div>
           </div>
-          <div *ngIf="isPasswordInvalid()" class="text-danger">Heslo musí byť dlhé aspoň 8 znakov.</div>
-        </div>
-      </form>
-      <div class="mt-4">
-        <button mat-raised-button color="primary" (click)="confirmEdit()" class="rounded-button"
-                [disabled]="isUsernameInvalid() || isEmailInvalid() || isPasswordInvalid() || !areChangesMade()">Uložiť zmeny
-        </button>
+        </form>
         <div class="mt-4">
-          <button mat-raised-button color="warn" (click)="confirmDelete()" class="rounded-button">Zrušiť účet</button>
+          <button mat-raised-button color="primary" (click)="confirmEdit()" class="rounded-button"
+                  [disabled]="isUsernameInvalid() || isEmailInvalid() || isPasswordInvalid() || !isProfileChanged || !areChangesMade()">Uložiť zmeny
+          </button>
+          <div class="mt-4">
+            <button mat-raised-button color="warn" (click)="confirmDelete()" class="rounded-button">Zrušiť účet</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mt-4 mt-md-0">
       <div class="text-center">
-        <img src="assets/images/user_profile.jpg" class="img-circle img-thumbnail" alt="avatar">
-        <h6>Zvoľ inú fotku...</h6>
-        <input type="file">
+        <label for="fileInput" class="custom-file-upload">
+          <img src="assets/images/user_profile.jpg" class="img-fluid img-thumbnail" alt="avatar">
+          <h6 class="mt-3">Zvoľ inú fotku...</h6>
+        </label>
+        <input id="fileInput" type="file" class="mt-2" accept="image/*" style="display: none;">
       </div>
     </div>
   </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="border-bottom"></div>
+    </div>
+  </div>
 </div>
-

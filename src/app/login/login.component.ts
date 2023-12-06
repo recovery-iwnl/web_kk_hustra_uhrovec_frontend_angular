@@ -27,7 +27,7 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.invalid) {
-      this.toastr.error('', 'Login Failed!', {
+      this.toastr.error('', 'Nesprávne údaje!', {
         positionClass: 'toast-center-center',
       });
       return;
