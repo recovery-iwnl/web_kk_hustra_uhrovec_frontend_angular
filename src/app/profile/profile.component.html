@@ -41,7 +41,9 @@
         </form>
         <div class="mt-4">
           <button mat-raised-button color="primary" (click)="confirmEdit()" class="rounded-button"
-                  [disabled]="isUsernameInvalid() || isEmailInvalid() || isPasswordInvalid() || !isProfileChanged || !areChangesMade()">Uložiť zmeny
+                  [disabled]="isUsernameInvalid() || isEmailInvalid() || isPasswordInvalid() || !isProfileChanged
+                  || !areChangesMade() || this.usernameErrorMessage != null
+                  || this.emailErrorMessage != null ">Uložiť zmeny
           </button>
           <div class="mt-4">
             <button mat-raised-button color="warn" (click)="confirmDelete()" class="rounded-button">Zrušiť účet</button>

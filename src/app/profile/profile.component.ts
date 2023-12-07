@@ -41,7 +41,7 @@ export class ProfileComponent {
         return of(null);
       })
     ).subscribe();
-    this.initialUserDetails = { ...this.userDetails };
+    this.initialUserDetails = {...this.userDetails};
   }
 
   confirmDelete(): void {
@@ -80,7 +80,7 @@ export class ProfileComponent {
         localStorage.setItem("token", this.userDetails.email);
         localStorage.setItem("pass", this.userDetails.password);
         //this.userDetails.password =  localStorage.getItem("pass");
-        this.initialUserDetails = { ...this.userDetails };
+        this.initialUserDetails = {...this.userDetails};
       }),
       catchError((err) => {
         console.log(err);
@@ -147,6 +147,7 @@ export class ProfileComponent {
   areChangesMade(): boolean {
     return JSON.stringify(this.userDetails) !== JSON.stringify(this.initialUserDetails);
   }
+
   onPasswordChange() {
     this.isProfileChanged = true;
   }
