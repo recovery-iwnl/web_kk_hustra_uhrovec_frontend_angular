@@ -21,7 +21,7 @@ function passwordMatchValidator(control: AbstractControl) {
 export class RegisterComponent {
   registerForm = new FormGroup({
     userName: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     passwordSame: new FormControl('', [Validators.required]),
   }, {validators: passwordMatchValidator});
