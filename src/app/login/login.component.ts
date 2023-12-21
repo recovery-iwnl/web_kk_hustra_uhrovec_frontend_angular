@@ -19,6 +19,7 @@ export class LoginComponent {
   );
 
 
+
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {
 
   }
@@ -48,9 +49,9 @@ export class LoginComponent {
           positionClass: 'toast-center-center',
         });
       } else if (resultData.message == "Login Successful") {
-        this.authService.login();
         localStorage.setItem("token", <string>this.loginForm.value.email);
         localStorage.setItem("pass", <string>this.loginForm.value.password);
+        this.authService.login();
         this.router.navigateByUrl('/domov');
       } else {
         this.toastr.error('', 'Nesprávne údaje!', {
