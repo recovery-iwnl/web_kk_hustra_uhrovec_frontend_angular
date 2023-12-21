@@ -1,0 +1,71 @@
+<div class="container table-responsive ">
+  <body>
+  <h2 class="border-bottom">Používatelia</h2>
+  <div class="row">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Používateľské meno</th>
+        <th>Email</th>
+        <th>Rola</th>
+        <th style="width: 80px;" >Upraviť</th>
+        <th style="width: 80px;">Vymazať</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.userID }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button mat-stroked-button color="primary" data-bs-toggle="modal" data-bs-target="#editUserModal" (click)="editUser(user)" [disabled]="user.role === 'ADMIN'">Upraviť</button>
+        </td>
+        <td>
+          <button mat-stroked-button color="warn" [disabled]="user.role === 'ADMIN'">Vymazať</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Upraviť uživateľa</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3">
+            <div class="col-md-12">
+              <label for="userId" class="form-label">#ID:</label>
+              <input type="text" class="form-control" id="userId" [(ngModel)]="editedUser.userID"  [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+            <div class="col-md-12">
+              <label for="username" class="form-label">Používateľské meno:</label>
+              <input type="text" class="form-control" id="username" [(ngModel)]="editedUser.userName"  [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+            <div class="col-md-12">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" [(ngModel)]="editedUser.email"  [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+            <div class="col-md-12">
+              <label for="role" class="form-label">Rola:</label>
+              <select class="form-select" id="role" [(ngModel)]="editedUser.role" [ngModelOptions]="{standalone: true}">
+                <option value="FAN">FAN</option>
+                <option value="PLAYER">PLAYER</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button mat-raised-button color="basic" (click)="updateUser()" data-bs-dismiss="modal">Uložit zmeny</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</div>
+
+

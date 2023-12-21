@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import {MatButtonModule} from "@angular/material/button";
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatButtonModule} from "@angular/material/button";
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,

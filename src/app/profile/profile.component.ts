@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/userService/user.service";
 import {tap, catchError} from 'rxjs/operators';
 import {of} from 'rxjs';

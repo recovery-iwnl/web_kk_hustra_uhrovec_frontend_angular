@@ -27,6 +27,10 @@ export class UserService {
     return this.http.get(this.API + '/api/v1/user/getUser', { params });
   }
 
+  public getAllUsers() {
+    return this.http.get(this.API + '/api/v1/user/getUsersList');
+  }
+
   public deleteUser(email: any) {
     return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email);
   }

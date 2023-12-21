@@ -1,0 +1,13 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container.table-responsive h2.border-bottom {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+
+
