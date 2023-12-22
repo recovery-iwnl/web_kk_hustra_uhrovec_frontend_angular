@@ -11,8 +11,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from "./home/home.component";
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { PlayersAComponent } from './players-a/players-a.component';
-import { PlayersBComponent } from './players-b/players-b.component';
+import { PlayersComponent } from './players/players.component';
 import { TableComponent } from './table/table.component';
 import { ResultsComponent } from './results/results.component';
 import { HistoryComponent } from './history/history.component';
@@ -30,8 +29,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    PlayersAComponent,
-    PlayersBComponent,
+    PlayersComponent,
     TableComponent,
     ResultsComponent,
     HistoryComponent,

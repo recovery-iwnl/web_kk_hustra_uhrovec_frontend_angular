@@ -63,7 +63,7 @@ export class ProfileComponent {
     const email = <string>localStorage.getItem("token");
     this.userService.deleteUser(email).pipe(
       tap((resp: any) => {
-        console.log("Accout deleted");
+        console.log("Account deleted");
       }),
       catchError((err) => {
         console.log(err);

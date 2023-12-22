@@ -23,7 +23,7 @@
           <button mat-stroked-button color="primary" data-bs-toggle="modal" data-bs-target="#editUserModal" (click)="editUser(user)" [disabled]="user.role === 'ADMIN'">Upraviť</button>
         </td>
         <td>
-          <button mat-stroked-button color="warn" [disabled]="user.role === 'ADMIN'">Vymazať</button>
+          <button mat-stroked-button color="warn" (click)="confirmDelete(user)" [disabled]="user.role === 'ADMIN'">Vymazať</button>
         </td>
       </tr>
       </tbody>

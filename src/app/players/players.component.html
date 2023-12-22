@@ -1,0 +1,64 @@
+<div class="container px-3 py-5" id="team-a">
+  <h2 class="pb-2 border-bottom">KK HuStra Uhrovec "A", "B"</h2>
+
+  <div class="container text-center">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="showPlayerDetails(player)" data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
+        <a class="text-decoration-none text-reset">
+          <img src="assets/images/user_profile.jpg" alt="Player {{ player.id }}" width="110" height="110" class="rounded-circle">
+          <p>{{ player.name }} {{ player.surname }}</p>
+        </a>
+        <button class="btn btn-light">
+          <!-- Use an edit icon instead of the + symbol -->
+          <span class="fw-bold"></span> Upraviť
+        </button>
+        <button class="btn btn-dark position-absolute top-0 end-0 me-2 mt-2">
+          <!-- Use a delete icon -->
+          <span class="fw-bold text-white">X</span>
+        </button>
+      </div>
+      <button class="btn btn-circle btn-light btn-lg">
+        <!-- Use a circular button for add player -->
+        <span class="fw-bold text-black">+</span>Pridať
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="playerDetailsModal" tabindex="-1" aria-labelledby="playerDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Štatistiky hráča</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="profile-picture-container mb-3">
+          <img src="assets/images/user_profile.jpg" alt="Player {{ shownPlayer?.id }}" class="rounded-circle profile-picture">
+        </div>
+        <h2>{{ shownPlayer?.name }} {{ shownPlayer?.surname }}</h2>
+
+        <table class="table table-bordered">
+          <tbody>
+          <tr>
+            <td><strong>Vek:</strong></td>
+            <td>{{ shownPlayer?.age }}</td>
+          </tr>
+          <tr>
+            <td><strong>Priemer bodov:</strong></td>
+            <td>{{ shownPlayer?.points }}</td>
+          </tr>
+          <!-- Add more details as needed -->
+          </tbody>
+        </table>
+
+        <!-- Add more tabular details as needed -->
+      </div>
+
+      <div class="modal-footer">
+        <button mat-raised-button color="basic" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -53,9 +53,7 @@ export class AuthService {
     localStorage.removeItem("token");
     localStorage.removeItem("pass");
     const currentUrl = this.router.url;
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate([currentUrl]);
-      });
+      this.router.navigateByUrl('/domov');
     this.toastr.success('', 'Úspešne ste sa odhlásili!', {
       positionClass: 'toast-bottom-right',
     });

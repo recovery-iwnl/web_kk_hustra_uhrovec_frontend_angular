@@ -32,7 +32,7 @@ export class UserService {
   }
 
   public deleteUser(email: any) {
-    return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email);
+    return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email, {responseType: 'text'});
   }
 
   public updateUser(user: any): Observable<any> {
