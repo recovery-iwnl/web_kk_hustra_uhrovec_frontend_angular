@@ -28,7 +28,7 @@ export class PlayerService {
   }
 
   public updatePlayer(player: any): Observable<any> {
-    return this.http.put(this.API + '/api/v1/user/updateUser', player);
+    return this.http.put(this.API + '/api/v1/player/updatePlayer', player);
   }
 
 }

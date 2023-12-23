@@ -3,24 +3,140 @@
 
   <div class="container text-center">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="showPlayerDetails(player)" data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
-        <a class="text-decoration-none text-reset">
+      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
+        <a class="text-decoration-none text-reset" >
           <img src="assets/images/user_profile.jpg" alt="Player {{ player.id }}" width="110" height="110" class="rounded-circle">
           <p>{{ player.name }} {{ player.surname }}</p>
         </a>
-        <button class="btn btn-light">
-          <!-- Use an edit icon instead of the + symbol -->
+        <button class="btn btn-light" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal" data-bs-target="#updatePlayerModal" *ngIf="isAdmin()">
           <span class="fw-bold"></span> Upraviť
         </button>
-        <button class="btn btn-dark position-absolute top-0 end-0 me-2 mt-2">
-          <!-- Use a delete icon -->
-          <span class="fw-bold text-white">X</span>
+        <button class="btn btn-light position-absolute top-0 end-0 me-2 mt-2" (mousedown)="confirmDelete($event,player)" *ngIf="isAdmin()">
+          <span class="fw-bold text-black">X</span>
         </button>
       </div>
-      <button class="btn btn-circle btn-light btn-lg">
-        <!-- Use a circular button for add player -->
+      <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addPlayerModal" *ngIf="isAdmin()">
         <span class="fw-bold text-black">+</span>Pridať
       </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addPlayerModal" tabindex="-1" aria-labelledby="addPlayerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addPlayerLabel">Pridať hráča</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+
+        <div class="mb-4">
+          <a class="text-decoration-none text-reset d-flex justify-content-center">
+            <img src="assets/images/user_profile.jpg" alt="Hráč" width="110" height="110" class="rounded-circle">
+          </a>
+        </div>
+
+        <form (ngSubmit)="addPlayer(newPlayer)" #playerForm="ngForm">
+
+          <div class="mb-3 text-start">
+            <label for="name" class="form-label">Meno hráča:</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newPlayer.name" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="playerForm.controls['name']?.hasError('pattern') && playerForm.controls['name'].touched" class="text-danger">
+              Meno hráča môže obsahovať len písmená a špeciálne znaky.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="surname" class="form-label">Priezvisko hráča:</label>
+            <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="newPlayer.surname" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="playerForm.controls['surname']?.hasError('pattern') && playerForm.controls['surname'].touched" class="text-danger">
+              Priezvisko hráča môže obsahovať len písmená a špeciálne znaky.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="age" class="form-label">Vek hráča:</label>
+            <input type="number" class="form-control" id="age" name="age" [(ngModel)]="newPlayer.age" required min="1">
+            <div *ngIf="playerForm.controls['age']?.hasError('min') && playerForm.controls['age'].touched" class="text-danger">
+              Vek hráča musí byť väčší alebo rovný 1.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="points" class="form-label">Priemerné body:</label>
+            <input type="number" class="form-control" id="points" name="points" [(ngModel)]="newPlayer.points" required min="0">
+            <div *ngIf="playerForm.controls['points']?.hasError('min') && playerForm.controls['points'].touched" class="text-danger">
+              Priemerné body musia byť väčšie alebo rovné 0.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic" [disabled]="playerForm.invalid" data-bs-dismiss="modal">Pridať hráča</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="updatePlayerModal" tabindex="-1" aria-labelledby="updatePlayerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updatePlayerLabel">Upraviť hráča</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+
+        <div class="mb-4">
+          <a class="text-decoration-none text-reset d-flex justify-content-center">
+            <img src="assets/images/user_profile.jpg" alt="Hráč" width="110" height="110" class="rounded-circle">
+          </a>
+        </div>
+
+        <form (ngSubmit)="updatePlayer(shownPlayer)" #updateForm="ngForm">
+
+          <div class="mb-3 text-start">
+            <label for="name" class="form-label">Meno hráča:</label>
+            <input type="text" class="form-control" id="nameUpdate" name="name" [(ngModel)]="shownPlayer.name" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="updateForm.controls['name']?.hasError('pattern') && updateForm.controls['name'].touched" class="text-danger">
+              Meno hráča môže obsahovať len písmená a špeciálne znaky.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="surname" class="form-label">Priezvisko hráča:</label>
+            <input type="text" class="form-control" id="surnameUpdate" name="surname" [(ngModel)]="shownPlayer.surname" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="updateForm.controls['surname']?.hasError('pattern') && updateForm.controls['surname'].touched" class="text-danger">
+              Priezvisko hráča môže obsahovať len písmená a špeciálne znaky.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="age" class="form-label">Vek hráča:</label>
+            <input type="number" class="form-control" id="ageUpdate" name="age" [(ngModel)]="shownPlayer.age" required min="1">
+            <div *ngIf="updateForm.controls['age']?.hasError('min') && updateForm.controls['age'].touched" class="text-danger">
+              Vek hráča musí byť väčší alebo rovný 1.
+            </div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="points" class="form-label">Priemerné body:</label>
+            <input type="number" class="form-control" id="pointsUpdate" name="points" [(ngModel)]="shownPlayer.points" required min="0">
+            <div *ngIf="updateForm.controls['points']?.hasError('min') && updateForm.controls['points'].touched" class="text-danger">
+              Priemerné body musia byť väčšie alebo rovné 0.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic" [disabled]="updateForm.invalid" data-bs-dismiss="modal">Upraviť hráča</button>
+          </div>
+
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -30,7 +146,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Štatistiky hráča</h1>
+        <h1 class="modal-title fs-5" id="playerDetailsLabel">Štatistiky hráča</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
@@ -38,7 +154,6 @@
           <img src="assets/images/user_profile.jpg" alt="Player {{ shownPlayer?.id }}" class="rounded-circle profile-picture">
         </div>
         <h2>{{ shownPlayer?.name }} {{ shownPlayer?.surname }}</h2>
-
         <table class="table table-bordered">
           <tbody>
           <tr>
@@ -49,15 +164,11 @@
             <td><strong>Priemer bodov:</strong></td>
             <td>{{ shownPlayer?.points }}</td>
           </tr>
-          <!-- Add more details as needed -->
           </tbody>
         </table>
-
-        <!-- Add more tabular details as needed -->
       </div>
-
       <div class="modal-footer">
-        <button mat-raised-button color="basic" data-bs-dismiss="modal">OK</button>
+        <button mat-raised-button color="basic" data-bs-dismiss="modal" >OK</button>
       </div>
     </div>
   </div>
