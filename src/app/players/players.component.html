@@ -63,14 +63,6 @@
             </div>
           </div>
 
-          <div class="mb-3 text-start">
-            <label for="points" class="form-label">Priemerné body:</label>
-            <input type="number" class="form-control" id="points" name="points" [(ngModel)]="newPlayer.points" required min="0">
-            <div *ngIf="playerForm.controls['points']?.hasError('min') && playerForm.controls['points'].touched" class="text-danger">
-              Priemerné body musia byť väčšie alebo rovné 0.
-            </div>
-          </div>
-
           <div class="d-flex justify-content-end">
             <button type="submit" mat-raised-button color="basic" [disabled]="playerForm.invalid" data-bs-dismiss="modal">Pridať hráča</button>
           </div>
@@ -123,14 +115,6 @@
             </div>
           </div>
 
-          <div class="mb-3 text-start">
-            <label for="points" class="form-label">Priemerné body:</label>
-            <input type="number" class="form-control" id="pointsUpdate" name="points" [(ngModel)]="shownPlayer.points" required min="0">
-            <div *ngIf="updateForm.controls['points']?.hasError('min') && updateForm.controls['points'].touched" class="text-danger">
-              Priemerné body musia byť väčšie alebo rovné 0.
-            </div>
-          </div>
-
           <div class="d-flex justify-content-end">
             <button type="submit" mat-raised-button color="basic" [disabled]="updateForm.invalid" data-bs-dismiss="modal">Upraviť hráča</button>
           </div>
@@ -161,8 +145,16 @@
             <td>{{ shownPlayer?.age }}</td>
           </tr>
           <tr>
-            <td><strong>Priemer bodov:</strong></td>
-            <td>{{ shownPlayer?.points }}</td>
+            <td><strong>Priemer:</strong></td>
+            <td>{{ (shownPlayer?.points / shownPlayer?.matchesPlayed) | number:'1.1-2' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Odohraných zápasov:</strong></td>
+            <td>{{ shownPlayer?.matchesPlayed }}</td>
+          </tr>
+          <tr>
+            <td><strong>Najlepší výkon:</strong></td>
+            <td>{{ shownPlayer?.playersBest }}</td>
           </tr>
           </tbody>
         </table>
