@@ -5,6 +5,7 @@ import {PlayerService} from "../services/playerService/player.service";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {TeamService} from "../services/teamService/team.service";
 
 @Component({
   selector: 'app-hraci',
@@ -19,15 +20,15 @@ export class PlayersComponent {
 
   newPlayer: any = {};
 
-  constructor(private playerService: PlayerService, private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private playerService: PlayerService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.getAllPlayers();
+    this.getPlayersByTeam();
   }
 
-  getAllPlayers() {
-    this.playerService.getAllPlayers().pipe(
+  getPlayersByTeam() {
+    this.teamService.getPlayersByTeam(652).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.players = resp;
@@ -86,7 +87,7 @@ export class PlayersComponent {
   }
 
   addPlayer(newP : any) {
-    this.playerService.addPlayer(newP).pipe(
+    this.playerService.addPlayer(652,newP).pipe(
       tap((resp: any) => {
           console.log("Player " + newP.name + " " + newP.surname + " added");
           newP.playerID = resp.playerID

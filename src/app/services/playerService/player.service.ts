@@ -12,8 +12,8 @@ export class PlayerService {
 
   API = "http://localhost:8080";
 
-  public addPlayer(playerData: any) {
-    return this.http.post(this.API+'/api/v1/player/save', playerData, {responseType : 'json'})
+  public addPlayer(id: any, playerData: any) {
+    return this.http.post(this.API+'/api/v1/player/save?id=' +id , playerData, {responseType : 'json'})
   }
   public getPlayer(id: any) {
     const params = { id };
