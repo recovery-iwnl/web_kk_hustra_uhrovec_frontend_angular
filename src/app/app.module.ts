@@ -6,6 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from "./home/home.component";
@@ -45,6 +46,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatExpansionModule,
     FormsModule,
     ToastrModule.forRoot({
       timeOut: 2000,

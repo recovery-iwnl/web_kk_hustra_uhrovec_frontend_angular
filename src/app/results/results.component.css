@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
   padding: 10px;
   margin: 5px;
 }
@@ -18,10 +17,18 @@
   font-weight: bold;
   font-size: 20px;
 }
-.my-team-bold {
-  font-weight: bold;
+.player {
+  flex: 8;
+  text-align: center;
+  padding: 5px;
 }
 
-.bg-win {
-  background-color: rgba(3, 248, 3, 0.18);
+.head2head-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
+

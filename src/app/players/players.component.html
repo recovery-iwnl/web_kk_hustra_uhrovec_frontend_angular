@@ -11,8 +11,7 @@
         <button class="btn btn-light" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal" data-bs-target="#updatePlayerModal" *ngIf="isAdmin()">
           <span class="fw-bold"></span> Upraviť
         </button>
-        <button class="btn btn-light position-absolute top-0 end-0 me-2 mt-2" (mousedown)="confirmDelete($event,player)" *ngIf="isAdmin()">
-          <span class="fw-bold text-black">X</span>
+        <button type="button" class="btn-close position-absolute top-0 end-0 me-2 mt-2 aria" aria-label="Close" (mousedown)="confirmDelete($event,player)" *ngIf="isAdmin()">
         </button>
       </div>
       <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addPlayerModal" *ngIf="isAdmin()">

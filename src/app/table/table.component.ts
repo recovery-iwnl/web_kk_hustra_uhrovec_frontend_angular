@@ -14,6 +14,8 @@ export class TableComponent {
 
   teams : any [] = [];
 
+  columns: string[] = ['#', 'Klub', 'Záp', 'V', 'R', 'P', 'Priemer', 'Body']
+
   constructor(private teamService: TeamService, private cdRef: ChangeDetectorRef) {
   }
 

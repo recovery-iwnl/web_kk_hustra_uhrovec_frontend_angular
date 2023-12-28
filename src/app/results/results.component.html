@@ -1,225 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vysledky</title>
-</head>
 <body>
-<div class="container px-3 py-5" >
+<div class="container px-3 py-5">
   <div class="pb-2 dropdown d-flex align-items-center justify-content-between">
-    <h2>{{selectedLeague}} 2023/2024</h2>
-    <button id="leagueDropdown" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <h2>{{ selectedLeague }} 2023/2024</h2>
+    <button
+      id="leagueDropdown"
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
       Vyber ligu
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item custom-button" (click)="changeTable('1.KL Západ')"  href="#">1.KL Západ</a></li>
-      <li><a class="dropdown-item custom-button" (click)="changeTable('3.liga TN kraja')"href="#">3.liga TN kraja</a></li>
+      <li>
+        <a class="dropdown-item custom-button" href="#">1.KL Západ</a>
+      </li>
+      <li>
+        <a class="dropdown-item custom-button" href="#">3.liga TN kraja</a>
+      </li>
     </ul>
   </div>
-  <div *ngIf="selectedLeague === '1.KL Západ'" class="container" id="vysledky1">
-  <a href="https://vysledky.kolky.sk/match/detail/40828/KK-Hustra-Uhrovec-vs-KK-Cabaj-Capor" class="text-decoration-none text-reset">
-    <div class="match-container">
-      <div class="team my-team-bold">
-        KK Hustra Uhrovec
-      </div>
-      <div>
-        3185
-      </div>
-      <div class="result">
-        2.5 - 5.5
-      </div>
-      <div>
-        3205
-      </div>
-      <div class="team">
-        KK Cabaj Čápor
-      </div>
-    </div>
-  </a>
+  <div *ngFor="let result of results" class="container" id="vysledky1">
 
-  <a href="https://vysledky.kolky.sk/match/detail/40836/KKZ-Hlohovec-vs-KK-Hustra-Uhrovec" class="text-decoration-none text-reset">
-    <div class="match-container">
-      <div class="team">
-        KKZ Hlohovec
-      </div>
-      <div>
-        3220
-      </div>
-      <div class="result">
-        6.0 - 2.0
-      </div>
-      <div>
-        3085
-      </div>
-      <div class="team my-team-bold">
-        KK Hustra Uhrovec
-      </div>
-    </div>
-  </a>
+    <mat-accordion>
 
-  <a href="https://vysledky.kolky.sk/match/detail/40839/KK-Hustra-Uhrovec-vs-TJ-Slovan-Duslo-Sala" class="text-decoration-none text-reset">
-    <div class="match-container">
-      <div class="team my-team-bold">
-        KK Hustra Uhrovec
-      </div>
-      <div>
-        3187
-      </div>
-      <div class="result">
-        2.0 - 6.0
-      </div>
-      <div>
-        3203
-      </div>
-      <div class="team">
-        TJ Slovan Duslo Šaľa
-      </div>
-    </div>
-  </a>
-
-  <a href="https://vysledky.kolky.sk/match/detail/40849/TKK-Trencin-A-vs-KK-Hustra-Uhrovec" class="text-decoration-none text-reset">
-    <div class="match-container bg-win">
-      <div class="team">
-        TKK Trenčín A
-      </div>
-      <div>
-        3281
-      </div>
-      <div class="result">
-        2.0 - 6.0
-      </div>
-      <div>
-        3299
-      </div>
-      <div class="team my-team-bold ">
-        KK Hustra Uhrovec
-      </div>
-    </div>
-  </a>
-
-  <a href="https://vysledky.kolky.sk/match/detail/40850/KK-Hustra-Uhrovec-vs-TJ-Rakovice" class="text-decoration-none text-reset">
-    <div class="match-container">
-      <div class="team my-team-bold">
-        KK Hustra Uhrovec
-      </div>
-      <div>
-        3221
-      </div>
-      <div class="result">
-        2.0 - 6.0
-      </div>
-      <div>
-        3270
-      </div>
-      <div class="team">
-        TJ Rakovice
-      </div>
-    </div>
-  </a>
-
-  <a href="https://vysledky.kolky.sk/match/detail/40861/KK-Hustra-Uhrovec-vs-MKK-Slovan-Galanta-A" class="text-decoration-none text-reset">
-    <div class="match-container bg-win">
-      <div class="team my-team-bold ">
-        KK Hustra Uhrovec
-      </div>
-      <div>
-        3256
-      </div>
-      <div class="result">
-        5.0 - 3.0
-      </div>
-      <div>
-        3222
-      </div>
-      <div class="team">
-        MKK Slovan Galanta A
-      </div>
-    </div>
-  </a>
-  </div>
-
-  <div *ngIf="selectedLeague === '3.liga TN kraja'" class="container" id="vysledky2">
-    <a href="https://vysledky.kolky.sk/match/detail/40828/KK-Hustra-Uhrovec-vs-KK-Cabaj-Capor" class="text-decoration-none text-reset">
-      <div class="match-container">
-        <div class="team my-team-bold">
-          KK Hustra Uhrovec
+      <mat-expansion-panel >
+        <mat-expansion-panel-header>
+            <div class="match-container w-100">
+              <div class="team">
+                {{ result.teamHome.teamName }}
+              </div>
+              <div>
+                {{ result.team1ScoreOverall }}
+              </div>
+              <div class="result">
+                {{ result.team1PointsOverall }} - {{ result.team2PointsOverall }}
+              </div>
+              <div>
+                {{ result.team2ScoreOverall }}
+              </div>
+              <div class="team">
+                {{ result.teamAway.teamName }}
+              </div>
+            </div>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="head2head-container w-100">
+            <span>1.</span>
+            <div class="player">
+              {{ result.player1Home.name }} {{ result.player1Home.surname }}
+            </div>
+            <div>
+              <sup>S</sup>{{ result.player1ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player1PointsHome }} - {{ result.player1PointsAway }}<sup>B</sup>
+            </div>
+            <div>
+              <sup>S</sup>{{ result.player1ScoreAway }}
+            </div>
+            <div class="player">
+              {{ result.player1Away.name }} {{ result.player1Away.surname }}
+            </div>
+          </div>
         </div>
-        <div>
-          3185
-        </div>
-        <div class="result">
-          2.5 - 5.5
-        </div>
-        <div>
-          3205
-        </div>
-        <div class="team">
-          KK Cabaj Čápor
-        </div>
-      </div>
-    </a>
-
-    <a href="https://vysledky.kolky.sk/match/detail/40836/KKZ-Hlohovec-vs-KK-Hustra-Uhrovec" class="text-decoration-none text-reset">
-      <div class="match-container">
-        <div class="team">
-          KKZ Hlohovec
-        </div>
-        <div>
-          3220
-        </div>
-        <div class="result">
-          6.0 - 2.0
-        </div>
-        <div>
-          3085
-        </div>
-        <div class="team my-team-bold">
-          KK Hustra Uhrovec
-        </div>
-      </div>
-    </a>
-
-    <a href="https://vysledky.kolky.sk/match/detail/40839/KK-Hustra-Uhrovec-vs-TJ-Slovan-Duslo-Sala" class="text-decoration-none text-reset">
-      <div class="match-container">
-        <div class="team my-team-bold">
-          KK Hustra Uhrovec
-        </div>
-        <div>
-          3187
-        </div>
-        <div class="result">
-          2.0 - 6.0
-        </div>
-        <div>
-          3203
-        </div>
-        <div class="team">
-          TJ Slovan Duslo Šaľa
-        </div>
-      </div>
-    </a>
-
-    <a href="https://vysledky.kolky.sk/match/detail/40849/TKK-Trencin-A-vs-KK-Hustra-Uhrovec" class="text-decoration-none text-reset">
-      <div class="match-container bg-win">
-        <div class="team">
-          TKK Trenčín A
-        </div>
-        <div>
-          3281
-        </div>
-        <div class="result">
-          2.0 - 6.0
-        </div>
-        <div>
-          3299
-        </div>
-        <div class="team my-team-bold ">
-          KK Hustra Uhrovec
-        </div>
-      </div>
-    </a>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>
+
+
 </body>
-</html>

@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabulka</title>
-</head>
-
 <body>
 <div class="container px-3 py-5 ">
   <div class="pb-2 dropdown border-bottom d-flex align-items-center justify-content-between">
@@ -25,29 +16,8 @@
     <table *ngIf="selectedLeague === '1.KL Západ'" id="table1" class="table tab-content table-sm table-hover colored box">
       <thead>
       <tr>
-        <th class="text-center">
-            <span>#</span>
-        </th>
-        <th class="text-center">
-            <span>Klub</span>
-        </th>
-        <th class="text-center">
-            <span>Záp.</span>
-        </th>
-        <th class="text-center d-sm-table-cell">
-            <span>V</span>
-        </th>
-        <th class="text-center d-sm-table-cell">
-            <span>R</span>
-        </th>
-        <th class="text-center d-sm-table-cell">
-          <span>P</span>
-        </th>
-        <th class="text-center d-md-table-cell">
-            <span>Priemer</span>
-        </th>
-        <th class="text-center">
-            <span>Body</span>
+        <th *ngFor="let column of columns" class="text-center">
+            <span>{{column}}</span>
         </th>
       </tr>
       </thead>
@@ -69,5 +39,4 @@
   </div>
   </div>
 </body>
-</html>
 
