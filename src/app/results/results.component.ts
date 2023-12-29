@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
 import {ResultService} from "../services/resultService/result.service";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
@@ -16,7 +16,7 @@ export class ResultsComponent {
 
   results : any[] = [];
 
-  newResult : any = {};
+  result : any = {};
 
   teams : any[] = [];
 
@@ -30,7 +30,7 @@ export class ResultsComponent {
 
 
   panelOpenState = false;
-  constructor(private teamService: TeamService, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef) {
+  constructor(private teamService: TeamService, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
 
@@ -38,6 +38,7 @@ export class ResultsComponent {
     this.getAllResults();
     this.getAllTeams();
   }
+
 
 
 
@@ -54,6 +55,45 @@ export class ResultsComponent {
       })
     ).subscribe();
   }
+
+
+  updatePoints(result: any): void {
+    this.ngZone.run(() => {
+      for (let i = 1; i <= 6; i++) {
+        const homeScore = result[`player${i}ScoreHome`] || 0;
+        const awayScore = result[`player${i}ScoreAway`] || 0;
+
+        if (homeScore > awayScore) {
+          result[`player${i}PointsHome`] = 1;
+          result[`player${i}PointsAway`] = 0;
+        } else if (homeScore < awayScore) {
+          result[`player${i}PointsHome`] = 0;
+          result[`player${i}PointsAway`] = 1;
+        } else {
+          result[`player${i}PointsHome`] = 0.5;
+          result[`player${i}PointsAway`] = 0.5;
+        }
+      }
+
+      result.team1ScoreOverall = sumScores('player', 'ScoreHome', 6);
+      result.team1PointsOverall = sumScores('player', 'PointsHome', 6);
+
+      result.team2ScoreOverall = sumScores('player', 'ScoreAway', 6);
+      result.team2PointsOverall = sumScores('player', 'PointsAway', 6);
+
+      function sumScores(playerKey: string, scoreKey: string, playerCount: number): number {
+        return Array.from({ length: playerCount }, (_, i) => result[`${playerKey}${i + 1}${scoreKey}`] || 0)
+          .reduce((total, score) => total + parseFloat(score), 0);
+      }
+
+      if (result.team1ScoreOverall > result.team2ScoreOverall) {
+        result.team1PointsOverall += 2;
+      } else if (result.team1ScoreOverall < result.team2ScoreOverall) {
+        result.team2PointsOverall += 2;
+      }
+    });
+  }
+
 
   getPlayersByTeamHome(id :any) {
     this.teamService.getPlayersByTeam(id).pipe(
@@ -110,11 +150,10 @@ export class ResultsComponent {
     ).subscribe();
   }
 
-  addResult(teamIdHome : any, teamIdAway : any,
-            player1IdHome : any, player2IdHome : any, player3IdHome : any, player4IdHome: any, player5IdHome : any, player6IdHome : any,
-            player1IdAway : any, player2IdAway : any, player3IdAway : any, player4IdAway : any, player5IdAway : any, player6IdAway : any,) {
-    this.resultService.addResult(teamIdHome,teamIdAway,player1IdHome,player2IdHome,player3IdHome,
-      player4IdHome,player5IdHome,player6IdHome,player1IdAway,player2IdAway,player3IdAway,player4IdAway,player5IdAway,player6IdAway,this.newResult).pipe(
+  addResult() {
+    //this.result.date = "09/09/2022";
+    console.log(this.result);
+    this.resultService.addResultSimple(this.teamHome.teamId,this.teamAway.teamId, this.result).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.detectChanges();

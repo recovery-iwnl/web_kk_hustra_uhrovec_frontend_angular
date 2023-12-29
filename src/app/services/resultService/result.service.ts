@@ -19,6 +19,11 @@ export class ResultService {
     return this.http.post(this.API + '/api/v1/result/save', resultData,{ params })
   }
 
+  public addResultSimple(teamIdHome : any, teamIdAway : any, resultData:any) {
+    const params = { teamIdHome, teamIdAway };
+    return this.http.post(this.API + '/api/v1/result/saveSimple', resultData,{ params })
+  }
+
   public getAllResults() {
     return this.http.get(this.API+'/api/v1/result/getResultsList');
   }

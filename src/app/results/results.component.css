@@ -16,8 +16,15 @@
   border-radius: 5px;
 }
 
+.small-form-field {
+  width: 100%;
+  max-width: 100px;
+}
 
-
+.points-form-field {
+  width: 100%;
+  max-width: 70px;
+}
 
 @media (max-width: 767px) {
   .match-container {

@@ -170,16 +170,20 @@
         </div>
 
       </mat-expansion-panel>
+
     </mat-accordion>
+
   </div>
+  <button class="btn btn-circle btn-light btn-lg add-button d-flex" data-bs-toggle="modal" data-bs-target="#addResultModal"
+          *ngIf="isAdmin()">
+    <span class="fw-bold text-black">+</span>Pridať
+  </button>
 </div>
 
-<button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addResultModal" *ngIf="isAdmin()">
-  <span class="fw-bold text-black">+</span>Pridať
-</button>
+
 
 <div class="modal fade" id="addResultModal" tabindex="-1" aria-labelledby="addResultModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered"  style="max-width: 1200px;">>
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 1500px;">>
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addResultLabel">Pridať výsledok</h1>
@@ -188,142 +192,376 @@
       <div class="modal-body text-center">
 
         <div class="row">
-
-          <div class="col-md-2">
-            <mat-form-field>
+          <!---DATE---->
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
               <mat-label>Vyber dátum</mat-label>
-              <input matInput [matDatepicker]="picker">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="result.date" readonly>
               <mat-hint>DD/MM/RRRR</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
-
-            <mat-form-field>
-              <mat-label>Vyber Tím 1</mat-label>
+          <!---TEAM HOME---->
+          <div class="col-md-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Tím Domáci</mat-label>
               <mat-select [(ngModel)]="teamHome" (ngModelChange)="onTeamHomeSelectionChange($event)">
                 <mat-option *ngFor="let team of teams" [value]="team">{{ team.teamName }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 1---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 1 {{teamHome.teamName}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              <mat-select [(ngModel)]="result.player1Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 2---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 2 {{teamHome.teamName}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              <mat-select [(ngModel)]="result.player2Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 3---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 3 {{teamHome.teamName}}</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-            </mat-select>
+              <mat-select [(ngModel)]="result.player3Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 4---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 4 {{teamHome.teamName}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              <mat-select [(ngModel)]="result.player4Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 5---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 5 {{teamHome.teamName}}</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-            </mat-select>
+              <mat-select [(ngModel)]="result.player5Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
+            <!---HOME PLAYER 6---->
+            <mat-form-field appearance="outline">
               <mat-label>Hráč 6 {{teamHome.teamName}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersHome" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+              <mat-select [(ngModel)]="result.player6Home">
+                <mat-option *ngFor="let player of playersHome"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
           </div>
 
+          <!---SCORE HOME---->
+          <div class="col-md-1" style="margin-left: -5px;">
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Spolu</mat-label>
+                <strong>
+                  <input matInput placeholder="Spolu" [(ngModel)]="result.team1ScoreOverall" style="text-align: center;" readonly>
+                </strong>
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 1---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 2---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 3---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 4---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 5---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE HOME PLAYER 6---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreHome" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+          </div>
 
+          <!---POINTS HOME---->
+          <div class="col-md-1">
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" >
+                <mat-label>Body</mat-label>
+                <strong>
+                  <input matInput placeholder="Body" [(ngModel)]="result.team1PointsOverall" style="text-align: center;" readonly>
+                </strong>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 1---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player1PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 2---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player2PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 3---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player3PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 4---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player4PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 5---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player5PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS HOME PLAYER 6---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player6PointsHome" style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+          </div>
 
-          <div class="col-md-4">
+          <!---VS---->
+          <div class="col-md-1">
+            <div class="d-flex flex-row align-items-center justify-content-center" style="height: 530px;">
+              <div class="vr"></div>
+            </div>
+          </div>
 
-            <mat-form-field>
-              <mat-label>Vyber Tím 2</mat-label>
+          <!---POINTS AWAY---->
+          <div class="col-md-1">
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <strong>
+                  <input matInput placeholder="Body" [(ngModel)]="result.team2PointsOverall" style="text-align: center;" readonly>
+                </strong>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 1---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player1PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 2---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player2PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 3---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player3PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 4---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player4PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 5---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player5PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+            <!---POINTS AWAY PLAYER 6---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="points-form-field">
+                <mat-label>Body</mat-label>
+                <input matInput placeholder="Body" [(ngModel)]="result.player6PointsAway"  style="text-align: center;" readonly>
+              </mat-form-field>
+            </p>
+          </div>
+
+          <!---SCORE AWAY---->
+          <div class="col-md-1">
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Spolu</mat-label>
+                <strong>
+                  <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;" readonly>
+                </strong>
+
+              </mat-form-field>
+            </p>
+
+            <!---SCORE AWAY PLAYER 1---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE AWAY PLAYER 2---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE AWAY PLAYER 3---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE AWAY PLAYER 4---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE AWAY PLAYER 5---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+            <!---SCORE AWAY PLAYER 6---->
+            <p class="mb-0">
+              <mat-form-field appearance="outline" class="small-form-field">
+                <mat-label>Skóre</mat-label>
+                <input matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreAway" (change)="updatePoints(result)" style="text-align: center;">
+              </mat-form-field>
+            </p>
+          </div>
+
+          <!---TEAM AWAY---->
+          <div class="col-md-1">
+            <mat-form-field appearance="outline">
+              <mat-label>Tím Hostia</mat-label>
               <mat-select [(ngModel)]="teamAway" (ngModelChange)="onTeamAwaySelectionChange($event)">
-                <mat-option *ngFor="let team of teams" value="one">{{team.teamName}}</mat-option>
+                <mat-option *ngFor="let team of teams" [value]="team">{{team.teamName}}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 1 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 1---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 1 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player1Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 2 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 2---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 2 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player2Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 3 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 3---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 3 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player3Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 4 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 4---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 4 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player4Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 5 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 5---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 5 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player5Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Hráč 6 {{teamHome.teamAway}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let player of playersAway" [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+            <!---AWAY PLAYER 6---->
+            <mat-form-field appearance="outline">
+              <mat-label>Hráč 6 {{teamAway.teamName}}</mat-label>
+              <mat-select [(ngModel)]="result.player6Away">
+                <mat-option *ngFor="let player of playersAway"
+                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
               </mat-select>
             </mat-form-field>
 
           </div>
-
-
         </div>
-
-        <form (ngSubmit)="getAllResults()" #resultForm="ngForm">
-
-          <div class="mb-3 text-start">
-          </div>
-          <div class="mb-3 text-start">
-            <label for="surname" class="form-label">Tím 2:</label>
-            <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="newResult.teamIdAway" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
-          </div>
-
-          <div class="d-flex justify-content-end">
-            <button type="submit" mat-raised-button color="basic" [disabled]="resultForm.invalid" data-bs-dismiss="modal">Pridať výsledok</button>
-          </div>
-
-        </form>
+        <div class="d-flex justify-content-end modal-footer">
+          <button type="submit" mat-raised-button color="basic" [disabled]="" data-bs-dismiss="modal" (click)="addResult()">Pridať výsledok
+          </button>
+        </div>
       </div>
     </div>
   </div>
