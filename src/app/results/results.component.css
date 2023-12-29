@@ -6,9 +6,28 @@
   margin: 5px;
 }
 
+
 .team {
   flex: 8;
   text-align: center;
+}
+
+.teamHome {
+  flex: 4.88;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.teamAway {
+  flex: 5.5;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.scoreHeader {
+  font-size: 18px;
 }
 
 .result {
@@ -17,10 +36,23 @@
   font-weight: bold;
   font-size: 20px;
 }
+
+.resultHeader {
+  flex: 2;
+  text-align: center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+
 .player {
   flex: 8;
   text-align: center;
   padding: 5px;
+}
+
+.result-margin {
+  margin-bottom: 20px;
 }
 
 .head2head-container {
@@ -28,7 +60,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
 }
 

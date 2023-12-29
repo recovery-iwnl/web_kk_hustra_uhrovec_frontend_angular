@@ -1,6 +1,6 @@
 <body>
 <div class="container px-3 py-5">
-  <div class="pb-2 dropdown d-flex align-items-center justify-content-between">
+  <div class="pb-2 dropdown d-flex align-items-center justify-content-between border-bottom ">
     <h2>{{ selectedLeague }} 2023/2024</h2>
     <button
       id="leagueDropdown"
@@ -20,50 +20,155 @@
       </li>
     </ul>
   </div>
-  <div *ngFor="let result of results" class="container" id="vysledky1">
+  <div *ngFor="let result of results" class="container result-margin py-3" id="vysledky1">
 
     <mat-accordion>
 
       <mat-expansion-panel >
         <mat-expansion-panel-header>
             <div class="match-container w-100">
-              <div class="team">
+              <div>
+                {{ result.date }}
+              </div>
+              <div class="teamHome">
                 {{ result.teamHome.teamName }}
               </div>
-              <div>
+              <div class="scoreHeader">
                 {{ result.team1ScoreOverall }}
               </div>
-              <div class="result">
+              <div class="resultHeader">
                 {{ result.team1PointsOverall }} - {{ result.team2PointsOverall }}
               </div>
-              <div>
+              <div class="scoreHeader">
                 {{ result.team2ScoreOverall }}
               </div>
-              <div class="team">
+              <div class="teamAway">
                 {{ result.teamAway.teamName }}
               </div>
             </div>
         </mat-expansion-panel-header>
         <div class="row">
+          <!-- Container 1 -->
           <div class="head2head-container w-100">
-            <span>1.</span>
-            <div class="player">
+            <span class="fs-5">1.</span>
+            <div class="player fs-5">
               {{ result.player1Home.name }} {{ result.player1Home.surname }}
             </div>
-            <div>
-              <sup>S</sup>{{ result.player1ScoreHome }}
+            <div class="fs-5">
+              {{ result.player1ScoreHome }}
             </div>
             <div class="result">
               <sup>B</sup>{{ result.player1PointsHome }} - {{ result.player1PointsAway }}<sup>B</sup>
             </div>
-            <div>
-              <sup>S</sup>{{ result.player1ScoreAway }}
+            <div class="fs-5">
+              {{ result.player1ScoreAway }}
             </div>
-            <div class="player">
+            <div class="player fs-5">
               {{ result.player1Away.name }} {{ result.player1Away.surname }}
             </div>
           </div>
+
+          <!-- Container 2 -->
+          <div class="head2head-container w-100">
+            <span class="fs-5">2.</span>
+            <div class="player fs-5">
+              {{ result.player2Home.name }} {{ result.player2Home.surname }}
+            </div>
+            <div class="fs-5">
+              {{ result.player2ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player2PointsHome }} - {{ result.player2PointsAway }}<sup>B</sup>
+            </div>
+            <div class="fs-5">
+              {{ result.player2ScoreAway }}
+            </div>
+            <div class="player fs-5">
+              {{ result.player2Away.name }} {{ result.player2Away.surname }}
+            </div>
+          </div>
+
+          <!-- Container 3 -->
+          <div class="head2head-container w-100">
+            <span class="fs-5">3.</span>
+            <div class="player fs-5">
+              {{ result.player3Home.name }} {{ result.player3Home.surname }}
+            </div>
+            <div class="fs-5">
+              {{ result.player3ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player3PointsHome }} - {{ result.player3PointsAway }}<sup>B</sup>
+            </div>
+            <div class="fs-5">
+              {{ result.player3ScoreAway }}
+            </div>
+            <div class="player fs-5">
+              {{ result.player3Away.name }} {{ result.player3Away.surname }}
+            </div>
+          </div>
+
+          <!-- Container 4 -->
+          <div class="head2head-container w-100">
+            <span class="fs-5">4.</span>
+            <div class="player fs-5">
+              {{ result.player4Home.name }} {{ result.player4Home.surname }}
+            </div>
+            <div class="fs-5">
+              {{ result.player4ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player4PointsHome }} - {{ result.player4PointsAway }}<sup>B</sup>
+            </div>
+            <div class="fs-5">
+              {{ result.player4ScoreAway }}
+            </div>
+            <div class="player fs-5">
+              {{ result.player4Away.name }} {{ result.player4Away.surname }}
+            </div>
+          </div>
+
+          <!-- Container 5 -->
+          <div class="head2head-container w-100">
+            <span class="fs-5">5.</span>
+            <div class="player fs-5">
+              {{ result.player5Home.name }} {{ result.player5Home.surname }}
+            </div>
+            <div class="fs-5">
+              {{ result.player5ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player5PointsHome }} - {{ result.player5PointsAway }}<sup>B</sup>
+            </div>
+            <div class="fs-5">
+              {{ result.player5ScoreAway }}
+            </div>
+            <div class="player fs-5">
+              {{ result.player5Away.name }} {{ result.player5Away.surname }}
+            </div>
+          </div>
+
+          <!-- Container 6 -->
+          <div class="head2head-container w-100">
+            <span class="fs-5">6.</span>
+            <div class="player fs-5">
+              {{ result.player6Home.name }} {{ result.player6Home.surname }}
+            </div>
+            <div class="fs-5">
+              {{ result.player6ScoreHome }}
+            </div>
+            <div class="result">
+              <sup>B</sup>{{ result.player6PointsHome }} - {{ result.player6PointsAway }}<sup>B</sup>
+            </div>
+            <div class="fs-5">
+              {{ result.player6ScoreAway }}
+            </div>
+            <div class="player fs-5">
+              {{ result.player6Away.name }} {{ result.player6Away.surname }}
+            </div>
+          </div>
         </div>
+
       </mat-expansion-panel>
     </mat-accordion>
   </div>
