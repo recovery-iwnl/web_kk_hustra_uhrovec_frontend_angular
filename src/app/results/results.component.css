@@ -6,6 +6,93 @@
   margin: 5px;
 }
 
+.head2head-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 5px;
+}
+
+
+
+
+@media (max-width: 767px) {
+  .match-container {
+    display: flex;
+    flex-direction: row !important;
+  }
+
+  .date{
+    font-size: 12px;
+  }
+
+  .teamHome {
+    font-size: 14px !important;
+  }
+
+  .teamAway {
+    font-size: 14px !important;
+  }
+
+  .resultHeader {
+    font-size: 15px !important;
+  }
+
+  .head2head-container {
+    width: 100%;
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .result-margin {
+    margin-bottom: 10px;
+  }
+  .resultHeader {
+    font-size: 15px !important;
+  }
+
+  .head2head-container {
+    font-size: 10px !important;/* Adjust the font size for medium screens */
+  }
+}
+
+/* Add more media queries for smaller font sizes on even smaller screens */
+
+@media (max-width: 479px) {
+  .resultHeader {
+    font-size: 12.1px !important;
+  }
+  .result {
+    font-size: 14px !important;
+  }
+
+  .scoreHeader {
+    font-size: 13px!important;
+  }
+
+  .teamHome {
+    font-size: 12px !important;
+  }
+
+  .teamAway {
+    font-size: 12px !important;
+  }
+
+  .head2head-container {
+    font-size: 15px !important;
+  }
+  .fs-5 {
+    font-size: 14px !important;
+  }
+
+  .date{
+    font-size: 10px;
+  }
+}
 
 .team {
   flex: 8;
@@ -55,13 +142,5 @@
   margin-bottom: 20px;
 }
 
-.head2head-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 5px;
-}
+
 
