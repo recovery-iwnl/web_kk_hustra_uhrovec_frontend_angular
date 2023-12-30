@@ -20,169 +20,174 @@
       </li>
     </ul>
   </div>
-  <div *ngFor="let result of results" class="container result-margin py-1" id="vysledky1">
+  <div class="row row-cols-1">
+    <div *ngFor="let result of results" class="container result-margin py-1" id="vysledky1">
 
-    <mat-accordion>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <div class="match-container w-100">
+              <div class="date">
+                {{ result.date }}
+              </div>
+              <div class="teamHome">
+                {{ result.teamHome.teamName }}
+              </div>
+              <div class="scoreHeader">
+                {{ result.team1ScoreOverall }}
+              </div>
+              <div class="resultHeader">
+                {{ result.team1PointsOverall }} - {{ result.team2PointsOverall }}
+              </div>
+              <div class="scoreHeader">
+                {{ result.team2ScoreOverall }}
+              </div>
+              <div class="teamAway">
+                {{ result.teamAway.teamName }}
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <!-- Container 1 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">1.</span>
+              <div class="player fs-5">
+                {{ result.player1Home.name }} {{ result.player1Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player1ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player1PointsHome }} - {{ result.player1PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player1ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player1Away.name }} {{ result.player1Away.surname }}
+              </div>
+            </div>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <div class="match-container w-100">
-            <div class="date">
-              {{ result.date }}
+            <!-- Container 2 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">2.</span>
+              <div class="player fs-5">
+                {{ result.player2Home.name }} {{ result.player2Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player2ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player2PointsHome }} - {{ result.player2PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player2ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player2Away.name }} {{ result.player2Away.surname }}
+              </div>
             </div>
-            <div class="teamHome">
-              {{ result.teamHome.teamName }}
+
+            <!-- Container 3 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">3.</span>
+              <div class="player fs-5">
+                {{ result.player3Home.name }} {{ result.player3Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player3ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player3PointsHome }} - {{ result.player3PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player3ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player3Away.name }} {{ result.player3Away.surname }}
+              </div>
             </div>
-            <div class="scoreHeader">
-              {{ result.team1ScoreOverall }}
+
+            <!-- Container 4 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">4.</span>
+              <div class="player fs-5">
+                {{ result.player4Home.name }} {{ result.player4Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player4ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player4PointsHome }} - {{ result.player4PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player4ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player4Away.name }} {{ result.player4Away.surname }}
+              </div>
             </div>
-            <div class="resultHeader">
-              {{ result.team1PointsOverall }} - {{ result.team2PointsOverall }}
+
+            <!-- Container 5 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">5.</span>
+              <div class="player fs-5">
+                {{ result.player5Home.name }} {{ result.player5Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player5ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player5PointsHome }} - {{ result.player5PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player5ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player5Away.name }} {{ result.player5Away.surname }}
+              </div>
             </div>
-            <div class="scoreHeader">
-              {{ result.team2ScoreOverall }}
-            </div>
-            <div class="teamAway">
-              {{ result.teamAway.teamName }}
+
+            <!-- Container 6 -->
+            <div class="head2head-container w-100">
+              <span class="fs-5">6.</span>
+              <div class="player fs-5">
+                {{ result.player6Home.name }} {{ result.player6Home.surname }}
+              </div>
+              <div class="fs-5">
+                {{ result.player6ScoreHome }}
+              </div>
+              <div class="result">
+                <sup>B</sup>{{ result.player6PointsHome }} - {{ result.player6PointsAway }}<sup>B</sup>
+              </div>
+              <div class="fs-5">
+                {{ result.player6ScoreAway }}
+              </div>
+              <div class="player fs-5">
+                {{ result.player6Away.name }} {{ result.player6Away.surname }}
+              </div>
             </div>
           </div>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <!-- Container 1 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">1.</span>
-            <div class="player fs-5">
-              {{ result.player1Home.name }} {{ result.player1Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player1ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player1PointsHome }} - {{ result.player1PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player1ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player1Away.name }} {{ result.player1Away.surname }}
-            </div>
-          </div>
+          <button class="btn btn-outline-danger " *ngIf="isAdmin()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
+            </svg>
+            Odstrániť
+          </button>
+        </mat-expansion-panel>
 
-          <!-- Container 2 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">2.</span>
-            <div class="player fs-5">
-              {{ result.player2Home.name }} {{ result.player2Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player2ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player2PointsHome }} - {{ result.player2PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player2ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player2Away.name }} {{ result.player2Away.surname }}
-            </div>
-          </div>
+      </mat-accordion>
 
-          <!-- Container 3 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">3.</span>
-            <div class="player fs-5">
-              {{ result.player3Home.name }} {{ result.player3Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player3ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player3PointsHome }} - {{ result.player3PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player3ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player3Away.name }} {{ result.player3Away.surname }}
-            </div>
-          </div>
-
-          <!-- Container 4 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">4.</span>
-            <div class="player fs-5">
-              {{ result.player4Home.name }} {{ result.player4Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player4ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player4PointsHome }} - {{ result.player4PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player4ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player4Away.name }} {{ result.player4Away.surname }}
-            </div>
-          </div>
-
-          <!-- Container 5 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">5.</span>
-            <div class="player fs-5">
-              {{ result.player5Home.name }} {{ result.player5Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player5ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player5PointsHome }} - {{ result.player5PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player5ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player5Away.name }} {{ result.player5Away.surname }}
-            </div>
-          </div>
-
-          <!-- Container 6 -->
-          <div class="head2head-container w-100">
-            <span class="fs-5">6.</span>
-            <div class="player fs-5">
-              {{ result.player6Home.name }} {{ result.player6Home.surname }}
-            </div>
-            <div class="fs-5">
-              {{ result.player6ScoreHome }}
-            </div>
-            <div class="result">
-              <sup>B</sup>{{ result.player6PointsHome }} - {{ result.player6PointsAway }}<sup>B</sup>
-            </div>
-            <div class="fs-5">
-              {{ result.player6ScoreAway }}
-            </div>
-            <div class="player fs-5">
-              {{ result.player6Away.name }} {{ result.player6Away.surname }}
-            </div>
-          </div>
-        </div>
-
-        <button class="btn btn-circle btn-light btn-lg add-button d-flex" data-bs-toggle="modal" data-bs-target="#addResultModal"
-                *ngIf="isAdmin()">
-          <span class="fw-bold text-black">+</span>Odstrániť
-        </button>
-
-      </mat-expansion-panel>
-
-    </mat-accordion>
-
+    </div>
+    <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addResultModal" *ngIf="isAdmin()">
+      <span class="fw-bold text-black">+</span>Pridať
+    </button>
   </div>
-  <button class="btn btn-circle btn-light btn-lg add-button d-flex" data-bs-toggle="modal" data-bs-target="#addResultModal"
-          *ngIf="isAdmin()">
-    <i class="fw-bold text-black bi bi-plus"></i>Pridať
-  </button>
+
+
+
+
 </div>
 
 

@@ -5,6 +5,7 @@ import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
+import {parseEnum} from "@angular/compiler-cli/linker/src/file_linker/partial_linkers/util";
 
 @Component({
   selector: 'app-users-list',
@@ -41,7 +42,7 @@ export class UsersListComponent {
   }
 
   updateUser() {
-    this.userService.updateUser(this.editedUser).pipe(
+    this.userService.updateUserRole(this.editedUser.userID, this.editedUser.role).pipe(
       tap((resp: any) => {
         console.log(resp);
         const index = this.users.findIndex(u => u.userID === this.editedUser.userID);

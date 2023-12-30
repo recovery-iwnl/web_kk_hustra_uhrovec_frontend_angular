@@ -48,4 +48,10 @@ export class UserService {
       })
     );
   }
+
+  public updateUserRole(id : any, role :any): Observable<any> {
+    const params = { id, role};
+    const url = `${this.API}/api/v1/user/updateUserRole?id=${id}&role=${role}`;
+    return this.http.put(url, { params });
+  }
 }
