@@ -4,6 +4,7 @@ import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {TeamService} from "../services/teamService/team.service";
+import {DatePipe} from "@angular/common";
 
 
 @Component({
@@ -28,15 +29,65 @@ export class ResultsComponent {
 
   playersAway : any[] = [];
 
+  dateShow : any = {};
+
 
   panelOpenState = false;
-  constructor(private teamService: TeamService, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor(private datePipe: DatePipe, private teamService: TeamService, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
 
   ngOnInit(): void {
     this.getAllResults();
     this.getAllTeams();
+  }
+
+
+  onDateSelected(selectedDate: Date): void {
+    // Format the selected date and assign it to result.date
+    this.result.date = this.formatDate(selectedDate);
+  }
+
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+  }
+
+
+  isFormValid(): boolean {
+    const playerScores = [
+      this.result.player1ScoreHome,
+      this.result.player2ScoreHome,
+      this.result.player3ScoreHome,
+      this.result.player4ScoreHome,
+      this.result.player5ScoreHome,
+      this.result.player6ScoreHome,
+
+      this.result.player1ScoreAway,
+      this.result.player2ScoreAway,
+      this.result.player3ScoreAway,
+      this.result.player4ScoreAway,
+      this.result.player5ScoreAway,
+      this.result.player6ScoreAway,
+    ];
+
+    const players = [
+      this.result.player1Home,
+      this.result.player2Home,
+      this.result.player3Home,
+      this.result.player4Home,
+      this.result.player5Home,
+      this.result.player6Home,
+
+      this.result.player1Away,
+      this.result.player2Away,
+      this.result.player3Away,
+      this.result.player4Away,
+      this.result.player5Away,
+      this.result.player6Away,
+    ];
+
+    return playerScores.every(score => score !== undefined && score !== '') &&
+      players.every(player => player !== undefined && player !== '') && this.result.date !== undefined && this.result.date !== '';
   }
 
 

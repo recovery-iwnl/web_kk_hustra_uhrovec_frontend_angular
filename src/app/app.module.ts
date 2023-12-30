@@ -29,6 +29,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -69,7 +70,7 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  providers: [ { provide: MAT_DATE_LOCALE, useValue: 'en-EN' } ],
+  providers: [ { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, DatePipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
