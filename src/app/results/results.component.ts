@@ -5,6 +5,8 @@ import {of} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {TeamService} from "../services/teamService/team.service";
 import {DatePipe} from "@angular/common";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -31,9 +33,7 @@ export class ResultsComponent {
 
   dateShow : any = {};
 
-
-  panelOpenState = false;
-  constructor(private datePipe: DatePipe, private teamService: TeamService, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor(private datePipe: DatePipe, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
 
@@ -42,9 +42,38 @@ export class ResultsComponent {
     this.getAllTeams();
   }
 
+  deleteResult(result : any) {
+    this.resultService.deleteResult(result.resultId).pipe(
+      tap((resp: any) => {
+        this.results = this.results.filter(r => r.resultId !== result.resultId);
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  confirmDelete(event: Event,resultN:any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Upozornenie!',
+        content: 'Naozaj chcete vymazať výsledok ' + resultN.teamHome.teamName + ' vs ' + resultN.teamAway.teamName + ' ?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteResult(resultN);
+      }
+    });
+  }
+
 
   onDateSelected(selectedDate: Date): void {
-    // Format the selected date and assign it to result.date
     this.result.date = this.formatDate(selectedDate);
   }
 
@@ -89,9 +118,6 @@ export class ResultsComponent {
     return playerScores.every(score => score !== undefined && score !== '') &&
       players.every(player => player !== undefined && player !== '') && this.result.date !== undefined && this.result.date !== '';
   }
-
-
-
 
   getAllTeams() {
     this.teamService.getAllTeams().pipe(
@@ -207,6 +233,7 @@ export class ResultsComponent {
     this.resultService.addResultSimple(this.teamHome.teamId,this.teamAway.teamId, this.result).pipe(
       tap((resp: any) => {
         console.log(resp);
+        this.results.push(resp);
         this.detectChanges();
       }),
       catchError((err) => {

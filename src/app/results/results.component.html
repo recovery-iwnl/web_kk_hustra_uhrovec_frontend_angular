@@ -20,12 +20,14 @@
       </li>
     </ul>
   </div>
-  <div class="row row-cols-1">
-    <div *ngFor="let result of results" class="container result-margin py-1" id="vysledky1">
+  <div class="row row-cols-1 py-3">
+    <div *ngFor="let result of results" class="container result-margin" id="vysledky1">
 
       <mat-accordion>
-        <mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
+            <button type="button" class="btn-close custom-button position-absolute top-0 end-0 me-50 mt-0 aria" aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,result)">
+            </button>
             <div class="match-container w-100">
               <div class="date">
                 {{ result.date }}
@@ -168,13 +170,7 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-outline-danger " *ngIf="isAdmin()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
-            </svg>
-            Odstrániť
-          </button>
+
         </mat-expansion-panel>
 
       </mat-accordion>
@@ -193,7 +189,7 @@
 
 
 <div class="modal fade" id="addResultModal" tabindex="-1" aria-labelledby="addResultModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 1500px;">>
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 1500px;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addResultLabel">Pridať výsledok</h1>
@@ -203,7 +199,7 @@
 
         <div class="row">
           <!---DATE---->
-          <div class="col-md-3">
+          <div class="col-12 col-md-3">
             <mat-form-field appearance="outline">
               <mat-label>Vyber dátum</mat-label>
               <input matInput [matDatepicker]="picker" [(ngModel)]="dateShow" readonly required (ngModelChange)="onDateSelected($event);">
@@ -214,7 +210,7 @@
           </div>
 
           <!---TEAM HOME---->
-          <div class="col-md-2">
+          <div class="col-12 col-md-2">
             <mat-form-field appearance="outline">
               <mat-label>Tím Domáci</mat-label>
               <mat-select [(ngModel)]="teamHome" (ngModelChange)="onTeamHomeSelectionChange($event)" required>
@@ -279,7 +275,7 @@
           </div>
 
           <!---SCORE HOME---->
-          <div class="col-md-1" style="margin-left: -5px;">
+          <div class="col-12 col-md-1" style="margin-left: -5px;">
             <p class="mb-0">
               <mat-form-field appearance="outline" class="small-form-field">
                 <mat-label>Spolu</mat-label>
@@ -333,7 +329,7 @@
           </div>
 
           <!---POINTS HOME---->
-          <div class="col-md-1">
+          <div class="col-12 col-md-1">
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" >
                 <mat-label>Body</mat-label>
@@ -387,14 +383,14 @@
           </div>
 
           <!---VS---->
-          <div class="col-md-1">
+          <div class="col-12 col-md-1">
             <div class="d-flex flex-row align-items-center justify-content-center" style="height: 530px;">
               <div class="vr"></div>
             </div>
           </div>
 
           <!---POINTS AWAY---->
-          <div class="col-md-1">
+          <div class="col-12 col-md-1">
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
@@ -448,7 +444,7 @@
           </div>
 
           <!---SCORE AWAY---->
-          <div class="col-md-1">
+          <div class="col-12 col-md-1">
             <p class="mb-0">
               <mat-form-field appearance="outline" class="small-form-field">
                 <mat-label>Spolu</mat-label>
@@ -504,7 +500,7 @@
           </div>
 
           <!---TEAM AWAY---->
-          <div class="col-md-1">
+          <div class="col-12 col-md-1">
             <mat-form-field appearance="outline">
               <mat-label>Tím Hostia</mat-label>
               <mat-select [(ngModel)]="teamAway" (ngModelChange)="onTeamAwaySelectionChange($event)" required>
