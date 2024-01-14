@@ -63,11 +63,10 @@
   }
 
   .head2head-container {
-    font-size: 10px !important;/* Adjust the font size for medium screens */
+    font-size: 10px !important;
   }
 }
 
-/* Add more media queries for smaller font sizes on even smaller screens */
 
 @media (max-width: 479px) {
   .resultHeader {

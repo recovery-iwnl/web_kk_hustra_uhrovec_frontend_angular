@@ -1,0 +1,67 @@
+.match-margin {
+  margin-bottom: 20px;
+}
+
+.match-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teamHome {
+  flex: 4.88;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.vsMargin {
+  padding: 15px;
+}
+
+.teamAway {
+  flex: 5.5;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+@media (max-width: 767px) {
+  .match-container {
+    display: flex;
+    flex-direction: row !important;
+  }
+
+  .date{
+    font-size: 12px;
+  }
+
+  .teamHome {
+    font-size: 14px !important;
+  }
+
+  .teamAway {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .result-margin {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 479px) {
+  .teamHome {
+    font-size: 12px !important;
+  }
+
+  .teamAway {
+    font-size: 12px !important;
+  }
+
+  .date{
+    font-size: 10px;
+  }
+}

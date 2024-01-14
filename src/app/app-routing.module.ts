@@ -10,6 +10,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {UsersListComponent} from "./users-list/users-list.component";
+import {UpcomingMatchesComponent} from "./upcoming-matches/upcoming-matches.component";
 import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'nasledujuce-zapasy', component: UpcomingMatchesComponent },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },

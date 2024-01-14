@@ -17,23 +17,23 @@ import {MatDialog} from "@angular/material/dialog";
 export class ResultsComponent {
   selectedLeague: string = '1.KL Západ';
 
-  results : any[] = [];
+  results: any[] = [];
 
-  result : any = {};
+  result: any = {};
 
-  teams : any[] = [];
+  teams: any[] = [];
 
   teamHome: any = {};
 
-  playersHome : any[] = [];
+  playersHome: any[] = [];
 
   teamAway: any = {};
 
-  playersAway : any[] = [];
+  playersAway: any[] = [];
 
-  dateShow : any = {};
+  dateShow: any = {};
 
-  constructor(private datePipe: DatePipe, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor(private datePipe: DatePipe, private teamService: TeamService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
 
@@ -42,7 +42,7 @@ export class ResultsComponent {
     this.getAllTeams();
   }
 
-  deleteResult(result : any) {
+  deleteResult(result: any) {
     this.resultService.deleteResult(result.resultId).pipe(
       tap((resp: any) => {
         this.results = this.results.filter(r => r.resultId !== result.resultId);
@@ -55,7 +55,7 @@ export class ResultsComponent {
     ).subscribe();
   }
 
-  confirmDelete(event: Event,resultN:any): void {
+  confirmDelete(event: Event, resultN: any): void {
     event.preventDefault();
     event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -99,6 +99,25 @@ export class ResultsComponent {
       this.result.player6ScoreAway,
     ];
 
+    const playerPoints = [
+      this.result.team1PointsOverall,
+      this.result.player1PointsHome,
+      this.result.player2PointsHome,
+      this.result.player3PointsHome,
+      this.result.player4PointsHome,
+      this.result.player5PointsHome,
+      this.result.player6PointsHome,
+
+
+      this.result.team2PointsOverall,
+      this.result.player1PointsAway,
+      this.result.player2PointsAway,
+      this.result.player3PointsAway,
+      this.result.player4PointsAway,
+      this.result.player5PointsAway,
+      this.result.player6PointsAway,
+    ];
+
     const players = [
       this.result.player1Home,
       this.result.player2Home,
@@ -115,8 +134,47 @@ export class ResultsComponent {
       this.result.player6Away,
     ];
 
-    return playerScores.every(score => score !== undefined && score !== '') &&
-      players.every(player => player !== undefined && player !== '') && this.result.date !== undefined && this.result.date !== '';
+    return playerPoints.every(score => score !== undefined && score !== null && score !== '') &&
+      playerScores.every(score => score !== undefined && score !== null && score !== '') &&
+      players.every(player => player !== undefined && player !== null && player !== '') &&
+      this.result.date !== undefined && this.result.date !== '';
+  }
+
+  areInputsValid(): boolean {
+    return (
+      this.isWithinInterval(this.result.team1PointsOverall, 0, 8) &&
+      this.isWithinInterval(this.result.team2PointsOverall, 0, 8) &&
+
+      this.isWithinInterval(this.result.player1ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player2ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player3ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player4ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player5ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player6ScoreHome, 0, 1000) &&
+      this.isWithinInterval(this.result.player1ScoreAway, 0, 1000) &&
+      this.isWithinInterval(this.result.player2ScoreAway, 0, 1000) &&
+      this.isWithinInterval(this.result.player3ScoreAway, 0, 1000) &&
+      this.isWithinInterval(this.result.player4ScoreAway, 0, 1000) &&
+      this.isWithinInterval(this.result.player5ScoreAway, 0, 1000) &&
+      this.isWithinInterval(this.result.player6ScoreAway, 0, 1000) &&
+
+      this.isWithinInterval(this.result.player1PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player2PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player3PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player4PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player5PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player6PointsHome, 0, 1) &&
+      this.isWithinInterval(this.result.player1PointsAway, 0, 1) &&
+      this.isWithinInterval(this.result.player2PointsAway, 0, 1) &&
+      this.isWithinInterval(this.result.player3PointsAway, 0, 1) &&
+      this.isWithinInterval(this.result.player4PointsAway, 0, 1) &&
+      this.isWithinInterval(this.result.player5PointsAway, 0, 1) &&
+      this.isWithinInterval(this.result.player6PointsAway, 0, 1)
+    );
+  }
+
+  isWithinInterval(value: number, min: number, max: number): boolean {
+    return value !== undefined && value !== null && value >= min && value <= max;
   }
 
   getAllTeams() {
@@ -159,7 +217,7 @@ export class ResultsComponent {
       result.team2PointsOverall = sumScores('player', 'PointsAway', 6);
 
       function sumScores(playerKey: string, scoreKey: string, playerCount: number): number {
-        return Array.from({ length: playerCount }, (_, i) => result[`${playerKey}${i + 1}${scoreKey}`] || 0)
+        return Array.from({length: playerCount}, (_, i) => result[`${playerKey}${i + 1}${scoreKey}`] || 0)
           .reduce((total, score) => total + parseFloat(score), 0);
       }
 
@@ -175,7 +233,7 @@ export class ResultsComponent {
   }
 
 
-  getPlayersByTeamHome(id :any) {
+  getPlayersByTeamHome(id: any) {
     this.teamService.getPlayersByTeam(id).pipe(
       tap((resp: any) => {
         console.log(resp);
@@ -189,7 +247,7 @@ export class ResultsComponent {
     ).subscribe();
   }
 
-  getPlayersByTeamAway(id :any) {
+  getPlayersByTeamAway(id: any) {
     this.teamService.getPlayersByTeam(id).pipe(
       tap((resp: any) => {
         console.log(resp);
@@ -231,12 +289,12 @@ export class ResultsComponent {
   }
 
   addResult() {
-    //this.result.date = "09/09/2022";
     console.log(this.result);
-    this.resultService.addResultSimple(this.teamHome.teamId,this.teamAway.teamId, this.result).pipe(
+    this.resultService.addResultSimple(this.teamHome.teamId, this.teamAway.teamId, this.result).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.results.push(resp);
+        this.resetForm();
         this.detectChanges();
       }),
       catchError((err) => {
@@ -244,6 +302,13 @@ export class ResultsComponent {
         return of(null);
       })
     ).subscribe();
+  }
+
+  resetForm() {
+    this.result = {};
+    this.teamHome = {};
+    this.teamAway = {};
+    this.dateShow = {};
   }
 
   getResultsUhrovec() {
@@ -264,7 +329,8 @@ export class ResultsComponent {
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
   isAdmin(): boolean {

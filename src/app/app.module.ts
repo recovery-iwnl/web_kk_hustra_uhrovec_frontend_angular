@@ -30,6 +30,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {DatePipe} from "@angular/common";
+import { UpcomingMatchesComponent } from './upcoming-matches/upcoming-matches.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import {DatePipe} from "@angular/common";
     RegisterComponent,
     ProfileComponent,
     ConfirmationDialogComponent,
-    UsersListComponent
+    UsersListComponent,
+    UpcomingMatchesComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import {DatePipe} from "@angular/common";
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule
   ],
   providers: [ { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, DatePipe ],
   bootstrap: [AppComponent]
