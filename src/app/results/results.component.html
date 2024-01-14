@@ -334,7 +334,7 @@
               <mat-form-field appearance="outline" class="points-form-field" >
                 <mat-label>Body</mat-label>
                 <strong>
-                  <input matInput placeholder="Body" [(ngModel)]="result.team1PointsOverall" style="text-align: center;" readonly>
+                  <input type="number" matInput placeholder="Body" [(ngModel)]="result.team1PointsOverall" style="text-align: center;" required min="0" max="8">
                 </strong>
               </mat-form-field>
             </p>
@@ -342,42 +342,42 @@
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player1PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS HOME PLAYER 2---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player2PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS HOME PLAYER 3---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player3PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS HOME PLAYER 4---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player4PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS HOME PLAYER 5---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player5PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS HOME PLAYER 6---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player6PointsHome" style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsHome" style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
           </div>
@@ -395,7 +395,7 @@
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
                 <strong>
-                  <input matInput placeholder="Body" [(ngModel)]="result.team2PointsOverall" style="text-align: center;" readonly>
+                  <input type="number" matInput placeholder="Body" [(ngModel)]="result.team2PointsOverall" style="text-align: center;" required min="0" max="8">
                 </strong>
               </mat-form-field>
             </p>
@@ -403,42 +403,42 @@
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player1PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS AWAY PLAYER 2---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player2PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS AWAY PLAYER 3---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player3PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS AWAY PLAYER 4---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player4PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS AWAY PLAYER 5---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player5PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
             <!---POINTS AWAY PLAYER 6---->
             <p class="mb-0">
               <mat-form-field appearance="outline" class="points-form-field">
                 <mat-label>Body</mat-label>
-                <input matInput placeholder="Body" [(ngModel)]="result.player6PointsAway"  style="text-align: center;" readonly>
+                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsAway"  style="text-align: center;" required min="0" max="1">
               </mat-form-field>
             </p>
           </div>
@@ -449,7 +449,7 @@
               <mat-form-field appearance="outline" class="small-form-field">
                 <mat-label>Spolu</mat-label>
                 <strong>
-                  <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;" readonly>
+                  <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;" required min="0" max="1">
                 </strong>
 
               </mat-form-field>

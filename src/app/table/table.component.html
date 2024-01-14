@@ -22,8 +22,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let team of teams">
-        <td class="text-center">1</td>
+      <tr *ngFor="let team of teams; let i = index">
+        <td class="text-center">{{ i + 1 }}</td>
         <td class="font-weight-bold">
           <a href="/vysledky" class="text-decoration-none a-text-custom">{{ team.teamName }}</a>
         </td>
@@ -31,7 +31,7 @@
         <td class="text-center d-sm-table-cell">{{ team.matchesWon }}</td>
         <td class="text-center d-sm-table-cell">{{ team.matchesDraw }}</td>
         <td class="text-center d-sm-table-cell">{{ team.matchesLost }}</td>
-        <td class="text-center d-md-table-cell">{{ team.averageThrownFrames }}</td>
+        <td class="text-center d-md-table-cell">{{ team.thrownFrames / team.matchesPlayed }}</td>
         <td class="text-center font-weight-bold">{{ team.points }}</td>
       </tr>
       </tbody>

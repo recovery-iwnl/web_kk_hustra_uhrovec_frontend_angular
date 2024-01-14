@@ -167,6 +167,9 @@ export class ResultsComponent {
         result.team1PointsOverall += 2;
       } else if (result.team1ScoreOverall < result.team2ScoreOverall) {
         result.team2PointsOverall += 2;
+      } else {
+        result.team1PointsOverall += 1;
+        result.team2PointsOverall += 1;
       }
     });
   }

@@ -28,7 +28,7 @@ export class PlayersComponent {
   }
 
   getPlayersByTeam() {
-    this.teamService.getPlayersByTeam(652).pipe(
+    this.teamService.getPlayersByTeam(754).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.players = resp;
@@ -87,7 +87,7 @@ export class PlayersComponent {
   }
 
   addPlayer(newP : any) {
-    this.playerService.addPlayer(652,newP).pipe(
+    this.playerService.addPlayer(754,newP).pipe(
       tap((resp: any) => {
           console.log("Player " + newP.name + " " + newP.surname + " added");
           newP.playerID = resp.playerID
