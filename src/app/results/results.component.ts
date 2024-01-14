@@ -246,6 +246,21 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  getResultsUhrovec() {
+    this.resultService.getResultsUhrovec().pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.results = resp;
+        this.results = this.results.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();

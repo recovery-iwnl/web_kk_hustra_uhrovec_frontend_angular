@@ -9,14 +9,14 @@
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      Vyber ligu
+      Filter
     </button>
     <ul class="dropdown-menu">
       <li>
-        <a class="dropdown-item custom-button" href="#">1.KL Západ</a>
+        <a class="dropdown-item custom-button" (click)="getAllResults()" href="#">1.KL Západ - Všetky výsledky</a>
       </li>
       <li>
-        <a class="dropdown-item custom-button" href="#">3.liga TN kraja</a>
+        <a class="dropdown-item custom-button" (click)="getResultsUhrovec()" href="#">1.KL Západ - Výsledky KK HuStra Uhrovec</a>
       </li>
     </ul>
   </div>
