@@ -32,6 +32,7 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {DatePipe} from "@angular/common";
 import { UpcomingMatchesComponent } from './upcoming-matches/upcoming-matches.component';
 import {MatCardModule} from '@angular/material/card';
+import { GalleryComponent } from './gallery/gallery.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {MatCardModule} from '@angular/material/card';
     ProfileComponent,
     ConfirmationDialogComponent,
     UsersListComponent,
-    UpcomingMatchesComponent
+    UpcomingMatchesComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,
