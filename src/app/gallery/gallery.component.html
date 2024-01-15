@@ -1,35 +1,10 @@
-<div id="carouselExampleAutoplaying" class="carousel slide bg-dark container" data-bs-ride="carousel">
-  <div class="carousel-inner ">
-    <div class="carousel-item active">
-      <a href="https://vysledky.kolky.sk/match/detail/40861/KK-Hustra-Uhrovec-vs-MKK-Slovan-Galanta-A" >
+<div id="carouselExampleAutoplaying" class="carousel slide bg-dark " data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item" *ngFor="let image of images; let i = index" [class.active]="i === 0">
+      <a>
         <div class="carousel-image">
-          <img src="assets/images/pobedim_zapas.png" class="d-block mx-auto w-75 rounded-custom" alt="zapas-car">
+          <img [src]="'http://localhost:8080/api/v1/image/' + image.name" class="d-block mx-auto w-75" style="max-height: 750px;" [alt]="image.alt">
           <div class="overlay"></div>
-        </div>
-        <div class="carousel-caption">
-          <h3>KK Hustra Uhrovec - MKK Slovan Galanta A</h3>
-        </div>
-      </a>
-    </div>
-    <div class="carousel-item">
-      <a href="/historia">
-        <div class="carousel-image">
-          <img src="assets/images/history.jpg" class="d-block mx-auto w-75 rounded-custom" alt="history-car">
-          <div class="overlay"></div>
-        </div>
-        <div class="carousel-caption">
-          <h3>50 rokov kolkov v Uhrovci</h3>
-        </div>
-      </a>
-    </div>
-    <div class="carousel-item">
-      <a href="/">
-        <div class="carousel-image">
-          <img src="assets/images/kolkaren2.jpg" class="d-block mx-auto w-75 rounded-custom" alt="kolkaren-car">
-          <div class="overlay"></div>
-        </div>
-        <div class="carousel-caption">
-          <h3>Novo-prerobená kolkáreň</h3>
         </div>
       </a>
     </div>
@@ -43,4 +18,25 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+</div>
+
+<div class="container mt-5 py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Pridať fotku</h5>
+          <form>
+            <div class="mb-3">
+              <label for="fileInput" class="form-label">Vyberte súbor s fotkou:</label>
+              <input type="file" class="form-control" id="fileInput" (change)="selectFile($event)" accept="image/*" />
+            </div>
+            <div class="d-grid">
+              <button type="button" class="btn btn-outline-primary" (click)="uploadFile()">Pridať</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
