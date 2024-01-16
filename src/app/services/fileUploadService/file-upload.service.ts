@@ -20,5 +20,9 @@ export class FileUploadService {
     return this.http.get<any[]>(this.API + '/api/v1/image/all');
   }
 
+  public deleteImage(id : any) {
+    return this.http.delete(this.API + '/api/v1/image/delete/' + id, { responseType: "text"});
+  }
+
 
 }

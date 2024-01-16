@@ -1,0 +1,19 @@
+.custom-button-image {
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 25px;
+  transition: background-color 0.5s, color 0.9s;
+}
+
+@media (max-width: 576px) {
+  .custom-button-image {
+    padding: 8px 15px;
+    font-size: 15px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
