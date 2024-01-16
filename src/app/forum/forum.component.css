@@ -5,11 +5,16 @@ a{
   text-decoration:none;
 }
 .text-primary, a.text-primary:focus, a.text-primary:hover {
-  color: #00ADBB!important;
+  color: rgba(0, 0, 0, 0.82) !important;
 }
-.text-black, .text-hover-black:hover {
-  color: #000 !important;
+.text-blue, .text-hover-blue:hover {
+  color: #0849ec !important;
 }
 .font-weight-bold {
   font-weight: 700 !important;
 }
+
+.btn.ion-heart:hover {
+  color: rgba(178, 4, 18, 0.83);
+}
+

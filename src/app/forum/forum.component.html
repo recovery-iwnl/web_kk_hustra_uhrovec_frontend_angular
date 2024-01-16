@@ -1,24 +1,57 @@
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 <div class="container">
+
+
   <div class="row">
+
+
     <!-- Main content -->
-    <div class="col-lg-9 mb-3">
+    <div class="col-lg-9 mb-3 ">
+
+      <select class="form-select form-control mt-5">
+        <option selected>Filter by:</option>
+        <option value="1">Newest</option>
+        <option value="2">Oldest</option>
+        <option value="3">Most liked</option>
+      </select>
+
       <!-- End of post 1 -->
-      <div *ngFor="let comment of comments" class="card row-hover pos-relative mt-4 py-3 px-3 mb-3 border-primary-subtle border-top-1 border-right-1 border-bottom-1 rounded-5">
+      <div *ngFor="let comment of comments"
+           class="card row-hover pos-relative mt-4 py-3 px-3 mb-3 border-primary-subtle border-top-1 border-right-1 border-bottom-1 rounded-5">
         <div class="row align-items-center">
           <div class="col-md-8 mb-3 mb-sm-0">
             <h5>
-              <a href="#" class="text-primary"> {{ comment.text }}
+              <a class="text-primary"> {{ comment.text }}
               </a>
             </h5>
-            <p class="text-sm"><span class="op-6">Posted</span> <a class="text-black" href="#"> {{ formatDate(comment.date) }} </a> <span class="op-6">ago by </span> <a class="text-black" href="#">{{ comment.user.userName }}</a></p>
+            <p class="text-sm">
+              <span class="op-6">Posted</span>
+              <a> {{ formatDate(comment.date) }}</a>
+              <span class="op-6"> by </span>
+              <a class="text-blue" >{{ comment.user.userName }} </a>
+              <svg *ngIf="comment.user.role === 'ADMIN'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16" >
+                <title>Admin</title>
+                <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415"/>
+              </svg>
+              <svg *ngIf="comment.user.role === 'FAN'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16" >
+                <title>Fanúšik</title>
+                <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+              </svg>
+              <svg *ngIf="comment.user.role === 'PLAYER'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                <title>Hráč klubu</title>
+                <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+              </svg>
+            </p>
           </div>
-          <div class="col-md-4 op-7 ">
+          <div class="col-md-4 op-7">
             <div class="row text-center op-7">
-              <div class="col px-1 custom-button" (click)="likeComment(comment.id)">
-                <i class="ion-heart icon-1x "></i>
+              <div class="col px-1 " (click)="likeComment(comment.id)">
+                <button class="btn ion-heart icon-1x"></button>
                 <span class="d-block text-sm">{{ comment.likes }} Likes</span>
               </div>
+              <button *ngIf="(email === comment.user.email || isAdmin())" type="button" class="btn btn-close mt-4 mb-5 position-absolute top-30 end-0" (click)="confirmDelete($event,comment.id)" style="margin-right: 20px"></button>
             </div>
           </div>
         </div>
@@ -27,30 +60,45 @@
       <!-- /End of post 1 -->
 
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-        <label for="floatingTextarea2">Comments</label>
+  <textarea class="form-control rounded-5" placeholder="Leave a comment here" id="floatingTextarea2"
+            style="height: 100px" [(ngModel)]="comment.text" (input)="updateCharacterCount()"></textarea>
+        <label for="floatingTextarea2">Pridaj komentár</label>
+        <small class="text-muted">Zostávajúci počet znakov: {{ charactersLeft }}</small>
       </div>
 
-      <button type="button" class="btn btn-outline-primary mt-4">Comment</button>
+      <button type="button" class="btn btn-outline-primary mt-4 rounded-5 mb-5" (click)="addComment()" [disabled]="!comment.text || charactersLeft < 0 || !isLoggedIn()">Pridať komentár</button>
     </div>
     <!-- Sidebar content -->
     <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
-      <div style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div><div data-settings="{&quot;parent&quot;:&quot;#content&quot;,&quot;mind&quot;:&quot;#header&quot;,&quot;top&quot;:10,&quot;breakpoint&quot;:992}" data-toggle="sticky" class="sticky" style="top: 85px;"><div class="sticky-inner">
-      <div class="bg-white text-sm">
-        <h4 class="px-3 py-4 op-5 m-0 roboto-bold">
-          Stats
-        </h4>
-        <hr class="my-0">
-        <div class="row text-center d-flex flex-row op-7 mx-0">
-          <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right"> <a class="d-block lead font-weight-bold" href="#">58</a> Topics </div>
-          <div class="col-sm-6 col flex-ew text-center py-3 border-bottom mx-0"> <a class="d-block lead font-weight-bold" href="#">1.856</a> Posts </div>
-        </div>
-        <div class="row d-flex flex-row op-7">
-          <div class="col-sm-6 flex-ew text-center py-3 border-right mx-0"> <a class="d-block lead font-weight-bold" href="#">300</a> Members </div>
-          <div class="col-sm-6 flex-ew text-center py-3 mx-0"> <a class="d-block lead font-weight-bold" href="#">DanielD</a> Newest Member </div>
+      <div
+        style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div>
+      <div
+        data-settings="{&quot;parent&quot;:&quot;#content&quot;,&quot;mind&quot;:&quot;#header&quot;,&quot;top&quot;:10,&quot;breakpoint&quot;:992}"
+        data-toggle="sticky" class="sticky" style="top: 85px;">
+        <div class="sticky-inner">
+          <div class="bg-white text-sm">
+            <h4 class="px-3 py-4 op-5 m-0 mt-5 roboto-bold text-center" >
+              Fórum
+            </h4>
+            <hr class="my-0">
+            <div class="row text-center d-flex flex-row op-7 mx-0">
+              <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right"><a
+                class="d-block lead font-weight-bold">{{ getUniqueAuthorsCount() }}</a> Prispievajúci
+              </div>
+              <div class="col-sm-6 col flex-ew text-center py-3 border-bottom mx-0"><a
+                class="d-block lead font-weight-bold">{{ comments.length }}</a> Príspevky
+              </div>
+            </div>
+            <div class="row d-flex flex-row op-7">
+              <div class="col-sm-6 flex-ew text-center py-3 border-right mx-0"><a class="d-block lead font-weight-bold"
+              > {{ users.length }}</a> Členovia
+              </div>
+              <div class="col-sm-6 flex-ew text-center py-3 mx-0">    <a class="d-block lead font-weight-bold" >{{ newestUserName }}</a> Nový člen
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div></div>
     </div>
   </div>
 </div>

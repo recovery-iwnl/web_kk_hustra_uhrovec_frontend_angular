@@ -46,6 +46,7 @@ export class UpcomingMatchesComponent {
       tap((resp: any) => {
         console.log(resp);
         this.matches.push(resp);
+        this.getAllMatches();
         this.resetForm();
         this.detectChanges();
       }),
@@ -82,7 +83,6 @@ export class UpcomingMatchesComponent {
       tap((resp: any) => {
         console.log(resp);
         this.matches = resp;
-        this.matches = this.matches.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         this.detectChanges();
       }),
       catchError((err) => {
@@ -97,7 +97,6 @@ export class UpcomingMatchesComponent {
       tap((resp: any) => {
         console.log(resp);
         this.matches = resp;
-        this.matches = this.matches.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         this.detectChanges();
       }),
       catchError((err) => {

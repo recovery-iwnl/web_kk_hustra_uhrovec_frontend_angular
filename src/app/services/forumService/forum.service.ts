@@ -23,4 +23,9 @@ export class ForumService {
     const params = { id };
     return this.http.put(this.API + '/api/v1/comment/likeComment', null,{params, responseType: "text"})
   }
+
+  public deleteComment( id : any) {
+    const params = { id };
+    return this.http.delete(this.API + '/api/v1/comment/deleteComment', {params, responseType: "text"})
+  }
 }

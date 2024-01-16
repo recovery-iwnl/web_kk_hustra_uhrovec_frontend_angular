@@ -278,7 +278,6 @@ export class ResultsComponent {
       tap((resp: any) => {
         console.log(resp);
         this.results = resp;
-        this.results = this.results.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         this.detectChanges();
       }),
       catchError((err) => {
@@ -294,6 +293,7 @@ export class ResultsComponent {
       tap((resp: any) => {
         console.log(resp);
         this.results.push(resp);
+        this.getAllResults();
         this.resetForm();
         this.detectChanges();
       }),
@@ -316,7 +316,6 @@ export class ResultsComponent {
       tap((resp: any) => {
         console.log(resp);
         this.results = resp;
-        this.results = this.results.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         this.detectChanges();
       }),
       catchError((err) => {
