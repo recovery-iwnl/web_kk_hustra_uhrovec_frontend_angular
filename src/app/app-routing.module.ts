@@ -12,6 +12,7 @@ import {ProfileComponent} from "./profile/profile.component";
 import {UsersListComponent} from "./users-list/users-list.component";
 import {UpcomingMatchesComponent} from "./upcoming-matches/upcoming-matches.component";
 import {GalleryComponent} from "./gallery/gallery.component";
+import {ForumComponent} from "./forum/forum.component";
 import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },
   { path: 'galeria', component: GalleryComponent },
+  { path: 'forum', component: ForumComponent },
   { path: 'login', component: LoginComponent },
   { path: 'nasledujuce-zapasy', component: UpcomingMatchesComponent },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },

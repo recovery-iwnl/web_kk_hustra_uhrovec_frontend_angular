@@ -33,6 +33,7 @@ import {DatePipe} from "@angular/common";
 import { UpcomingMatchesComponent } from './upcoming-matches/upcoming-matches.component';
 import {MatCardModule} from '@angular/material/card';
 import { GalleryComponent } from './gallery/gallery.component';
+import { ForumComponent } from './forum/forum.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { GalleryComponent } from './gallery/gallery.component';
     ConfirmationDialogComponent,
     UsersListComponent,
     UpcomingMatchesComponent,
-    GalleryComponent
+    GalleryComponent,
+    ForumComponent
   ],
   imports: [
     BrowserModule,
