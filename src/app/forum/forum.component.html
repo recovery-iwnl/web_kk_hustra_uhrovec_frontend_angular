@@ -4,21 +4,20 @@
     <!-- Main content -->
     <div class="col-lg-9 mb-3">
       <!-- End of post 1 -->
-      <div class="card row-hover pos-relative mt-4 py-3 px-3 mb-3 border-primary-subtle border-top-1 border-right-1 border-bottom-1 rounded-5">
+      <div *ngFor="let comment of comments" class="card row-hover pos-relative mt-4 py-3 px-3 mb-3 border-primary-subtle border-top-1 border-right-1 border-bottom-1 rounded-5">
         <div class="row align-items-center">
           <div class="col-md-8 mb-3 mb-sm-0">
             <h5>
-              <a href="#" class="text-primary">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              <a href="#" class="text-primary"> {{ comment.text }}
               </a>
             </h5>
-            <p class="text-sm"><span class="op-6">Posted</span> <a class="text-black" href="#"> 20 minutes </a> <span class="op-6">ago by </span> <a class="text-black" href="#">KenyeW</a></p>
+            <p class="text-sm"><span class="op-6">Posted</span> <a class="text-black" href="#"> {{ formatDate(comment.date) }} </a> <span class="op-6">ago by </span> <a class="text-black" href="#">{{ comment.user.userName }}</a></p>
           </div>
           <div class="col-md-4 op-7 ">
             <div class="row text-center op-7">
-              <div class="col px-1 custom-button">
+              <div class="col px-1 custom-button" (click)="likeComment(comment.id)">
                 <i class="ion-heart icon-1x "></i>
-                <span class="d-block text-sm">10 Likes</span>
+                <span class="d-block text-sm">{{ comment.likes }} Likes</span>
               </div>
             </div>
           </div>
