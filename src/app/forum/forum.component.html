@@ -46,8 +46,8 @@
           </div>
           <div class="col-md-4 op-7">
             <div class="row text-center op-7">
-              <div class="col px-1 " (click)="likeComment(comment.id)">
-                <button class="btn ion-heart icon-1x"></button>
+              <div class="col px-1 ">
+                <button class="btn ion-heart icon-1x" [disabled]="!isLoggedIn()" (click)="likeComment(comment.id)"></button>
                 <span class="d-block text-sm">{{ comment.likes }} Likes</span>
               </div>
               <button *ngIf="(email === comment.user.email || isAdmin())" type="button" class="btn btn-close mt-4 mb-5 position-absolute top-30 end-0" (click)="confirmDelete($event,comment.id)" style="margin-right: 20px"></button>
