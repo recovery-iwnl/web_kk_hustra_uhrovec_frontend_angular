@@ -33,6 +33,7 @@ export class ResultsComponent {
 
   dateShow: any = {};
 
+
   constructor(private datePipe: DatePipe, private teamService: TeamService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
@@ -177,6 +178,32 @@ export class ResultsComponent {
     return value !== undefined && value !== null && value >= min && value <= max;
   }
 
+  areTeamsOrPlayersSame(): boolean {
+    const areTeamsOrPlayersSame =
+      this.teamHome &&
+      this.teamAway &&
+      (this.teamHome.teamId === this.teamAway.teamId ||
+        this.arePlayersOnSameSideSame('Home') ||
+        this.arePlayersOnSameSideSame('Away'))
+
+    return areTeamsOrPlayersSame;
+  }
+
+  arePlayersOnSameSideSame(side: string): boolean {
+    for (let i = 1; i <= 6; i++) {
+      const playerID1 = this.result[`player${i}${side}`]?.playerID;
+      for (let j = i + 1; j <= 6; j++) {
+        const playerID2 = this.result[`player${j}${side}`]?.playerID;
+
+        if (playerID1 && playerID2 && playerID1 === playerID2) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   getAllTeams() {
     this.teamService.getAllTeams().pipe(
       tap((resp: any) => {
@@ -262,12 +289,24 @@ export class ResultsComponent {
   }
 
   onTeamHomeSelectionChange(selectedTeam: any) {
+    this.result.player1Home = null;
+    this.result.player2Home = null;
+    this.result.player3Home = null;
+    this.result.player4Home = null;
+    this.result.player5Home = null;
+    this.result.player6Home = null;
     this.teamHome = selectedTeam;
     console.log('Selected team for teamHome:', this.teamHome);
     this.getPlayersByTeamHome(this.teamHome.teamId);
   }
 
   onTeamAwaySelectionChange(selectedTeam: any) {
+    this.result.player1Away = null;
+    this.result.player2Away = null;
+    this.result.player3Away = null;
+    this.result.player4Away = null;
+    this.result.player5Away = null;
+    this.result.player6Away = null;
     this.teamAway = selectedTeam;
     console.log('Selected team for teamHome:', this.teamAway);
     this.getPlayersByTeamAway(this.teamAway.teamId);

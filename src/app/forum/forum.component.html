@@ -8,11 +8,10 @@
     <!-- Main content -->
     <div class="col-lg-9 mb-3 ">
 
-      <select class="form-select form-control mt-5">
-        <option selected>Filter by:</option>
-        <option value="1">Newest</option>
-        <option value="2">Oldest</option>
-        <option value="3">Most liked</option>
+      <select class="form-select form-control mt-5 rounded-5" [(ngModel)]="type" (ngModelChange)="getComments()">
+        <option [value]="1">Najnovšie</option>
+        <option [value]="2">Najstaršie</option>
+        <option [value]="3">Najoblúbenejšie</option>
       </select>
 
       <!-- End of post 1 -->

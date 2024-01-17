@@ -29,6 +29,8 @@ export class ForumComponent {
 
   newestUserName: string = '';
 
+  type : any = 1;
+
 
   constructor(private dialog: MatDialog, private authService: AuthService, private forumService: ForumService, private userService: UserService, private cdRef: ChangeDetectorRef, private datePipe: DatePipe) {
   }
@@ -58,7 +60,7 @@ export class ForumComponent {
   }
 
   getComments() {
-    this.forumService.getComments().pipe(
+    this.forumService.getComments(this.type).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.comments = resp;
@@ -180,10 +182,6 @@ export class ForumComponent {
 
     return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
   }
-
-
-
-
 
   private detectChanges(): void {
     try {

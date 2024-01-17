@@ -593,7 +593,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-end modal-footer">
-          <button type="submit" mat-raised-button color="basic" [disabled]="!isFormValid() || !areInputsValid()" data-bs-dismiss="modal"
+          <button type="submit" mat-raised-button color="basic" [disabled]="!isFormValid() || !areInputsValid() || areTeamsOrPlayersSame()" data-bs-dismiss="modal"
                   (click)="addResult()">Pridať výsledok
           </button>
         </div>

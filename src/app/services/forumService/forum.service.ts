@@ -15,8 +15,9 @@ export class ForumService {
     return this.http.post(this.API + '/api/v1/comment/save', commentData,{ params })
   }
 
-  public getComments() {
-    return this.http.get(this.API + '/api/v1/comment/getCommentsList')
+  public getComments(number : any) {
+    const params = { number };
+    return this.http.get(this.API + '/api/v1/comment/getCommentsList',{ params })
   }
 
   public likeComment( id : any) {
