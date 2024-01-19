@@ -7,6 +7,11 @@ import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {TeamService} from "../services/teamService/team.service";
 
+/**
+ * PlayersComponent is an Angular component responsible for managing and displaying player information.
+ * It includes features such as retrieving players by team, displaying player details, adding, updating, and deleting players.
+ *
+ */
 @Component({
   selector: 'app-hraci',
   templateUrl: './players.component.html',
@@ -14,19 +19,44 @@ import {TeamService} from "../services/teamService/team.service";
 })
 export class PlayersComponent {
 
+  /**
+   * Array containing information about players in a team.
+   */
   players: any[] = [];
 
+  /**
+   * Represents the currently displayed player details.
+   */
   shownPlayer: any = {};
 
+  /**
+   * Represents a new player to be added.
+   */
   newPlayer: any = {};
 
+  /**
+   * Creates an instance of PlayersComponent.
+   *
+   * @param playerService - Reference to the PlayerService for managing player-related operations.
+   * @param teamService - Reference to the TeamService for managing team-related operations.
+   * @param dialog - Reference to the MatDialog service for displaying dialogs.
+   * @param authService - Reference to the AuthService for handling user authentication.
+   * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
+   */
   constructor(private playerService: PlayerService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
   }
 
+  /**
+   * Lifecycle hook that is called after the component is created.
+   * Initializes the component by retrieving players by team.
+   */
   ngOnInit(): void {
     this.getPlayersByTeam();
   }
 
+  /**
+   * Retrieves players from a team and updates the 'players' array.
+   */
   getPlayersByTeam() {
     this.teamService.getPlayersByTeam(754).pipe(
       tap((resp: any) => {
@@ -41,6 +71,11 @@ export class PlayersComponent {
     ).subscribe();
   }
 
+  /**
+   * Retrieves detailed information about a player by their ID and updates the 'shownPlayer' property.
+   *
+   * @param playerID - The ID of the player to retrieve details for.
+   */
   getPlayerDetails(playerID: number) {
     this.playerService.getPlayer(playerID).pipe(
       tap((resp: any) => {
@@ -55,6 +90,13 @@ export class PlayersComponent {
     ).subscribe();
   }
 
+  /**
+   * Opens a confirmation dialog to confirm player deletion.
+   * If the user confirms, deletes the player from the team.
+   *
+   * @param event - The click event triggering the confirmation dialog.
+   * @param player - The player to be deleted.
+   */
   confirmDelete(event: Event,player:any): void {
     event.preventDefault();
     event.stopPropagation();
@@ -72,6 +114,12 @@ export class PlayersComponent {
     });
   }
 
+  /**
+   * Deletes the player from the team.
+   * Updates the 'players' array and triggers change detection.
+   *
+   * @param player - The player to be deleted.
+   */
   deletePlayer(player: any) {
     this.playerService.deletePlayer(player.playerID).pipe(
       tap((resp: any) => {
@@ -86,6 +134,12 @@ export class PlayersComponent {
     ).subscribe();
   }
 
+  /**
+   * Adds a new player to the team.
+   * Updates the 'players' array and triggers change detection.
+   *
+   * @param newP - The new player to be added.
+   */
   addPlayer(newP : any) {
     this.playerService.addPlayer(754,newP).pipe(
       tap((resp: any) => {
@@ -102,6 +156,12 @@ export class PlayersComponent {
     ).subscribe();
   }
 
+  /**
+   * Updates the information of an existing player.
+   * Updates the 'players' array and triggers change detection.
+   *
+   * @param updatedPlayer - The updated player information.
+   */
   updatePlayer(updatedPlayer: any) {
     console.log(updatedPlayer);
     this.playerService.updatePlayer(updatedPlayer).pipe(
@@ -119,12 +179,21 @@ export class PlayersComponent {
     ).subscribe();
   }
 
+  /**
+   * Detects changes manually in the component.
+   * This is necessary in certain situations where Angular's change detection may not be triggered automatically.
+   */
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();
     } catch (e) {}
   }
 
+  /**
+   * Checks if the currently logged-in user has the 'ADMIN' role.
+   *
+   * @returns True if the user is an admin, false otherwise.
+   */
   isAdmin(): boolean {
     const loggedInUser = this.authService.getLoggedInUser();
     return loggedInUser && loggedInUser.role === 'ADMIN';

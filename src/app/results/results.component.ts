@@ -8,41 +8,89 @@ import {DatePipe} from "@angular/common";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 
-
+/**
+ * ResultsComponent is an Angular component responsible for managing and displaying sports results.
+ * It provides functionality for adding, updating, and deleting results, as well as validating input data.
+ *
+ */
 @Component({
   selector: 'app-vysledky',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css'],
 })
 export class ResultsComponent {
+  /**
+   * Represents the selected sports league for displaying results.
+   */
   selectedLeague: string = '1.KL Západ';
 
+  /**
+   * Array containing all sports results.
+   */
   results: any[] = [];
 
+  /**
+   * Represents a single sports result.
+   */
   result: any = {};
 
+  /**
+   * Array containing all sports teams.
+   */
   teams: any[] = [];
 
+  /**
+   * Represents the home team in a sports result.
+   */
   teamHome: any = {};
 
+  /**
+   * Array containing players from the home team.
+   */
   playersHome: any[] = [];
 
+  /**
+   * Represents the away team in a sports result.
+   */
   teamAway: any = {};
 
+  /**
+   * Array containing players from the away team.
+   */
   playersAway: any[] = [];
 
+  /**
+   * Represents the selected date for a sports result.
+   */
   dateShow: any = {};
 
-
+  /**
+   * Creates an instance of ResultsComponent.
+   *
+   * @param datePipe - Reference to the DatePipe for formatting dates.
+   * @param teamService - Reference to the TeamService for managing team-related operations.
+   * @param dialog - Reference to the MatDialog for displaying dialogs.
+   * @param authService - Reference to the AuthService for handling user authentication.
+   * @param resultService - Reference to the ResultService for managing result-related operations.
+   * @param cdRef - Reference to the ChangeDetectorRef for manually detecting changes.
+   * @param ngZone - Reference to the NgZone for managing change detection within or outside Angular zones.
+   */
   constructor(private datePipe: DatePipe, private teamService: TeamService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
-
+  /**
+   * Initializes the component by fetching all results and teams.
+   */
   ngOnInit(): void {
     this.getAllResults();
     this.getAllTeams();
   }
 
+  /**
+   * Deletes a sports result.
+   *
+   * @param result - The sports result to be deleted.
+   */
   deleteResult(result: any) {
     this.resultService.deleteResult(result.resultId).pipe(
       tap((resp: any) => {
@@ -56,6 +104,12 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Opens a confirmation dialog for deleting a sports result.
+   *
+   * @param event - The event triggering the delete action.
+   * @param resultN - The sports result to be deleted.
+   */
   confirmDelete(event: Event, resultN: any): void {
     event.preventDefault();
     event.stopPropagation();
@@ -73,16 +127,31 @@ export class ResultsComponent {
     });
   }
 
-
+  /**
+   * Handles the selection of a date for a sports result.
+   *
+   * @param selectedDate - The selected date.
+   */
   onDateSelected(selectedDate: Date): void {
     this.result.date = this.formatDate(selectedDate);
   }
 
+  /**
+   * Formats a date using the DatePipe.
+   *
+   * @param date - The date to be formatted.
+   * @returns The formatted date as a string.
+   */
   formatDate(date: Date): string {
     return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
   }
 
 
+  /**
+   * Checks if the form for adding a result is valid.
+   *
+   * @returns True if the form is valid, false otherwise.
+   */
   isFormValid(): boolean {
     const playerScores = [
       this.result.player1ScoreHome,
@@ -141,6 +210,11 @@ export class ResultsComponent {
       this.result.date !== undefined && this.result.date !== '';
   }
 
+  /**
+   * Checks if the input values for adding a result are valid.
+   *
+   * @returns True if the input values are valid, false otherwise.
+   */
   areInputsValid(): boolean {
     return (
       this.isWithinInterval(this.result.team1PointsOverall, 0, 8) &&
@@ -174,10 +248,23 @@ export class ResultsComponent {
     );
   }
 
+  /**
+   * Checks if a numeric value is within a specified interval.
+   *
+   * @param value - The numeric value to be checked.
+   * @param min - The minimum value of the interval.
+   * @param max - The maximum value of the interval.
+   * @returns True if the value is within the interval, false otherwise.
+   */
   isWithinInterval(value: number, min: number, max: number): boolean {
     return value !== undefined && value !== null && value >= min && value <= max;
   }
 
+  /**
+   * Checks if the teams or players in a sports result are the same.
+   *
+   * @returns True if the teams or players are the same, false otherwise.
+   */
   areTeamsOrPlayersSame(): boolean {
     const areTeamsOrPlayersSame =
       this.teamHome &&
@@ -189,6 +276,12 @@ export class ResultsComponent {
     return areTeamsOrPlayersSame;
   }
 
+  /**
+   * Checks if players on the same side (home/away) have the same ID.
+   *
+   * @param side - The side (home/away) to check.
+   * @returns True if players on the same side have the same ID, false otherwise.
+   */
   arePlayersOnSameSideSame(side: string): boolean {
     for (let i = 1; i <= 6; i++) {
       const playerID1 = this.result[`player${i}${side}`]?.playerID;
@@ -204,6 +297,9 @@ export class ResultsComponent {
     return false;
   }
 
+  /**
+   * Fetches all sports teams.
+   */
   getAllTeams() {
     this.teamService.getAllTeams().pipe(
       tap((resp: any) => {
@@ -219,6 +315,11 @@ export class ResultsComponent {
   }
 
 
+  /**
+   * Updates the points based on the scores in a sports result.
+   *
+   * @param result - The sports result for which points are updated.
+   */
   updatePoints(result: any): void {
     this.ngZone.run(() => {
       for (let i = 1; i <= 6; i++) {
@@ -260,6 +361,11 @@ export class ResultsComponent {
   }
 
 
+  /**
+   * Fetches players from the home team based on the team ID.
+   *
+   * @param id - The ID of the home team.
+   */
   getPlayersByTeamHome(id: any) {
     this.teamService.getPlayersByTeam(id).pipe(
       tap((resp: any) => {
@@ -274,6 +380,11 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Fetches players from the away team based on the team ID.
+   *
+   * @param id - The ID of the away team.
+   */
   getPlayersByTeamAway(id: any) {
     this.teamService.getPlayersByTeam(id).pipe(
       tap((resp: any) => {
@@ -288,6 +399,11 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Handles the change in selection of the home team.
+   *
+   * @param selectedTeam - The selected home team.
+   */
   onTeamHomeSelectionChange(selectedTeam: any) {
     this.result.player1Home = null;
     this.result.player2Home = null;
@@ -300,6 +416,11 @@ export class ResultsComponent {
     this.getPlayersByTeamHome(this.teamHome.teamId);
   }
 
+  /**
+   * Handles the change in selection of the away team.
+   *
+   * @param selectedTeam - The selected away team.
+   */
   onTeamAwaySelectionChange(selectedTeam: any) {
     this.result.player1Away = null;
     this.result.player2Away = null;
@@ -312,6 +433,9 @@ export class ResultsComponent {
     this.getPlayersByTeamAway(this.teamAway.teamId);
   }
 
+  /**
+   * Fetches all sports results.
+   */
   getAllResults() {
     this.resultService.getAllResults().pipe(
       tap((resp: any) => {
@@ -326,6 +450,9 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Adds a sports result to the list of results.
+   */
   addResult() {
     console.log(this.result);
     this.resultService.addResultSimple(this.teamHome.teamId, this.teamAway.teamId, this.result).pipe(
@@ -343,6 +470,9 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Resets the form for adding a sports result.
+   */
   resetForm() {
     this.result = {};
     this.teamHome = {};
@@ -350,6 +480,9 @@ export class ResultsComponent {
     this.dateShow = {};
   }
 
+  /**
+   * Fetches results specific to Uhrovec.
+   */
   getResultsUhrovec() {
     this.resultService.getResultsUhrovec().pipe(
       tap((resp: any) => {
@@ -364,6 +497,9 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  /**
+   * Manually triggers change detection to update the view.
+   */
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();
@@ -371,10 +507,18 @@ export class ResultsComponent {
     }
   }
 
+  /**
+   * Checks if the currently logged-in user has admin privileges.
+   *
+   * @returns True if the user is an admin, false otherwise.
+   */
   isAdmin(): boolean {
     const loggedInUser = this.authService.getLoggedInUser();
     return loggedInUser && loggedInUser.role === 'ADMIN';
   }
 
+  /**
+   * Reference to the console for logging.
+   */
   protected readonly console = console;
 }

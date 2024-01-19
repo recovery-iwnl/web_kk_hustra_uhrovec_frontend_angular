@@ -10,6 +10,13 @@ import * as moment from 'moment';
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {UserService} from "../services/userService/user.service";
 
+
+/**
+ * ForumComponent is an Angular component responsible for managing and displaying forum comments.
+ *
+ * It includes features such as adding comments, deleting comments, liking comments, and displaying comment-related information.
+ *
+ */
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
@@ -17,29 +24,68 @@ import {UserService} from "../services/userService/user.service";
 })
 export class ForumComponent {
 
+  /**
+   * Object representing the current comment being added.
+   */
   comment: any = {};
 
+  /**
+   * Array containing all comments in the forum.
+   */
   comments: any[] = [];
 
+  /**
+   * Array containing all users in the forum.
+   */
   users: any[] = [];
 
+  /**
+   * Number of characters left for the user to type in a comment.
+   */
   charactersLeft: number = 255;
 
+  /**
+   * Email of the currently logged-in user.
+   */
   email : any;
 
+  /**
+   * Username of the newest user in the forum.
+   */
   newestUserName: string = '';
 
+  /**
+   * Type of the forum (e.g., 1 for a specific type).
+   */
   type : any = 1;
 
 
+  /**
+   * Creates an instance of ForumComponent.
+   *
+   * @param dialog - Reference to the MatDialog service for displaying dialogs.
+   * @param authService - Reference to the AuthService for handling user authentication.
+   * @param forumService - Reference to the ForumService for managing forum-related operations.
+   * @param userService - Reference to the UserService for managing user-related operations.
+   * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
+   * @param datePipe - Reference to the DatePipe for formatting dates.
+   */
   constructor(private dialog: MatDialog, private authService: AuthService, private forumService: ForumService, private userService: UserService, private cdRef: ChangeDetectorRef, private datePipe: DatePipe) {
   }
 
+  /**
+   * Lifecycle hook that is called after the component is created.
+   * Initializes the component by fetching comments and users.
+   */
   ngOnInit(): void {
     this.getComments();
     this.getUsers();
   }
 
+  /**
+   * Adds a comment to the forum.
+   * Handles the process of submitting a new comment, updating the UI, and resetting the comment input.
+   */
   addComment() {
     this.comment.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     const email = <string>localStorage.getItem("token");
@@ -59,6 +105,10 @@ export class ForumComponent {
     ).subscribe();
   }
 
+  /**
+   * Retrieves forum comments based on the specified type.
+   * Updates the 'comments' array with the fetched comments and triggers change detection.
+   */
   getComments() {
     this.forumService.getComments(this.type).pipe(
       tap((resp: any) => {
@@ -73,10 +123,19 @@ export class ForumComponent {
     ).subscribe();
   }
 
+  /**
+   * Updates the character count based on the length of the comment text.
+   */
   updateCharacterCount() {
     this.charactersLeft = 255 - this.comment.text.length;
   }
 
+  /**
+   * Likes a specific comment by its ID.
+   * Fetches updated comments and triggers change detection.
+   *
+   * @param id - The ID of the comment to be liked.
+   */
   likeComment(id : any) {
     this.forumService.likeComment(id).pipe(
       tap((resp: any) => {
@@ -91,6 +150,13 @@ export class ForumComponent {
     ).subscribe();
   }
 
+  /**
+   * Opens a confirmation dialog to confirm comment deletion.
+   * If the user confirms, deletes the comment with the specified ID.
+   *
+   * @param event - The click event triggering the confirmation dialog.
+   * @param id - The ID of the comment to be deleted.
+   */
   confirmDelete(event: Event,id:any): void {
     event.preventDefault();
     event.stopPropagation();
@@ -108,6 +174,12 @@ export class ForumComponent {
     });
   }
 
+  /**
+   * Deletes a comment with the specified ID.
+   * Fetches updated comments and triggers change detection.
+   *
+   * @param id - The ID of the comment to be deleted.
+   */
   deleteComment(id : any) {
     this.forumService.deleteComment(id).pipe(
       tap((resp: any) => {
@@ -122,12 +194,22 @@ export class ForumComponent {
     ).subscribe();
   }
 
+  /**
+   * Calculates the number of unique authors among the displayed comments.
+   *
+   * @returns The count of unique authors.
+   */
   getUniqueAuthorsCount(): number {
     const uniqueAuthors = new Set<string>();
     this.comments.forEach(comment => uniqueAuthors.add(comment.user.userName));
     return uniqueAuthors.size;
   }
 
+  /**
+   * Retrieves all users and sorts them based on their user IDs.
+   * Sets the 'newestUserName' to the username of the newest user.
+   * Triggers change detection.
+   */
   getUsers() {
     this.userService.getAllUsers().pipe(
       tap((resp: any) => {
@@ -149,6 +231,13 @@ export class ForumComponent {
     ).subscribe();
   }
 
+
+  /**
+   * Formats a given date string into a human-readable relative time format (e.g., "3 minutes ago").
+   *
+   * @param date - The date string to be formatted.
+   * @returns A formatted string representing the relative time.
+   */
   formatDate(date: string): string {
     const currentDate = moment();
     const commentDate = moment(date, 'DD/MM/YYYY HH:mm:ss');
@@ -183,6 +272,10 @@ export class ForumComponent {
     return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
   }
 
+  /**
+   * Detects changes manually in the component.
+   * This is necessary in certain situations where Angular's change detection may not be triggered automatically.
+   */
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();
@@ -190,12 +283,22 @@ export class ForumComponent {
     }
   }
 
+  /**
+   * Checks if the currently logged-in user has the 'ADMIN' role.
+   *
+   * @returns True if the user is an admin, false otherwise.
+   */
   isAdmin(): boolean {
     const loggedInUser = this.authService.getLoggedInUser();
     this.email = <string>localStorage.getItem("token");
     return loggedInUser && loggedInUser.role === 'ADMIN';
   }
 
+  /**
+   * Checks if a user is currently logged in.
+   *
+   * @returns True if a user is logged in, false otherwise.
+   */
   isLoggedIn() : boolean {
     return this.authService.isLoggedIn;
   }
