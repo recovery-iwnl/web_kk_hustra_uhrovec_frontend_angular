@@ -36,6 +36,16 @@ export class PlayerService {
   }
 
   /**
+   * Adds a player to the team Uhrovec.
+   *
+   * @param playerData - The data of the player to be added.
+   * @returns An HTTP POST request to add the player.
+   */
+  public addPlayerUhrovec(playerData: any) {
+    return this.http.post(this.API+'/api/v1/player/saveUhrovec', playerData, {responseType : 'json'})
+  }
+
+  /**
    * Retrieves player information based on the specified ID.
    *
    * @param id - The ID of the player to fetch.

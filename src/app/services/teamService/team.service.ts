@@ -85,4 +85,12 @@ export class TeamService {
     const params = { id };
     return this.http.get(this.API + '/api/v1/team/playersByTeam', { params });
   }
+
+  /**
+   * Retrieves a list of players belonging to the team Uhrovec.
+   *
+   */
+  public getPlayersUhrovec() {
+    return this.http.get(this.API + '/api/v1/team/playersUhrovec');
+  }
 }

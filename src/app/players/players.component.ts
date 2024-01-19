@@ -58,7 +58,7 @@ export class PlayersComponent {
    * Retrieves players from a team and updates the 'players' array.
    */
   getPlayersByTeam() {
-    this.teamService.getPlayersByTeam(754).pipe(
+    this.teamService.getPlayersUhrovec().pipe(
       tap((resp: any) => {
         console.log(resp);
         this.players = resp;
@@ -135,13 +135,13 @@ export class PlayersComponent {
   }
 
   /**
-   * Adds a new player to the team.
+   * Adds a new player to the team Uhrovec.
    * Updates the 'players' array and triggers change detection.
    *
    * @param newP - The new player to be added.
    */
   addPlayer(newP : any) {
-    this.playerService.addPlayer(754,newP).pipe(
+    this.playerService.addPlayerUhrovec(newP).pipe(
       tap((resp: any) => {
           console.log("Player " + newP.name + " " + newP.surname + " added");
           newP.playerID = resp.playerID
