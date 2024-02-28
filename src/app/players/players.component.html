@@ -3,7 +3,7 @@
 
   <div class="container text-center">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
+      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="getPlayerDetails(player.playerID); getAverageByPlayer(player.playerID); getMatchesPlayedByPlayer(player.playerID); getPlayersBest(player.playerID) " data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
         <a class="text-decoration-none text-reset" >
           <img src="assets/images/user_profile.jpg" alt="Player {{ player.id }}" width="110" height="110" class="rounded-circle">
           <p>{{ player.name }} {{ player.surname }}</p>
@@ -145,15 +145,15 @@
           </tr>
           <tr>
             <td><strong>Priemer:</strong></td>
-            <td>{{ (shownPlayer?.points / shownPlayer?.matchesPlayed) | number:'1.1-2' }}</td>
+            <td>{{ average | number:'1.1-2' }}</td>
           </tr>
           <tr>
             <td><strong>Odohraných zápasov:</strong></td>
-            <td>{{ shownPlayer?.matchesPlayed }}</td>
+            <td>{{ matchesPlayed }}</td>
           </tr>
           <tr>
             <td><strong>Najlepší výkon:</strong></td>
-            <td>{{ shownPlayer?.playersBest }}</td>
+            <td>{{ playersBest }}</td>
           </tr>
           </tbody>
         </table>

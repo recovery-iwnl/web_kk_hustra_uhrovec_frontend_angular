@@ -6,6 +6,7 @@ import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {TeamService} from "../services/teamService/team.service";
+import {PlayerResultService} from "../services/playerResultService/player-result.service";
 
 /**
  * PlayersComponent is an Angular component responsible for managing and displaying player information.
@@ -29,6 +30,12 @@ export class PlayersComponent {
    */
   shownPlayer: any = {};
 
+  matchesPlayed: any;
+
+  average: any;
+
+  playersBest: any;
+
   /**
    * Represents a new player to be added.
    */
@@ -43,7 +50,7 @@ export class PlayersComponent {
    * @param authService - Reference to the AuthService for handling user authentication.
    * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
    */
-  constructor(private playerService: PlayerService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private playerService: PlayerService, private playerResultService: PlayerResultService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
   }
 
   /**
@@ -81,6 +88,48 @@ export class PlayersComponent {
       tap((resp: any) => {
         console.log(resp);
         this.shownPlayer = resp;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  getMatchesPlayedByPlayer(playerID: number) {
+    this.playerResultService.getMatchesPlayed(playerID).pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.matchesPlayed = resp;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  getAverageByPlayer(playerID: number) {
+    this.playerResultService.getAverage(playerID).pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.average = resp;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  getPlayersBest(playerID: number) {
+    this.playerResultService.getPlayersBest(playerID).pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.playersBest = resp;
         this.detectChanges();
       }),
       catchError((err) => {
