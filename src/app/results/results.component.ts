@@ -7,6 +7,8 @@ import {TeamService} from "../services/teamService/team.service";
 import {DatePipe} from "@angular/common";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {LeagueYearService} from "../services/leagueYearService/league-year.service";
+import {MatSelectChange} from "@angular/material/select";
 
 /**
  * ResultsComponent is an Angular component responsible for managing and displaying sports results.
@@ -40,6 +42,11 @@ export class ResultsComponent {
   teams: any[] = [];
 
   /**
+   * Array containing all league years.
+   */
+  years: any[] = [];
+
+  /**
    * Represents the home team in a sports result.
    */
   teamHome: any = {};
@@ -64,6 +71,8 @@ export class ResultsComponent {
    */
   dateShow: any = {};
 
+  selectedYear: any = {};
+
   /**
    * Creates an instance of ResultsComponent.
    *
@@ -75,15 +84,47 @@ export class ResultsComponent {
    * @param cdRef - Reference to the ChangeDetectorRef for manually detecting changes.
    * @param ngZone - Reference to the NgZone for managing change detection within or outside Angular zones.
    */
-  constructor(private datePipe: DatePipe, private teamService: TeamService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor(private datePipe: DatePipe, private teamService: TeamService, private leagueYearService: LeagueYearService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
   }
 
   /**
    * Initializes the component by fetching all results and teams.
    */
   ngOnInit(): void {
-    this.getAllResults();
     this.getAllTeams();
+    this.getAllYearsAndResultsForFirstYear();
+  }
+
+  getAllYearsAndResultsForFirstYear() {
+    this.leagueYearService.getAllYears().pipe(
+      tap((resp: any) => {
+        this.years = resp;
+        if (this.years.length > 0) {
+          this.getResultsByYear(this.years[0].yearId);
+          this.selectedYear = this.years[0].year;
+        }
+        console.log(this.years)
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  getAllYears() {
+    this.leagueYearService.getAllYears().pipe(
+      tap((resp: any) => {
+        this.years = resp;
+        console.log(this.years)
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   /**
@@ -207,7 +248,7 @@ export class ResultsComponent {
     return playerPoints.every(score => score !== undefined && score !== null && score !== '') &&
       playerScores.every(score => score !== undefined && score !== null && score !== '') &&
       players.every(player => player !== undefined && player !== null && player !== '') &&
-      this.result.date !== undefined && this.result.date !== '';
+      this.result.date !== undefined && this.result.date !== '' && this.result.leagueYear !== undefined && this.result.leagueYear !== '';
   }
 
   /**
@@ -450,6 +491,20 @@ export class ResultsComponent {
     ).subscribe();
   }
 
+  getResultsByYear(id : any) {
+    this.resultService.getResultsByYear(id).pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.results = resp;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
   /**
    * Adds a sports result to the list of results.
    */
@@ -521,4 +576,9 @@ export class ResultsComponent {
    * Reference to the console for logging.
    */
   protected readonly console = console;
+
+  setSelectedYear(year: any) {
+    this.selectedYear = year.year;
+    this.getResultsByYear(year.yearId);
+  }
 }

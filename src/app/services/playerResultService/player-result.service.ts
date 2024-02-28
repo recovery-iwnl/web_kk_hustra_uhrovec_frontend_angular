@@ -12,7 +12,7 @@ export class PlayerResultService {
   private API = "http://localhost:8080";
 
   /**
-   * Creates an instance of PlayerService.
+   * Creates an instance of PlayerResultService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */

@@ -1,18 +1,28 @@
 <body>
 <div class="container px-3 py-5 ">
   <div class="pb-2 dropdown border-bottom d-flex align-items-center justify-content-between">
-    <h2>{{selectedLeague}} 2023/2024</h2>
-    <button id="leagueDropdown" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Vyber ligu
+    <h2>1.KL Západ {{ selectedYear }}</h2>
+    <button
+      id="leagueYearDropdown"
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Ročník
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item custom-button" (click)="changeTable('1.KL Západ')"  href="#">1.KL Západ</a></li>
+      <div *ngFor="let year of years">
+        <li>
+          <a class="dropdown-item custom-button" (click)="setSelectedYear(year)" href="#"> {{ year.year }}</a>
+        </li>
+      </div>
     </ul>
   </div>
 
 
   <div class="container text-center table-responsive">
-    <table *ngIf="selectedLeague === '1.KL Západ'" id="table1" class="table tab-content table-sm table-hover colored box">
+    <table id="table1" class="table tab-content table-sm table-hover colored box">
       <thead>
       <tr>
         <th *ngFor="let column of columns" class="text-center">

@@ -1,24 +1,44 @@
 <body>
 <div class="container px-3 py-5">
   <div class="pb-2 dropdown d-flex align-items-center justify-content-between border-bottom">
-    <h2>{{ selectedLeague }} 2023/2024</h2>
-    <button
-      id="leagueDropdown"
-      class="btn btn-secondary dropdown-toggle"
-      type="button"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      Filter
-    </button>
-    <ul class="dropdown-menu">
-      <li>
-        <a class="dropdown-item custom-button" (click)="getAllResults()" href="#">Všetky výsledky</a>
-      </li>
-      <li>
-        <a class="dropdown-item custom-button" (click)="getResultsUhrovec()" href="#">Výsledky KK HuStra Uhrovec</a>
-      </li>
-    </ul>
+    <h2>1.KL Západ {{ selectedYear }}</h2>
+
+    <div class="button-container">
+      <button
+        id="leagueYearDropdown"
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Ročník
+      </button>
+      <ul class="dropdown-menu">
+        <div *ngFor="let year of years">
+          <li>
+            <a class="dropdown-item custom-button" (click)="setSelectedYear(year)" href="#"> {{ year.year }}</a>
+          </li>
+        </div>
+      </ul>
+
+      <button
+        id="leagueDropdown"
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Filter
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item custom-button" (click)="getAllResults()" href="#">Všetky výsledky</a>
+        </li>
+        <li>
+          <a class="dropdown-item custom-button" (click)="getResultsUhrovec()" href="#">Výsledky KK HuStra Uhrovec</a>
+        </li>
+      </ul>
+    </div>
   </div>
   <div class="row row-cols-1 py-3">
     <div *ngFor="let result of results" class="container result-margin" id="vysledky1">
@@ -203,10 +223,17 @@
               <mat-label>Vyber dátum</mat-label>
               <input matInput [matDatepicker]="picker" [(ngModel)]="dateShow" readonly required
                      (ngModelChange)="onDateSelected($event);">
-              <mat-hint>DD/MM/RRRR</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+
+            <mat-form-field appearance="outline" style="margin-left: -33px;">
+            <mat-label>Ročník Ligy</mat-label>
+              <mat-select [(ngModel)]="result.leagueYear" required>
+                <mat-option *ngFor="let year of years" [value]="year">{{ year.year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
           </div>
 
           <!---TEAM HOME---->

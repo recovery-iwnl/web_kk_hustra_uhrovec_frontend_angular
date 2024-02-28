@@ -45,6 +45,12 @@ export class ResultService {
     return this.http.get(this.API+'/api/v1/result/getResultsList');
   }
 
+
+  public getResultsByYear(id : any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/result/getResultsByYear', { params } );
+  }
+
   /**
    * Retrieves a list of results specific to Uhrovec.
    *

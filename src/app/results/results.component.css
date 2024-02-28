@@ -148,5 +148,14 @@
   margin-bottom: 20px;
 }
 
+.button-container {
+  display: flex;
+}
+
+.button-container > button,
+.button-container > ul {
+  margin-right: 5px; /* Adjust margin as needed */
+}
+
 
 
