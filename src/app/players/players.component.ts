@@ -7,6 +7,7 @@ import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {TeamService} from "../services/teamService/team.service";
 import {PlayerResultService} from "../services/playerResultService/player-result.service";
+import {LeagueYearService} from "../services/leagueYearService/league-year.service";
 
 /**
  * PlayersComponent is an Angular component responsible for managing and displaying player information.
@@ -42,6 +43,14 @@ export class PlayersComponent {
   newPlayer: any = {};
 
   /**
+   * Array containing all league years.
+   */
+  years: any[] = [];
+
+
+  selectedYear: any = {};
+
+  /**
    * Creates an instance of PlayersComponent.
    *
    * @param playerService - Reference to the PlayerService for managing player-related operations.
@@ -50,7 +59,7 @@ export class PlayersComponent {
    * @param authService - Reference to the AuthService for handling user authentication.
    * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
    */
-  constructor(private playerService: PlayerService, private playerResultService: PlayerResultService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private playerService: PlayerService, private leagueYearService: LeagueYearService, private playerResultService: PlayerResultService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
   }
 
   /**
@@ -58,7 +67,23 @@ export class PlayersComponent {
    * Initializes the component by retrieving players by team.
    */
   ngOnInit(): void {
+    this.getAllYears();
     this.getPlayersByTeam();
+  }
+
+  getAllYears() {
+    this.leagueYearService.getAllYears().pipe(
+      tap((resp: any) => {
+        this.years = resp;
+        console.log(this.years);
+        this.selectedYear = this.years[0];
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   /**
@@ -98,7 +123,7 @@ export class PlayersComponent {
   }
 
   getMatchesPlayedByPlayer(playerID: number) {
-    this.playerResultService.getMatchesPlayed(playerID).pipe(
+    this.playerResultService.getMatchesPlayed(playerID,this.selectedYear.yearId).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.matchesPlayed = resp;
@@ -112,7 +137,7 @@ export class PlayersComponent {
   }
 
   getAverageByPlayer(playerID: number) {
-    this.playerResultService.getAverage(playerID).pipe(
+    this.playerResultService.getAverage(playerID,this.selectedYear.yearId).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.average = resp;
@@ -126,7 +151,7 @@ export class PlayersComponent {
   }
 
   getPlayersBest(playerID: number) {
-    this.playerResultService.getPlayersBest(playerID).pipe(
+    this.playerResultService.getPlayersBest(playerID,this.selectedYear.yearId).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.playersBest = resp;
@@ -226,6 +251,11 @@ export class PlayersComponent {
         return of(null);
       })
     ).subscribe();
+  }
+
+  setSelectedYear(year: any) {
+    this.selectedYear = year;
+    this.detectChanges();
   }
 
   /**

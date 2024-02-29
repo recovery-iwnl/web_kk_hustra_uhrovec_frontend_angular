@@ -28,6 +28,8 @@ export class UpcomingMatchesComponent {
 
   dateShow : any = {};
 
+  selectedFilter: any = {};
+
   constructor(private datePipe: DatePipe,
               private teamService: TeamService,
               private dialog: MatDialog,
@@ -39,6 +41,11 @@ export class UpcomingMatchesComponent {
   ngOnInit(): void {
     this.getAllMatches();
     this.getAllTeams();
+    this.selectedFilter = "Všetky zápasy";
+  }
+
+  setSelectedFilter(filter : string) {
+    this.selectedFilter = filter;
   }
 
   addMatch() {

@@ -1,7 +1,7 @@
 <body>
 <div class="container px-3 py-5">
   <div class="pb-2 dropdown d-flex align-items-center justify-content-between border-bottom">
-    <h2>1.KL Západ {{ selectedYear }}</h2>
+    <h2>1.KL Západ</h2>
 
     <div class="button-container">
       <button
@@ -11,7 +11,7 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        Ročník
+        {{ selectedYear }}
       </button>
       <ul class="dropdown-menu">
         <div *ngFor="let year of years">
@@ -28,14 +28,14 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        Filter
+        {{selectedFilter}}
       </button>
       <ul class="dropdown-menu">
         <li>
-          <a class="dropdown-item custom-button" (click)="getAllResults()" href="#">Všetky výsledky</a>
+          <a class="dropdown-item custom-button" (click)="getAllResults(); setSelectedFilter('Všetky výsledky')" href="#">Všetky výsledky</a>
         </li>
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsUhrovec()" href="#">Výsledky KK HuStra Uhrovec</a>
+          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(); setSelectedFilter('Výsledky Uhrovec')" href="#">Výsledky Uhrovec</a>
         </li>
       </ul>
     </div>

@@ -1,7 +1,7 @@
 <body>
 <div class="container px-3 py-5 ">
   <div class="pb-2 dropdown border-bottom d-flex align-items-center justify-content-between">
-    <h2>1.KL Západ {{ selectedYear }}</h2>
+    <h2>1.KL Západ</h2>
     <button
       id="leagueYearDropdown"
       class="btn btn-secondary dropdown-toggle"
@@ -9,12 +9,13 @@
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      Ročník
+      {{ selectedYear.year }}
     </button>
+
     <ul class="dropdown-menu">
       <div *ngFor="let year of years">
         <li>
-          <a class="dropdown-item custom-button" (click)="setSelectedYear(year)" href="#"> {{ year.year }}</a>
+          <a class="dropdown-item custom-button" (click)="setSelectedYear(year);" href="#"> {{ year.year }}</a>
         </li>
       </div>
     </ul>

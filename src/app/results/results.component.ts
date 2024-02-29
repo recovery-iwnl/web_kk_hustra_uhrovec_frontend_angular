@@ -73,6 +73,10 @@ export class ResultsComponent {
 
   selectedYear: any = {};
 
+  selectedFilter: any = {};
+
+
+
   /**
    * Creates an instance of ResultsComponent.
    *
@@ -93,6 +97,11 @@ export class ResultsComponent {
   ngOnInit(): void {
     this.getAllTeams();
     this.getAllYearsAndResultsForFirstYear();
+    this.selectedFilter = "Všetky výsledky";
+  }
+
+  setSelectedFilter(filter : string) {
+    this.selectedFilter = filter;
   }
 
   getAllYearsAndResultsForFirstYear() {

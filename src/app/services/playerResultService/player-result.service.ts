@@ -18,18 +18,18 @@ export class PlayerResultService {
    */
   constructor(private http : HttpClient) { }
 
-  public getAverage(id: any) {
-    const params = { id };
+  public getAverage(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId  };
     return this.http.get(this.API+'/api/v1/playerResult/getAverage',{ params } );
   }
 
-  public getMatchesPlayed(id: any) {
-    const params = { id };
+  public getMatchesPlayed(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId  };
     return this.http.get(this.API+'/api/v1/playerResult/getMatchesPlayed',{ params } );
   }
 
-  public getPlayersBest(id: any) {
-    const params = { id };
+  public getPlayersBest(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId  };
     return this.http.get(this.API+'/api/v1/playerResult/getPlayersBest',{ params } );
   }
 }

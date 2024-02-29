@@ -18,33 +18,33 @@ export class TeamResultService {
    */
   constructor(private http : HttpClient) { }
 
-  public getAverage(id: any) {
-    const params = { id };
+  public getAverage(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getAverage',{ params } );
   }
 
-  public getMatchesPlayed(id: any) {
-    const params = { id };
+  public getMatchesPlayed(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getMatchesPlayed',{ params } );
   }
 
-  public getMatchesWon(id: any) {
-    const params = { id };
+  public getMatchesWon(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getMatchesWon',{ params } );
   }
 
-  public getMatchesLost(id: any) {
-    const params = { id };
+  public getMatchesLost(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getMatchesLost',{ params } );
   }
 
-  public getMatchesDrawn(id: any) {
-    const params = { id };
+  public getMatchesDrawn(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getMatchesDrawn',{ params } );
   }
 
-  public getPoints(id: any) {
-    const params = { id };
+  public getPoints(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId };
     return this.http.get(this.API+'/api/v1/teamResult/getPoints',{ params } );
   }
 }
