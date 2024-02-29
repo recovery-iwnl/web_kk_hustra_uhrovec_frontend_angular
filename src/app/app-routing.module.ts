@@ -14,11 +14,13 @@ import {UpcomingMatchesComponent} from "./upcoming-matches/upcoming-matches.comp
 import {GalleryComponent} from "./gallery/gallery.component";
 import {ForumComponent} from "./forum/forum.component";
 import {AuthGuard} from "./auth.guard";
+import {CompareComponent} from "./compare/compare.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
   { path: 'domov', component: HomeComponent },
   { path: 'hraci', component: PlayersComponent },
+  { path: 'porovnaj', component: CompareComponent },
   { path: 'tabulka', component: TableComponent },
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },

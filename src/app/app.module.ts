@@ -34,6 +34,7 @@ import { UpcomingMatchesComponent } from './upcoming-matches/upcoming-matches.co
 import {MatCardModule} from '@angular/material/card';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ForumComponent } from './forum/forum.component';
+import { CompareComponent } from './compare/compare.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { ForumComponent } from './forum/forum.component';
     UsersListComponent,
     UpcomingMatchesComponent,
     GalleryComponent,
-    ForumComponent
+    ForumComponent,
+    CompareComponent
   ],
   imports: [
     BrowserModule,
