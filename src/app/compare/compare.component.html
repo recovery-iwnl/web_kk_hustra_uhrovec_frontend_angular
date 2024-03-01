@@ -50,7 +50,8 @@
 
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
-            <input list="team1Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="team1"
+            <input list="team1Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+                   [(ngModel)]="team1"
                    (ngModelChange)="getTeam1StatisticsByName(team1)" placeholder="Vyber tím...">
             <datalist id="team1Options">
               <option *ngFor="let team of teams" [value]="team.teamName"> {{ team.teamName }}</option>
@@ -58,7 +59,8 @@
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
-            <input list="player1Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="player1"
+            <input list="player1Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+                   [(ngModel)]="player1"
                    (ngModelChange)="getPlayer1StatisticsByName(player1)"
                    placeholder="Vyber hráča...">
             <datalist id="player1Options">
@@ -92,7 +94,7 @@
 
         </div>
         <div class="col mt-5">
-          <div class="card">
+          <div>
             <div class="card-body">
               VS
             </div>
@@ -117,7 +119,8 @@
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
-            <input list="team2Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="team2"
+            <input list="team2Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+                   [(ngModel)]="team2"
                    (ngModelChange)="getTeam2StatisticsByName(team2)" placeholder="Vyber tím...">
             <datalist id="team2Options">
               <option *ngFor="let team of teams" [value]="team.teamName"> {{ team.teamName }}</option>
@@ -125,7 +128,8 @@
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
-            <input list="player2Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="player2"
+            <input list="player2Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+                   [(ngModel)]="player2"
                    (ngModelChange)="getPlayer2StatisticsByName(player2)"
                    placeholder="Vyber hráča...">
             <datalist id="player2Options">
@@ -168,26 +172,110 @@
             </thead>
             <tbody>
             <tr>
-              <th class="text-end team-name">{{team1Object?.matchesPlayed}}</th>
+              <th class="text-end team-name">
+                <a>{{team1Object?.matchesPlayed}} </a>
+                <ng-container *ngIf="team1Object?.matchesPlayed >= team2Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team1Object?.matchesPlayed < team2Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>ODOHRANÉ ZÁPASY</td>
-              <th class="text-start team-name">{{team2Object?.matchesPlayed}}</th>
+              <th class="text-start team-name">
+                <ng-container *ngIf="team2Object?.matchesPlayed >= team1Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team2Object?.matchesPlayed < team1Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{team2Object?.matchesPlayed}}</a>
+              </th>
             </tr>
             <tr>
-              <th class="text-end">{{team1Object?.matchesWon}} / {{team1Object?.matchesDrawn}}
-                / {{team1Object?.matchesLost}} </th>
+
+              <th class="text-end team-name">
+                <a *ngIf="team1">
+                  {{team1Object?.matchesWon}} / {{team1Object?.matchesDrawn}}
+                  / {{team1Object?.matchesLost}}
+                </a>
+              </th>
               <td>VÝHRY / REMÍZY / PREHRY</td>
-              <th class="text-start">{{team2Object?.matchesWon}} / {{team2Object?.matchesDrawn}}
-                / {{team2Object?.matchesLost}}</th>
+              <th class="text-start team-name">
+                <a *ngIf="team2"> {{team2Object?.matchesWon}} / {{team2Object?.matchesDrawn}}
+                  / {{team2Object?.matchesLost}}
+                </a>
+              </th>
+
             </tr>
             <tr>
-              <th class="text-end">{{team1Object?.average | number:'1.1-2' }}</th>
+              <th class="text-end team-name">
+                <a>{{team1Object?.average | number:'1.1-2' }} </a>
+                <ng-container *ngIf="team1Object?.average >= team2Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team1Object?.average < team2Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>PRIEMER</td>
-              <th class="text-start">{{team2Object?.average | number:'1.1-2' }}</th>
+              <th class="text-start team-name">
+                <ng-container *ngIf="team2Object?.average >= team1Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team2Object?.average < team1Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{team2Object?.average | number:'1.1-2' }}</a>
+              </th>
             </tr>
             <tr>
-              <th class="text-end">{{team1Object?.points}}</th>
+              <th class="text-end team-name">
+                <a>{{team1Object?.points}} </a>
+                <ng-container *ngIf="team1Object?.points >= team2Object?.points">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team1Object?.points < team2Object?.points">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>BODY</td>
-              <th class="text-start">{{team2Object?.points}}</th>
+              <th class="text-start team-name">
+                <ng-container *ngIf="team2Object?.points >= team1Object?.points">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="team2Object?.points < team1Object?.points">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{team2Object?.points}}</a>
+              </th>
             </tr>
             </tbody>
           </table>
@@ -195,7 +283,7 @@
       </div>
     </div>
 
-    <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Hráčov'" style="max-width: 800px;" >
+    <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Hráčov'" style="max-width: 800px;">
 
       <div class="row">
         <div class="col">
@@ -205,7 +293,7 @@
             <tbody>
             <tr>
               <th class="text-end team-name">{{ player1Object?.teamName}}</th>
-              <td >TÍM</td>
+              <td>TÍM</td>
               <th class="text-start team-name">{{player2Object?.teamName}}</th>
             </tr>
             <tr>
@@ -214,25 +302,104 @@
               <th class="text-start">{{player2Object?.age}}</th>
             </tr>
             <tr>
-              <th class="text-end">{{player1Object?.matchesPlayed}}</th>
+              <th class="text-end">
+                <a>{{ player1Object?.matchesPlayed }} </a>
+                <ng-container *ngIf="player1Object?.matchesPlayed >= player2Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player1Object?.matchesPlayed < player2Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>ODOHRANÉ ZÁPASY</td>
-              <th class="text-start">{{player2Object?.matchesPlayed}}</th>
+              <th class="text-start">
+                <ng-container *ngIf="player2Object?.matchesPlayed >= player1Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player2Object?.matchesPlayed < player1Object?.matchesPlayed">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{ player2Object?.matchesPlayed }}</a>
+              </th>
             </tr>
             <tr>
-              <th class="text-end">{{player1Object?.average | number:'1.1-2' }}</th>
+              <th class="text-end">
+                <a>{{player1Object?.average | number:'1.1-2' }} </a>
+                <ng-container *ngIf="player1Object?.average >= player2Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player1Object?.average < player2Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>PRIEMER</td>
-              <th class="text-start">{{player2Object?.average | number:'1.1-2'}}</th>
+              <th class="text-start">
+                <ng-container *ngIf="player2Object?.average >= player1Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player2Object?.average < player1Object?.average">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{player2Object?.average | number:'1.1-2' }}</a>
+              </th>
             </tr>
             <tr>
-              <th class="text-end">{{player1Object?.playerBest}}</th>
+              <th class="text-end">
+                <a>{{player1Object?.playerBest}} </a>
+                <ng-container *ngIf="player1Object?.playerBest >= player2Object?.playerBest">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player1Object?.playerBest < player2Object?.playerBest">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
               <td>NAJLEPŠÍ VÝKON</td>
-              <th class="text-start">{{player2Object?.playerBest}}</th>
+              <th class="text-start">
+                <ng-container *ngIf="player2Object?.playerBest >= player1Object?.playerBest">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player2Object?.playerBest < player1Object?.playerBest">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{player2Object?.playerBest}}</a>
+              </th>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
+  </div>
+
+  <div>
+    <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
   </div>
 </div>
 

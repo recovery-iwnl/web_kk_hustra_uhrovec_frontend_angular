@@ -7,6 +7,7 @@ import {PlayerResultService} from "../services/playerResultService/player-result
 import {catchError, tap} from "rxjs/operators";
 import {forkJoin, Observable, of} from "rxjs";
 
+
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
@@ -50,6 +51,29 @@ export class CompareComponent implements OnInit {
     private teamResultService: TeamResultService,
     private playerResultService: PlayerResultService,
     private cdRef: ChangeDetectorRef) {
+  }
+
+  chartOptions = {
+    animationEnabled: true,
+    theme: "dark2",
+    exportEnabled: true,
+    title: {
+      text: "Developer Work Week"
+    },
+    subtitles: [{
+      text: "Median hours/week"
+    }],
+    data: [{
+      type: "pie", //change type to column, line, area, doughnut, etc
+      indexLabel: "{name}: {y}%",
+      dataPoints: [
+        { name: "Overhead", y: 9.1 },
+        { name: "Problem Solving", y: 3.7 },
+        { name: "Debugging", y: 36.4 },
+        { name: "Writing Code", y: 30.7 },
+        { name: "Firefighting", y: 20.1 }
+      ]
+    }]
   }
 
   ngOnInit() {
