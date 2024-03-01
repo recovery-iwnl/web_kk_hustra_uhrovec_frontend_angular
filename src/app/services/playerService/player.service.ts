@@ -56,6 +56,21 @@ export class PlayerService {
     return this.http.get(this.API+'/api/v1/player/getPlayer',{ params } );
   }
 
+  public getPlayerByName(name: any, surname: any) {
+    const params = { name, surname };
+    return this.http.get(this.API+'/api/v1/player/getPlayerByName',{ params } );
+  }
+
+  public getTeamNameByPlayer(id : any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/player/getTeamNameByPlayer',{ params } );
+  }
+
+  public getAge(id : any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/player/getAge',{ params } );
+  }
+
   /**
    * Retrieves a list of all players.
    *

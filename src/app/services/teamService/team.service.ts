@@ -46,6 +46,11 @@ export class TeamService {
     return this.http.get(this.API+'/api/v1/team/getTeam',{ params } );
   }
 
+  public getTeamByName(name: any) {
+    const params = { name };
+    return this.http.get(this.API+'/api/v1/team/getTeamByName',{ params } );
+  }
+
   /**
    * Retrieves a list of all teams.
    *

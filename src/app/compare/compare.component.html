@@ -1,53 +1,236 @@
 <div class="container px-3 py-5">
   <div class="pb-2 dropdown border-bottom d-flex align-items-center justify-content-between">
     <h2>Porovnanie štatistík</h2>
-  <button
-    id="leagueYearDropdown"
-    class="btn btn-secondary dropdown-toggle"
-    type="button"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-  >
-    {{selectedCompare}}
-  </button>
+    <button
+      id="leagueYearDropdown"
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{selectedCompare}}
+    </button>
 
-  <ul class="dropdown-menu">
-    <div>
-      <li>
-        <a class="dropdown-item custom-button" (click)="setSelectedCompare('Porovnaj Tímy');"> Porovnaj Tímy </a>
-      </li>
-      <li>
-        <a class="dropdown-item custom-button" (click)="setSelectedCompare('Porovnaj Hráčov');"> Porovnaj Hráčov </a>
-      </li>
+    <ul class="dropdown-menu">
+      <div>
+        <li>
+          <a class="dropdown-item custom-button" (click)="setSelectedCompare('Porovnaj Tímy');"> Porovnaj Tímy </a>
+        </li>
+        <li>
+          <a class="dropdown-item custom-button" (click)="setSelectedCompare('Porovnaj Hráčov');"> Porovnaj Hráčov </a>
+        </li>
+      </div>
+    </ul>
+  </div>
+
+
+  <div class="card mt-4">
+    <div class="container text-center" style="max-width: 800px;">
+
+
+      <div class="row">
+
+
+        <div class="col">
+
+
+          <div *ngIf="selectedCompare === 'Porovnaj Hráčov'" class="mt-4">
+            <a class="text-decoration-none text-reset">
+              <img src="assets/images/user_profile.jpg" style="max-width: 110px; max-height: 110px"
+                   class="rounded-circle border border-dark img-fluid">
+            </a>
+          </div>
+
+          <div *ngIf="selectedCompare === 'Porovnaj Tímy'" class="mt-4">
+            <a class="text-decoration-none text-reset">
+              <img src="assets/images/teamPhoto.jpg" style="max-width: 110px; max-height: 110px"
+                   class="rounded-circle border border-dark img-fluid">
+            </a>
+          </div>
+
+
+          <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
+            <input list="team1Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="team1"
+                   (ngModelChange)="getTeam1StatisticsByName(team1)" placeholder="Vyber tím...">
+            <datalist id="team1Options">
+              <option *ngFor="let team of teams" [value]="team.teamName"> {{ team.teamName }}</option>
+            </datalist>
+          </div>
+
+          <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
+            <input list="player1Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="player1"
+                   (ngModelChange)="getPlayer1StatisticsByName(player1)"
+                   placeholder="Vyber hráča...">
+            <datalist id="player1Options">
+              <option *ngFor="let player of players"
+                      value="{{player.name}} {{player.surname}}"> {{player.name}} {{player.surname}}</option>
+            </datalist>
+          </div>
+
+          <div class="mt-4">
+            <button
+              id="leagueYear1Dropdown"
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ selectedYear1.year }}
+            </button>
+
+            <ul class="dropdown-menu">
+              <div *ngFor="let year of years">
+                <li>
+                  <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
+                     (click)="setSelectedYear1(year); getTeam1StatisticsByName(team1)" href="#"> {{ year.year }}</a>
+                  <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
+                     (click)="setSelectedYear1(year); getPlayer1StatisticsByName(player1)" href="#"> {{ year.year }}</a>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+        </div>
+        <div class="col mt-5">
+          <div class="card">
+            <div class="card-body">
+              VS
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col">
+
+          <div *ngIf="selectedCompare === 'Porovnaj Hráčov'" class="mt-4">
+            <a class="text-decoration-none text-reset">
+              <img src="assets/images/user_profile.jpg" style="max-width: 110px; max-height: 110px"
+                   class="rounded-circle border border-dark img-fluid">
+            </a>
+          </div>
+
+          <div *ngIf="selectedCompare === 'Porovnaj Tímy'" class="mt-4">
+            <a class="text-decoration-none text-reset">
+              <img src="assets/images/teamPhoto.jpg" style="max-width: 110px; max-height: 110px"
+                   class="rounded-circle border border-dark img-fluid">
+            </a>
+          </div>
+
+          <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
+            <input list="team2Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="team2"
+                   (ngModelChange)="getTeam2StatisticsByName(team2)" placeholder="Vyber tím...">
+            <datalist id="team2Options">
+              <option *ngFor="let team of teams" [value]="team.teamName"> {{ team.teamName }}</option>
+            </datalist>
+          </div>
+
+          <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
+            <input list="player2Options" class="form-control mt-3 text-center" style="max-width: 350px;" [(ngModel)]="player2"
+                   (ngModelChange)="getPlayer2StatisticsByName(player2)"
+                   placeholder="Vyber hráča...">
+            <datalist id="player2Options">
+              <option *ngFor="let player of players"
+                      value="{{player.name}} {{player.surname}}"> {{player.name}} {{player.surname}}</option>
+            </datalist>
+          </div>
+
+          <div class="mt-4">
+            <button
+              id="leagueYear2Dropdown"
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ selectedYear2.year }}
+            </button>
+
+            <ul class="dropdown-menu">
+              <div *ngFor="let year of years">
+                <li>
+                  <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
+                     (click)="setSelectedYear2(year); getTeam2StatisticsByName(team2)" href="#"> {{ year.year }}</a>
+                  <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
+                     (click)="setSelectedYear2(year); getPlayer2StatisticsByName(player2)" href="#"> {{ year.year }}</a>
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  </ul>
-</div>
 
+    <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Tímy'" style="max-width: 800px;">
+      <div class="row">
+        <div class="col">
+          <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+              <th class="text-end team-name">{{team1Object?.matchesPlayed}}</th>
+              <td>ODOHRANÉ ZÁPASY</td>
+              <th class="text-start team-name">{{team2Object?.matchesPlayed}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{team1Object?.matchesWon}} / {{team1Object?.matchesDrawn}}
+                / {{team1Object?.matchesLost}} </th>
+              <td>VÝHRY / REMÍZY / PREHRY</td>
+              <th class="text-start">{{team2Object?.matchesWon}} / {{team2Object?.matchesDrawn}}
+                / {{team2Object?.matchesLost}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{team1Object?.average | number:'1.1-2' }}</th>
+              <td>PRIEMER</td>
+              <th class="text-start">{{team2Object?.average | number:'1.1-2' }}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{team1Object?.points}}</th>
+              <td>BODY</td>
+              <th class="text-start">{{team2Object?.points}}</th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-  <div class="container text-center">
-    <div class="row">
-      <div class="col">
-        <mat-form-field class="mt-3" style="max-width: 350px;">
-          <mat-select *ngIf="selectedCompare === 'Porovnaj Tímy'" placeholder="Select Team">
-            <mat-option *ngFor="let team of teams" [value]="team">{{team.teamName}}</mat-option>
-          </mat-select>
-          <mat-select *ngIf="selectedCompare === 'Porovnaj Hráčov'" placeholder="Select Player">
-            <mat-option *ngFor="let player of players" [value]="player">{{player.name}} {{player.surname}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col mt-4">
-        <a> VS </a>
-      </div>
-      <div class="col">
-        <mat-form-field class="mt-3" style="max-width: 350px;">
-          <mat-select *ngIf="selectedCompare === 'Porovnaj Tímy'" placeholder="Select Team">
-            <mat-option *ngFor="let team of teams" [value]="team">{{team.teamName}}</mat-option>
-          </mat-select>
-          <mat-select *ngIf="selectedCompare === 'Porovnaj Hráčov'" placeholder="Select Player">
-            <mat-option *ngFor="let player of players" [value]="player">{{player.name}} {{player.surname}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Hráčov'" style="max-width: 800px;" >
+
+      <div class="row">
+        <div class="col">
+          <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+              <th class="text-end team-name">{{ player1Object?.teamName}}</th>
+              <td >TÍM</td>
+              <th class="text-start team-name">{{player2Object?.teamName}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{player1Object?.age}}</th>
+              <td>VEK</td>
+              <th class="text-start">{{player2Object?.age}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{player1Object?.matchesPlayed}}</th>
+              <td>ODOHRANÉ ZÁPASY</td>
+              <th class="text-start">{{player2Object?.matchesPlayed}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{player1Object?.average | number:'1.1-2' }}</th>
+              <td>PRIEMER</td>
+              <th class="text-start">{{player2Object?.average | number:'1.1-2'}}</th>
+            </tr>
+            <tr>
+              <th class="text-end">{{player1Object?.playerBest}}</th>
+              <td>NAJLEPŠÍ VÝKON</td>
+              <th class="text-start">{{player2Object?.playerBest}}</th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

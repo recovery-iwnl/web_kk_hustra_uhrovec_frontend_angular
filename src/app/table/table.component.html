@@ -41,7 +41,7 @@
         <td class="text-center d-sm-table-cell">{{ team.matchesWon }}</td>
         <td class="text-center d-sm-table-cell">{{ team.matchesDrawn }}</td>
         <td class="text-center d-sm-table-cell">{{ team.matchesLost }}</td>
-        <td class="text-center d-md-table-cell">{{ team.average }}</td>
+        <td class="text-center d-md-table-cell">{{ team.average | number:'1.1-2'  }}</td>
         <td class="text-center font-weight-bold">{{ team.points }}</td>
       </tr>
       </tbody>
