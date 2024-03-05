@@ -28,8 +28,28 @@ export class PlayerResultService {
     return this.http.get(this.API+'/api/v1/playerResult/getMatchesPlayed',{ params } );
   }
 
+  public getDuelsWon(id: any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/playerResult/getDuelsWon',{ params } );
+  }
+
+  public getDuelsDrawn(id: any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/playerResult/getDuelsDrawn',{ params } );
+  }
+
+  public getDuelsLost(id: any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/playerResult/getDuelsLost',{ params } );
+  }
+
   public getPlayersBest(id: any, leagueYearId : any) {
     const params = { id, leagueYearId  };
     return this.http.get(this.API+'/api/v1/playerResult/getPlayersBest',{ params } );
+  }
+
+  public getPlayersWorst(id: any, leagueYearId : any) {
+    const params = { id, leagueYearId  };
+    return this.http.get(this.API+'/api/v1/playerResult/getPlayersWorst',{ params } );
   }
 }

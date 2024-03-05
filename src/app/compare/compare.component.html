@@ -30,21 +30,19 @@
         <div class="col">
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'" class="mt-4">
             <a class="text-decoration-none text-reset">
-              <img src="assets/images/user_profile.jpg" style="max-width: 110px; max-height: 110px"
-                   class="rounded-circle border border-dark img-fluid">
+              <img src="assets/images/user_profile.jpg" class="rounded-circle border border-dark img-fluid team-photo" alt="Player Photo">
             </a>
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'" class="mt-4">
             <a class="text-decoration-none text-reset">
-              <img src="assets/images/teamPhoto.jpg" style="max-width: 110px; max-height: 110px"
-                   class="rounded-circle border border-dark img-fluid">
+              <img src="assets/images/teamPhoto.jpg" class="rounded-circle border border-dark img-fluid team-photo" alt="Team Photo">
             </a>
           </div>
 
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
-            <input list="team1Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+            <input list="team1Options" class="form-control mt-3 text-center"
                    [(ngModel)]="team1"
                    (ngModelChange)="getTeam1StatisticsByName(team1); hideChartTeam1()" placeholder="Vyber tím...">
             <datalist id="team1Options">
@@ -53,9 +51,9 @@
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
-            <input list="player1Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+            <input list="player1Options" class="form-control mt-3 text-center"
                    [(ngModel)]="player1"
-                   (ngModelChange)="getPlayer1StatisticsByName(player1)"
+                   (ngModelChange)="getPlayer1StatisticsByName(player1); hideChartPlayer1()"
                    placeholder="Vyber hráča...">
             <datalist id="player1Options">
               <option *ngFor="let player of players"
@@ -66,7 +64,7 @@
           <div class="mt-4">
             <button
               id="leagueYear1Dropdown"
-              class="btn btn-secondary dropdown-toggle"
+              class="btn btn-secondary dropdown-toggle btn-sm"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -81,7 +79,7 @@
                      (click)="setSelectedYear1(year); getTeam1StatisticsByName(team1); hideChartTeam1()"
                      href="#"> {{ year.year }}</a>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
-                     (click)="setSelectedYear1(year); getPlayer1StatisticsByName(player1)" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear1(year); getPlayer1StatisticsByName(player1); hideChartPlayer1()" href="#"> {{ year.year }}</a>
                 </li>
               </div>
             </ul>
@@ -101,20 +99,18 @@
 
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'" class="mt-4">
             <a class="text-decoration-none text-reset">
-              <img src="assets/images/user_profile.jpg" style="max-width: 110px; max-height: 110px"
-                   class="rounded-circle border border-dark img-fluid">
+              <img src="assets/images/user_profile.jpg" class="rounded-circle border border-dark img-fluid team-photo" alt="Player Photo">
             </a>
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'" class="mt-4">
             <a class="text-decoration-none text-reset">
-              <img src="assets/images/teamPhoto.jpg" style="max-width: 110px; max-height: 110px"
-                   class="rounded-circle border border-dark img-fluid">
+              <img src="assets/images/teamPhoto.jpg" class="rounded-circle border border-dark img-fluid team-photo" alt="Team Photo">
             </a>
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Tímy'">
-            <input list="team2Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+            <input list="team2Options" class="form-control mt-3 text-center"
                    [(ngModel)]="team2"
                    (ngModelChange)="getTeam2StatisticsByName(team2); hideChartTeam2()" placeholder="Vyber tím...">
             <datalist id="team2Options">
@@ -123,9 +119,9 @@
           </div>
 
           <div *ngIf="selectedCompare === 'Porovnaj Hráčov'">
-            <input list="player2Options" class="form-control mt-3 text-center" style="max-width: 350px;"
+            <input list="player2Options" class="form-control mt-3 text-center"
                    [(ngModel)]="player2"
-                   (ngModelChange)="getPlayer2StatisticsByName(player2)"
+                   (ngModelChange)="getPlayer2StatisticsByName(player2); hideChartPlayer2()"
                    placeholder="Vyber hráča...">
             <datalist id="player2Options">
               <option *ngFor="let player of players"
@@ -136,7 +132,7 @@
           <div class="mt-4">
             <button
               id="leagueYear2Dropdown"
-              class="btn btn-secondary dropdown-toggle"
+              class="btn btn-secondary dropdown-toggle btn-sm"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -148,9 +144,9 @@
               <div *ngFor="let year of years">
                 <li>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
-                     (click)="setSelectedYear2(year); getTeam2StatisticsByName(team2)" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear2(year); getTeam2StatisticsByName(team2); hideChartTeam2()" href="#"> {{ year.year }}</a>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
-                     (click)="setSelectedYear2(year); getPlayer2StatisticsByName(player2)" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear2(year); getPlayer2StatisticsByName(player2); hideChartPlayer2()" href="#"> {{ year.year }}</a>
                 </li>
               </div>
             </ul>
@@ -434,6 +430,44 @@
                 <a> {{player2Object?.playerBest}}</a>
               </th>
             </tr>
+            <tr>
+              <th class="text-end">
+                <a>{{player1Object?.playerWorst}} </a>
+                <ng-container *ngIf="player1Object?.playerWorst >= player2Object?.playerWorst">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                       class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path
+                      d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player1Object?.playerWorst < player2Object?.playerWorst">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                       class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+
+                  </svg>
+                </ng-container>
+              </th>
+              <td>NAJHORŠÍ VÝKON</td>
+              <th class="text-start">
+                <ng-container *ngIf="player2Object?.playerWorst >= player1Object?.playerWorst">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                       class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
+                    <path
+                      d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                  </svg>
+                </ng-container>
+                <ng-container *ngIf="player2Object?.playerWorst < player1Object?.playerWorst">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                       class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: red;">
+                    <path
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                  </svg>
+                </ng-container>
+                <a> {{player2Object?.playerWorst}}</a>
+              </th>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -441,7 +475,7 @@
     </div>
 
     <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Tímy'" style="max-width: 800px;">
-      <div class="text-center border-bottom">
+      <div class="text-center border-bottom" *ngIf="showChartTeam1 || showChartTeam2">
         <h2>Bilancia výsledkov</h2>
       </div>
       <div class="row">
@@ -455,6 +489,27 @@
         <div class="col" *ngIf="showChartTeam2">
           <div class="chart-container">
             <canvasjs-chart [options]="chartTeam2" [styles]="{height:'260px'}"
+                            style="max-width: 100%;"></canvasjs-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center mt-4" *ngIf="selectedCompare === 'Porovnaj Hráčov'" style="max-width: 800px;">
+      <div class="text-center border-bottom" *ngIf="showChartPlayer1 || showChartPlayer2">
+        <h2>Úspešnosť bodov</h2>
+      </div>
+      <div class="row">
+        <div class="col" *ngIf="showChartPlayer1">
+          <div class="chart-container">
+            <canvasjs-chart [options]="chartPlayer1" [styles]="{height:'260px'}"
+                            style="max-width: 100%;"></canvasjs-chart>
+          </div>
+        </div>
+
+        <div class="col" *ngIf="showChartPlayer2">
+          <div class="chart-container">
+            <canvasjs-chart [options]="chartPlayer2" [styles]="{height:'260px'}"
                             style="max-width: 100%;"></canvasjs-chart>
           </div>
         </div>

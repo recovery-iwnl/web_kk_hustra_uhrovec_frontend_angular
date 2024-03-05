@@ -3,13 +3,25 @@
 }
 
 .chart-container {
-  max-width: 250px; /* Set a maximum width for the chart container */
-  margin: 0 auto; /* Center the chart container horizontally */
-  padding: 0 10px; /* Add some padding to the chart container */
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 0 0;
 }
 
 @media (max-width: 768px) {
   .chart-container {
-    max-width: 150px; /* Adjust the maximum width for smaller screens */
+    max-width: 150px;
+  }
+}
+
+.team-photo {
+  max-width: 125px;
+  max-height: 125px;
+}
+
+@media (max-width: 768px) {
+  .team-photo {
+    max-width: 100%; /* This ensures the image will be responsive on smaller screens */
+    height: auto;
   }
 }

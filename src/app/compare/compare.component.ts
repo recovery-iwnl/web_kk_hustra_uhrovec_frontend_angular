@@ -47,6 +47,10 @@ export class CompareComponent implements OnInit {
 
   showChartTeam2: boolean = false;
 
+  showChartPlayer1: boolean = false;
+
+  showChartPlayer2: boolean = false;
+
 
   constructor(
     private teamService: TeamService,
@@ -66,7 +70,9 @@ export class CompareComponent implements OnInit {
     data: [{
       type: "pie",
       showInLegend: true,
-      yValueFormatString: "#,###.##'%'",
+      startAngle: -90,
+      toolTipContent: "{name}: ({y}) #percent %",
+      yValueFormatString: "#,###.##",
       dataPoints: [
         { y: 0, name: "Výhry", color: "#9BBB58" },
         { y: 0, name: "Remízy", color: "#F79647" },
@@ -78,13 +84,55 @@ export class CompareComponent implements OnInit {
   chartTeam2 = {
     animationEnabled: true,
     legend: {
-      horizontalAlign: "right",
+      horizontalAlign: "left",
       verticalAlign: "center"
     },
     data: [{
       type: "pie",
       showInLegend: true,
-      yValueFormatString: "#,###.##'%'",
+      startAngle: -90,
+      toolTipContent: "{name}: ({y}) #percent %",
+      yValueFormatString: "#,###.##",
+      dataPoints: [
+        { y: 0, name: "Výhry", color: "#9BBB58" },
+        { y: 0, name: "Remízy", color: "#F79647" },
+        { y: 0, name: "Prehry", color: "#C0504E" }
+      ]
+    }]
+  };
+
+  chartPlayer1 = {
+    animationEnabled: true,
+    legend: {
+      horizontalAlign: "right",
+      verticalAlign: "center"
+    },
+    data: [{
+      type: "doughnut",
+      showInLegend: true,
+      startAngle: -90,
+      toolTipContent: "{name}: ({y}) #percent %",
+      yValueFormatString: "#,###.##",
+      dataPoints: [
+        { y: 0, name: "Výhry", color: "#9BBB58" },
+        { y: 0, name: "Remízy", color: "#F79647" },
+        { y: 0, name: "Prehry", color: "#C0504E" }
+      ]
+    }]
+  };
+
+  chartPlayer2 = {
+    animationEnabled: true,
+    legend: {
+      horizontalAlign: "left",
+      verticalAlign: "center"
+    },
+    data: [{
+      type: "doughnut",
+      showInLegend: true,
+      startAngle: -90,
+      toolTipContent: "{name}: ({y}) #percent %",
+      yValueFormatString: "#,###.##",
       dataPoints: [
         { y: 0, name: "Výhry", color: "#9BBB58" },
         { y: 0, name: "Remízy", color: "#F79647" },
@@ -182,23 +230,65 @@ export class CompareComponent implements OnInit {
     );
   }
 
-
   fetchPlayer1Statistics(playerId: any, yearId: any): Observable<any> {
     return forkJoin([
       this.playerResultService.getMatchesPlayed(playerId, yearId),
+      this.playerResultService.getDuelsWon(playerId),
+      this.playerResultService.getDuelsDrawn(playerId),
+      this.playerResultService.getDuelsLost(playerId),
       this.playerResultService.getPlayersBest(playerId, yearId),
+      this.playerResultService.getPlayersWorst(playerId, yearId),
       this.playerResultService.getAverage(playerId, yearId),
       this.playerService.getAge(playerId),
       this.playerService.getTeamNameByPlayer(playerId),
     ]).pipe(
-      tap(([matchesPlayed, playerBest, average, age, teamName ]) => {
+      tap(([matchesPlayed, duelsWon, duelsDrawn, duelsLost, playerBest, playerWorst, average, age, teamName ]) => {
         this.player1Object = { // Assign fetched statistics to team1Object
           teamName,
           matchesPlayed,
+          duelsWon,
+          duelsDrawn,
+          duelsLost,
           playerBest,
+          playerWorst,
           average,
           age
         };
+        this.updatePlayer1ChartData();
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    );
+  }
+
+  fetchPlayer2Statistics(playerId: any, yearId: any): Observable<any> {
+    return forkJoin([
+      this.playerResultService.getMatchesPlayed(playerId, yearId),
+      this.playerResultService.getDuelsWon(playerId),
+      this.playerResultService.getDuelsDrawn(playerId),
+      this.playerResultService.getDuelsLost(playerId),
+      this.playerResultService.getPlayersBest(playerId, yearId),
+      this.playerResultService.getPlayersWorst(playerId, yearId),
+      this.playerResultService.getAverage(playerId, yearId),
+      this.playerService.getAge(playerId),
+      this.playerService.getTeamNameByPlayer(playerId),
+    ]).pipe(
+      tap(([matchesPlayed, duelsWon, duelsDrawn, duelsLost, playerBest, playerWorst, average, age, teamName ]) => {
+        this.player2Object = { // Assign fetched statistics to team1Object
+          teamName,
+          matchesPlayed,
+          duelsWon,
+          duelsDrawn,
+          duelsLost,
+          playerBest,
+          playerWorst,
+          average,
+          age
+        };
+        this.updatePlayer2ChartData();
         this.detectChanges();
       }),
       catchError((err) => {
@@ -209,17 +299,11 @@ export class CompareComponent implements OnInit {
   }
 
   updateTeam1ChartData() {
-    const matchesPlayed = this.team1Object.matchesPlayed;
-
-    if (matchesPlayed > 0) {
-      const matchesWonPercentage = (this.team1Object.matchesWon / matchesPlayed) * 100;
-      const matchesDrawnPercentage = (this.team1Object.matchesDrawn / matchesPlayed) * 100;
-      const matchesLostPercentage = (this.team1Object.matchesLost / matchesPlayed) * 100;
-
+    if (this.team1Object.matchesPlayed > 0) {
       this.chartTeam1.data[0].dataPoints = [
-        { y: matchesWonPercentage, name: "Výhry", color: "#9BBB58" },
-        { y: matchesDrawnPercentage, name: "Remízy", color: "#F79647" },
-        { y: matchesLostPercentage, name: "Prehry", color: "#C0504E" }
+        { y: this.team1Object.matchesWon, name: "Výhry", color: "#9BBB58" },
+        { y: this.team1Object.matchesDrawn, name: "Remízy", color: "#F79647" },
+        { y: this.team1Object.matchesLost, name: "Prehry", color: "#C0504E" }
       ];
 
       this.showChartTeam1 = true;
@@ -229,17 +313,11 @@ export class CompareComponent implements OnInit {
   }
 
   updateTeam2ChartData() {
-    const matchesPlayed = this.team2Object.matchesPlayed;
-
-    if (matchesPlayed > 0) {
-      const matchesWonPercentage = (this.team2Object.matchesWon / matchesPlayed) * 100;
-      const matchesDrawnPercentage = (this.team2Object.matchesDrawn / matchesPlayed) * 100;
-      const matchesLostPercentage = (this.team2Object.matchesLost / matchesPlayed) * 100;
-
+    if (this.team2Object.matchesPlayed > 0) {
       this.chartTeam2.data[0].dataPoints = [
-        { y: matchesWonPercentage, name: "Výhry", color: "#9BBB58" },
-        { y: matchesDrawnPercentage, name: "Remízy", color: "#F79647" },
-        { y: matchesLostPercentage, name: "Prehry", color: "#C0504E" }
+        { y: this.team2Object.matchesWon, name: "Výhry", color: "#9BBB58" },
+        { y: this.team2Object.matchesDrawn, name: "Remízy", color: "#F79647" },
+        { y: this.team2Object.matchesLost, name: "Prehry", color: "#C0504E" }
       ];
 
       this.showChartTeam2 = true;
@@ -256,31 +334,43 @@ export class CompareComponent implements OnInit {
     this.showChartTeam2 = false;
   }
 
-  fetchPlayer2Statistics(playerId: any, yearId: any): Observable<any> {
-    return forkJoin([
-      this.playerResultService.getMatchesPlayed(playerId, yearId),
-      this.playerResultService.getPlayersBest(playerId, yearId),
-      this.playerResultService.getAverage(playerId, yearId),
-      this.playerService.getAge(playerId),
-      this.playerService.getTeamNameByPlayer(playerId),
-    ]).pipe(
-      tap(([matchesPlayed, playerBest, average, age, teamName ]) => {
-        this.player2Object = { // Assign fetched statistics to team1Object
-          teamName,
-          matchesPlayed,
-          playerBest,
-          average,
-          age
-        };
-        this.detectChanges();
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    );
+  updatePlayer1ChartData() {
+    if (this.player1Object.matchesPlayed > 0) {
+
+      this.chartPlayer1.data[0].dataPoints = [
+        { y: this.player1Object.duelsWon, name: "Výhry", color: "#9BBB58" },
+        { y: this.player1Object.duelsDrawn, name: "Remízy", color: "#F79647" },
+        { y: this.player1Object.duelsLost, name: "Prehry", color: "#C0504E" }
+      ];
+
+      this.showChartPlayer1 = true;
+    } else {
+      this.showChartPlayer1 = false;
+    }
   }
 
+  updatePlayer2ChartData() {
+    if (this.player2Object.matchesPlayed > 0) {
+
+      this.chartPlayer2.data[0].dataPoints = [
+        { y: this.player2Object.duelsWon, name: "Výhry", color: "#9BBB58" },
+        { y: this.player2Object.duelsDrawn, name: "Remízy", color: "#F79647" },
+        { y: this.player2Object.duelsLost, name: "Prehry", color: "#C0504E" }
+      ];
+
+      this.showChartPlayer2 = true;
+    } else {
+      this.showChartPlayer2 = false;
+    }
+  }
+
+  hideChartPlayer1() {
+    this.showChartPlayer1 = false;
+  }
+
+  hideChartPlayer2() {
+    this.showChartPlayer2 = false;
+  }
 
   getAllTeams() {
     this.teamService.getAllTeams().pipe(
@@ -354,7 +444,6 @@ export class CompareComponent implements OnInit {
     ).subscribe();
   }
 
-
   getPlayer1StatisticsByName(name: any) {
     const selectedYearId = this.selectedYear1.yearId;
     const [firstName, lastName] = name.split(' '); // Split name into first name and last name
@@ -393,8 +482,6 @@ export class CompareComponent implements OnInit {
     } catch (e) {
     }
   }
-
-
   setSelectedCompare(text: any) {
     this.selectedCompare = text;
   }
