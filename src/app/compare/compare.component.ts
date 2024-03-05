@@ -43,6 +43,10 @@ export class CompareComponent implements OnInit {
 
   selectedCompare: any = {};
 
+  showChartTeam1: boolean = false;
+
+  showChartTeam2: boolean = false;
+
 
   constructor(
     private teamService: TeamService,
@@ -53,28 +57,41 @@ export class CompareComponent implements OnInit {
     private cdRef: ChangeDetectorRef) {
   }
 
-  chartOptions = {
+  chartTeam1 = {
     animationEnabled: true,
-    theme: "dark2",
-    exportEnabled: true,
-    title: {
-      text: "Developer Work Week"
+    legend: {
+      horizontalAlign: "right",
+      verticalAlign: "center"
     },
-    subtitles: [{
-      text: "Median hours/week"
-    }],
     data: [{
-      type: "pie", //change type to column, line, area, doughnut, etc
-      indexLabel: "{name}: {y}%",
+      type: "pie",
+      showInLegend: true,
+      yValueFormatString: "#,###.##'%'",
       dataPoints: [
-        { name: "Overhead", y: 9.1 },
-        { name: "Problem Solving", y: 3.7 },
-        { name: "Debugging", y: 36.4 },
-        { name: "Writing Code", y: 30.7 },
-        { name: "Firefighting", y: 20.1 }
+        { y: 0, name: "Výhry", color: "#9BBB58" },
+        { y: 0, name: "Remízy", color: "#F79647" },
+        { y: 0, name: "Prehry", color: "#C0504E" }
       ]
     }]
-  }
+  };
+
+  chartTeam2 = {
+    animationEnabled: true,
+    legend: {
+      horizontalAlign: "right",
+      verticalAlign: "center"
+    },
+    data: [{
+      type: "pie",
+      showInLegend: true,
+      yValueFormatString: "#,###.##'%'",
+      dataPoints: [
+        { y: 0, name: "Výhry", color: "#9BBB58" },
+        { y: 0, name: "Remízy", color: "#F79647" },
+        { y: 0, name: "Prehry", color: "#C0504E" }
+      ]
+    }]
+  };
 
   ngOnInit() {
     this.getAllTeams();
@@ -82,6 +99,7 @@ export class CompareComponent implements OnInit {
     this.getAllLeagueYears();
     this.getAllYears();
     this.selectedCompare = "Porovnaj Tímy";
+    this.detectChanges();
   }
 
   getAllYears() {
@@ -118,7 +136,7 @@ export class CompareComponent implements OnInit {
       this.teamResultService.getPoints(teamId, yearId)
     ]).pipe(
       tap(([matchesPlayed, matchesWon, matchesLost, matchesDrawn, average, points]) => {
-        this.team1Object = { // Assign fetched statistics to team1Object
+        this.team1Object = {
           matchesPlayed,
           matchesWon,
           matchesLost,
@@ -126,6 +144,7 @@ export class CompareComponent implements OnInit {
           average,
           points
         };
+        this.updateTeam1ChartData();
         this.detectChanges();
       }),
       catchError((err) => {
@@ -145,7 +164,7 @@ export class CompareComponent implements OnInit {
       this.teamResultService.getPoints(teamId, yearId)
     ]).pipe(
       tap(([matchesPlayed, matchesWon, matchesLost, matchesDrawn, average, points]) => {
-        this.team2Object = { // Assign fetched statistics to team1Object
+        this.team2Object = {
           matchesPlayed,
           matchesWon,
           matchesLost,
@@ -153,6 +172,7 @@ export class CompareComponent implements OnInit {
           average,
           points
         };
+        this.updateTeam2ChartData();
         this.detectChanges();
       }),
       catchError((err) => {
@@ -186,6 +206,54 @@ export class CompareComponent implements OnInit {
         return of(null);
       })
     );
+  }
+
+  updateTeam1ChartData() {
+    const matchesPlayed = this.team1Object.matchesPlayed;
+
+    if (matchesPlayed > 0) {
+      const matchesWonPercentage = (this.team1Object.matchesWon / matchesPlayed) * 100;
+      const matchesDrawnPercentage = (this.team1Object.matchesDrawn / matchesPlayed) * 100;
+      const matchesLostPercentage = (this.team1Object.matchesLost / matchesPlayed) * 100;
+
+      this.chartTeam1.data[0].dataPoints = [
+        { y: matchesWonPercentage, name: "Výhry", color: "#9BBB58" },
+        { y: matchesDrawnPercentage, name: "Remízy", color: "#F79647" },
+        { y: matchesLostPercentage, name: "Prehry", color: "#C0504E" }
+      ];
+
+      this.showChartTeam1 = true;
+    } else {
+      this.showChartTeam1 = false;
+    }
+  }
+
+  updateTeam2ChartData() {
+    const matchesPlayed = this.team2Object.matchesPlayed;
+
+    if (matchesPlayed > 0) {
+      const matchesWonPercentage = (this.team2Object.matchesWon / matchesPlayed) * 100;
+      const matchesDrawnPercentage = (this.team2Object.matchesDrawn / matchesPlayed) * 100;
+      const matchesLostPercentage = (this.team2Object.matchesLost / matchesPlayed) * 100;
+
+      this.chartTeam2.data[0].dataPoints = [
+        { y: matchesWonPercentage, name: "Výhry", color: "#9BBB58" },
+        { y: matchesDrawnPercentage, name: "Remízy", color: "#F79647" },
+        { y: matchesLostPercentage, name: "Prehry", color: "#C0504E" }
+      ];
+
+      this.showChartTeam2 = true;
+    } else {
+      this.showChartTeam2 = false;
+    }
+  }
+
+  hideChartTeam1() {
+    this.showChartTeam1 = false;
+  }
+
+  hideChartTeam2() {
+    this.showChartTeam2 = false;
   }
 
   fetchPlayer2Statistics(playerId: any, yearId: any): Observable<any> {
