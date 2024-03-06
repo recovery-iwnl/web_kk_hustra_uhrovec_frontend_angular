@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {AuthService} from '../services/auth/auth.service';
+import {NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../services/userService/user.service";
+import {trigger, state, style, animate, transition} from '@angular/animations';
+import {filter} from "rxjs";
 
 /**
  * HeaderComponent is an Angular component responsible for displaying the header of the application.
@@ -13,9 +14,23 @@ import {UserService} from "../services/userService/user.service";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  animations: [
+    trigger('jumpOut', [
+      state('normal', style({
+        transform: 'scale(1)'
+      })),
+      state('jump', style({
+        transform: 'scale(1.1)'
+      })),
+      transition('normal <=> jump', [
+        animate('0.3s ease-in-out')
+      ])
+    ])
+  ]
+
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   /**
    * Creates an instance of HeaderComponent.
@@ -24,7 +39,22 @@ export class HeaderComponent {
    * @param router - Reference to the Router for navigation.
    * @param userService - Reference to the UserService for managing user-related operations.
    */
-  constructor(private authService: AuthService, private router : Router, private userService: UserService) {}
+
+  animationState: any = {};
+
+  currentRoute: any;
+
+
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
+  }
 
   /**
    * Checks if a user is currently logged in.
@@ -33,6 +63,21 @@ export class HeaderComponent {
    */
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
+  }
+
+  jump() {
+    this.animationState = 'jump';
+    setTimeout(() => {
+      this.animationState = 'normal';
+    }, 300); // Adjust the timeout to match the animation duration
+  }
+
+  onMouseEnter(item: string) {
+    this.animationState[item] = 'jump';
+  }
+
+  onMouseLeave(item: string) {
+    this.animationState[item] = 'normal';
   }
 
   /**
@@ -52,4 +97,5 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
+  protected readonly localStorage = localStorage;
 }

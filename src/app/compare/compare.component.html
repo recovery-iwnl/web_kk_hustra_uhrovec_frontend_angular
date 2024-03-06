@@ -77,9 +77,9 @@
                 <li>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
                      (click)="setSelectedYear1(year); getTeam1StatisticsByName(team1); hideChartTeam1()"
-                     href="#"> {{ year.year }}</a>
+                     > {{ year.year }}</a>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
-                     (click)="setSelectedYear1(year); getPlayer1StatisticsByName(player1); hideChartPlayer1()" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear1(year); getPlayer1StatisticsByName(player1); hideChartPlayer1()" > {{ year.year }}</a>
                 </li>
               </div>
             </ul>
@@ -144,9 +144,9 @@
               <div *ngFor="let year of years">
                 <li>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
-                     (click)="setSelectedYear2(year); getTeam2StatisticsByName(team2); hideChartTeam2()" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear2(year); getTeam2StatisticsByName(team2); hideChartTeam2()"> {{ year.year }}</a>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Hráčov'"
-                     (click)="setSelectedYear2(year); getPlayer2StatisticsByName(player2); hideChartPlayer2()" href="#"> {{ year.year }}</a>
+                     (click)="setSelectedYear2(year); getPlayer2StatisticsByName(player2); hideChartPlayer2()"> {{ year.year }}</a>
                 </li>
               </div>
             </ul>

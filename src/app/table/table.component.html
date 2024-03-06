@@ -15,7 +15,7 @@
     <ul class="dropdown-menu">
       <div *ngFor="let year of years">
         <li>
-          <a class="dropdown-item custom-button" (click)="setSelectedYear(year);" href="#"> {{ year.year }}</a>
+          <a class="dropdown-item custom-button" (click)="setSelectedYear(year);"> {{ year.year }}</a>
         </li>
       </div>
     </ul>
@@ -35,7 +35,7 @@
       <tr *ngFor="let team of teams; let i = index">
         <td class="text-center">{{ i + 1 }}</td>
         <td class="font-weight-bold">
-          <a href="/vysledky" class="text-decoration-none a-text-custom">{{ team.teamName }}</a>
+          <a routerLink="/vysledky" class="text-decoration-none a-text-custom">{{ team.teamName }}</a>
         </td>
         <td class="text-center">{{ team.matchesPlayed }}</td>
         <td class="text-center d-sm-table-cell">{{ team.matchesWon }}</td>

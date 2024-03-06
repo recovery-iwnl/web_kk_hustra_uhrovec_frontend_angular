@@ -21,7 +21,7 @@
 
 
 .custom-button:hover {
-  background-color: #cccccc;
+  background-color: #e8e8e8;
   color: #343a40;
   text-decoration: none;
   cursor: pointer;
@@ -29,4 +29,9 @@
 
 .custom-height {
   height: 560px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

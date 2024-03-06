@@ -29,24 +29,46 @@
 
   .navbar-collapse {
     justify-content: center !important;
-    position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa; /* Change it to your desired background color */
+    background-color: #f8f9fa;
   }
 
   .dropdown {
-    position: static !important;
+    position: fixed; /* Set it to fixed */
+    top: 50px; /* Adjust the top position as needed */
+    right: 25px; /* Adjust the right position as needed */
   }
+
+  .navbar-brand {
+    margin-right: calc(50vw - 67px); /* Calculate the margin dynamically */
+  }
+
 
 }
 
 .dropdown-menu {
-  right: 0; /* Align the dropdown menu to the right */
-  left: auto; /* Ensure it's not positioned to the left */
+  right: 0;
+  left: auto;
   top: auto;
 }
 
+.active {
+  text-decoration: none;
+  position: relative;
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 50%; /* Center the line horizontally under the nav item */
+  transform: translateX(-50%); /* Adjust to center the line */
+  bottom: -5px; /* Adjust to position the line */
+  width: 50%; /* Set the width to half the size */
+  height: 4px;
+  background-color: black;
+  border-radius: 10px;
+}
 
 

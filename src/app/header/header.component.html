@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header</title>
-</head>
-
-<body>
 <div>
   <header class="p-2 border-bottom">
 
     <nav class="navbar navbar-expand-lg  bg-body-tertiary rounded">
       <div class="container-fluid" style="max-width: 1400px">
-
-        <a class="navbar-brand" href="/">
-          <img class="logo-margin" src="assets/images/KKlogo.png" alt="KKlogo" width="100" height="80">
-        </a>
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10"
@@ -23,83 +10,87 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        <a class="navbar-brand" routerLink="/">
+          <img class="logo-margin" src="assets/images/KKlogo.png" alt="KKlogo" width="100" height="80">
+        </a>
+
 
         <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="/domov" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/domov'"  (mouseenter)="onMouseEnter('home')" (mouseleave)="onMouseLeave('home')" [@jumpOut]="animationState['home']">
+              <a routerLink="/domov" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#house-door"></use>
                 </svg>
                 Domov
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/vysledky" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/vysledky'" (mouseenter)="onMouseEnter('results')" (mouseleave)="onMouseLeave('results')" [@jumpOut]="animationState['results']">
+              <a routerLink="/vysledky" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#journal-check"></use>
                 </svg>
                 Výsledky
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/nasledujuce-zapasy" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/nasledujuce-zapasy'" (mouseenter)="onMouseEnter('matches')" (mouseleave)="onMouseLeave('matches')" [@jumpOut]="animationState['matches']">
+              <a routerLink="/nasledujuce-zapasy" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#calendar-week"></use>
                 </svg>
                 Nasledujúce zápasy
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/tabulka" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/tabulka'" (mouseenter)="onMouseEnter('table')" (mouseleave)="onMouseLeave('table')" [@jumpOut]="animationState['table']">
+              <a routerLink="/tabulka" class="nav-link text-black custom-button custom-button:hover text-center">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                 <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#table"></use>
               </svg>
                 Tabuľka
               </a>
             </li>
-            <li class="nav-item ">
-              <a href="/hraci" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/hraci'" (mouseenter)="onMouseEnter('players')" (mouseleave)="onMouseLeave('players')" [@jumpOut]="animationState['players']">
+              <a routerLink="/hraci" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#people"></use>
                 </svg>
                 Hráči
               </a>
             </li>
-            <li class="nav-item ">
-              <a href="/porovnaj" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/porovnaj'" (mouseenter)="onMouseEnter('stats')" (mouseleave)="onMouseLeave('stats')" [@jumpOut]="animationState['stats']">
+              <a routerLink="/porovnaj" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#bar-chart-line"></use>
                 </svg>
                 Porovnaj štatistiky
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/historia" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/historia'" (mouseenter)="onMouseEnter('history')" (mouseleave)="onMouseLeave('history')" [@jumpOut]="animationState['history']">
+              <a routerLink="/historia" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#hourglass"></use>
                 </svg>
                 História
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/galeria'" (mouseenter)="onMouseEnter('gallery')" (mouseleave)="onMouseLeave('gallery')" [@jumpOut]="animationState['gallery']">
+              <a routerLink="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#image"></use>
                 </svg>
                 Fotogaléria
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/forum" class="nav-link text-black custom-button custom-button:hover text-center">
+            <li class="nav-item" [class.active]="currentRoute === '/forum'" (mouseenter)="onMouseEnter('forum')" (mouseleave)="onMouseLeave('forum')" [@jumpOut]="animationState['forum']">
+              <a routerLink="/forum" class="nav-link text-black custom-button custom-button:hover text-center">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#chat-text"></use>
                 </svg>
                 Fórum
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/users" class="nav-link text-black custom-button custom-button:hover text-center" *ngIf="isAdmin()">
+            <li class="nav-item" [class.active]="currentRoute === '/users'" (mouseenter)="onMouseEnter('users')" (mouseleave)="onMouseLeave('users')" [@jumpOut]="animationState['users']">
+              <a routerLink="/users" class="nav-link text-black custom-button custom-button:hover text-center" *ngIf="isAdmin()">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#person-gear"></use>
                 </svg>
@@ -112,25 +103,25 @@
 
 
         <div class="dropdown text-end" *ngIf="!isLoggedIn">
-          <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle "
+          <a class="link-body-emphasis text-decoration-none dropdown-toggle "
              data-bs-toggle="dropdown" aria-expanded="false">
             <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle border border-dark">
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item custom-button" href="/login">Prihlásiť sa</a></li>
+            <li><a class="dropdown-item custom-button" routerLink="/login">Prihlásiť sa</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item custom-button" href="/register">Registrovať sa</a></li>
+            <li><a class="dropdown-item custom-button" routerLink="/register">Registrovať sa</a></li>
           </ul>
         </div>
         <div class="dropdown text-end ml-auto" *ngIf="isLoggedIn">
-          <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle "
+          <a class="link-body-emphasis text-decoration-none dropdown-toggle "
              data-bs-toggle="dropdown" aria-expanded="false">
             <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle border border-dark">
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item custom-button" href="/profil">Profil</a></li>
+            <li><a class="dropdown-item custom-button" routerLink="/profil">Profil</a></li>
             <li><a class="dropdown-item custom-button" (click)="logout()">Odhlásiť sa</a></li>
           </ul>
         </div>
@@ -140,5 +131,3 @@
     </nav>
   </header>
 </div>
-</body>
-</html>

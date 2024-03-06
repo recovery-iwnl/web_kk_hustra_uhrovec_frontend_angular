@@ -1,29 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Footer</title>
-</head>
-<body>
 <div class="border-top text-black ">
   <footer class="p-2 d-flex flex-column align-items-center">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-      <li class="nav-item"><a href="/domov" class="nav-link text-black custom-button custom-button:hover text-center">Domov</a></li>
-      <li class="nav-item"><a href="#" class="nav-link text-black custom-button custom-button:hover text-center">Kontakt</a></li>
-      <li class="nav-item"><a href="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">Fotogaléria</a></li>
-      <li class="nav-item"><a href="/historia" class="nav-link text-black custom-button custom-button:hover text-center">O nás</a></li>
+      <li class="nav-item"><a routerLink="/domov" class="nav-link text-black custom-button custom-button:hover text-center">Domov</a></li>
+      <li class="nav-item"><a routerLink="#" class="nav-link text-black custom-button custom-button:hover text-center">Kontakt</a></li>
+      <li class="nav-item"><a routerLink="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">Fotogaléria</a></li>
+      <li class="nav-item"><a routerLink="/historia" class="nav-link text-black custom-button custom-button:hover text-center">O nás</a></li>
     </ul>
     <p class="text-center">© 2023 KK HuStra Uhrovec</p>
-    <a href="/" class="mb-2 mb-lg-0 link-body-emphasis text-decoration-none text-black">
-      <a href="https://www.hustra.sk/" target="_blank">
+    <div class="mb-2 mb-lg-0 link-body-emphasis text-decoration-none text-black">
+      <a href="https://www.hustra.sk/" target="_blank" >
         <img src="assets/images/logoHustra.png" alt="hustraLogo">
       </a>
-      <a href="/" target="_blank">
+      <a routerLink="/domov" >
         <img src="assets/images/KKlogo.png" alt="KKLogo" width="100" height="80">
       </a>
-    </a>
+    </div>
   </footer>
 </div>
-</body>
-</html>

@@ -16,7 +16,7 @@
       <ul class="dropdown-menu">
         <div *ngFor="let year of years">
           <li>
-            <a class="dropdown-item custom-button" (click)="setSelectedYear(year)" href="#"> {{ year.year }}</a>
+            <a class="dropdown-item custom-button" (click)="setSelectedYear(year)"> {{ year.year }}</a>
           </li>
         </div>
       </ul>
@@ -32,10 +32,12 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <a class="dropdown-item custom-button" (click)="getAllResults(); setSelectedFilter('Všetky výsledky')" href="#">Všetky výsledky</a>
+          <a class="dropdown-item custom-button" (click)="getAllResults(); setSelectedFilter('Všetky výsledky')">Všetky
+            výsledky</a>
         </li>
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(); setSelectedFilter('Výsledky Uhrovec')" href="#">Výsledky Uhrovec</a>
+          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
+            Uhrovec</a>
         </li>
       </ul>
     </div>
@@ -228,7 +230,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" style="margin-left: -33px;">
-            <mat-label>Ročník Ligy</mat-label>
+              <mat-label>Ročník Ligy</mat-label>
               <mat-select [(ngModel)]="result.leagueYear" required>
                 <mat-option *ngFor="let year of years" [value]="year">{{ year.year }}</mat-option>
               </mat-select>
@@ -620,7 +622,8 @@
           </div>
         </div>
         <div class="d-flex justify-content-end modal-footer">
-          <button type="submit" mat-raised-button color="basic" [disabled]="!isFormValid() || !areInputsValid() || areTeamsOrPlayersSame()" data-bs-dismiss="modal"
+          <button type="submit" mat-raised-button color="basic"
+                  [disabled]="!isFormValid() || !areInputsValid() || areTeamsOrPlayersSame()" data-bs-dismiss="modal"
                   (click)="addResult()">Pridať výsledok
           </button>
         </div>
