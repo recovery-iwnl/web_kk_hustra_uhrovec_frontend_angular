@@ -1,7 +1,7 @@
 
-<div id="carouselExampleAutoplaying" class="carousel slide bg-dark py-3" data-bs-ride="carousel">
+<div id="carouselExampleAutoplaying" class="carousel slide bg-light py-3" data-bs-ride="carousel">
   <div class="carousel-inner" style="overflow: hidden;">
-    <div class="carousel-item" *ngFor="let image of images; let i = index" [class.active]="i === 0">
+    <div class="carousel-item " *ngFor="let image of images; let i = index" [class.active]="i === 0">
       <a>
         <div class="carousel-image">
           <img [src]="'http://localhost:8080/api/v1/image/' + image.name" class="d-block mx-auto w-50" [alt]="image.alt">

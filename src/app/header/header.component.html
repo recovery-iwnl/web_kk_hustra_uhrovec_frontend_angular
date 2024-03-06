@@ -7,86 +7,138 @@
 </head>
 
 <body>
-<div class="bg-dark-blue bg-gradient">
-<header class="p-2 border-bottom">
-    <div class="container d-flex align-items-center justify-content-between">
-      <div class="justify-content-lg-start">
-        <a href="/" class="align-items-center link-body-emphasis text-decoration-none">
-          <img class="logo-margin" src="assets/images/KKlogo.png" alt="KKlogo" width="110" height="90">
-        </a>
-      </div>
-      <div class="fs-2 text-center ">
-        <a class="text-sm-center text-white font-custom text-decoration-none" href="/domov">Kolkársky Klub HuStra Uhrovec</a>
-      </div>
-      <div class="dropdown text-end" *ngIf="!isLoggedIn">
-        <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
-           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small">
-          <li><a class="dropdown-item custom-button" href="/login">Prihlásiť sa</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item custom-button" href="/register">Registrovať sa</a></li>
-        </ul>
-      </div>
-      <div class="dropdown text-end" *ngIf="isLoggedIn">
-        <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle white-dropdown-arrow"
-           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small">
-          <li><a class="dropdown-item custom-button" href="/profil">Profil</a></li>
-          <li><a class="dropdown-item custom-button" (click)="logout()">Odhlásiť sa</a></li>
-        </ul>
-      </div>
-    </div>
+<div>
+  <header class="p-2 border-bottom">
 
-  <nav class="navbar navbar-expand-lg bg-body-tertiary rounded bg-dark text-white">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10"
-              aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav class="navbar navbar-expand-lg  bg-body-tertiary rounded">
+      <div class="container-fluid" style="max-width: 1400px">
 
-      <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/domov">Domov</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/vysledky">Výsledky</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/nasledujuce-zapasy">Nasledujúce zápasy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/tabulka">Tabuľka</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link custom-button custom-button:hover" href="/hraci">Hráči</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link custom-button custom-button:hover" href="/porovnaj">Porovnaj štatistiky</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/historia">História</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/galeria">Fotogaléria</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/forum">Fórum</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link custom-button custom-button:hover" href="/users" *ngIf="isAdmin()">Používatelia</a>
-          </li>
-        </ul>
+        <a class="navbar-brand" href="/">
+          <img class="logo-margin" src="assets/images/KKlogo.png" alt="KKlogo" width="100" height="80">
+        </a>
+
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10"
+                aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="/domov" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#house-door"></use>
+                </svg>
+                Domov
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/vysledky" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#journal-check"></use>
+                </svg>
+                Výsledky
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/nasledujuce-zapasy" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#calendar-week"></use>
+                </svg>
+                Nasledujúce zápasy
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/tabulka" class="nav-link text-black custom-button custom-button:hover text-center">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#table"></use>
+              </svg>
+                Tabuľka
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a href="/hraci" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#people"></use>
+                </svg>
+                Hráči
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a href="/porovnaj" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#bar-chart-line"></use>
+                </svg>
+                Porovnaj štatistiky
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/historia" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#hourglass"></use>
+                </svg>
+                História
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#image"></use>
+                </svg>
+                Fotogaléria
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/forum" class="nav-link text-black custom-button custom-button:hover text-center">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#chat-text"></use>
+                </svg>
+                Fórum
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/users" class="nav-link text-black custom-button custom-button:hover text-center" *ngIf="isAdmin()">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#person-gear"></use>
+                </svg>
+                Používatelia
+              </a>
+            </li>
+          </ul>
+        </div>
+
+
+
+        <div class="dropdown text-end" *ngIf="!isLoggedIn">
+          <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle "
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle border border-dark">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item custom-button" href="/login">Prihlásiť sa</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item custom-button" href="/register">Registrovať sa</a></li>
+          </ul>
+        </div>
+        <div class="dropdown text-end ml-auto" *ngIf="isLoggedIn">
+          <a href="#" class="link-body-emphasis text-decoration-none dropdown-toggle "
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32" class="rounded-circle border border-dark">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item custom-button" href="/profil">Profil</a></li>
+            <li><a class="dropdown-item custom-button" (click)="logout()">Odhlásiť sa</a></li>
+          </ul>
+        </div>
+
+
       </div>
-    </div>
-  </nav>
-</header>
+    </nav>
+  </header>
 </div>
 </body>
 </html>
