@@ -36,13 +36,13 @@
   }
 
   .dropdown {
-    position: fixed; /* Set it to fixed */
-    top: 50px; /* Adjust the top position as needed */
-    right: 25px; /* Adjust the right position as needed */
+    position: absolute;
+    top: 50px;
+    right: 25px;
   }
 
   .navbar-brand {
-    margin-right: calc(50vw - 67px); /* Calculate the margin dynamically */
+    margin-right: calc(50vw - 69px);
   }
 
 
@@ -62,13 +62,24 @@
 .active::after {
   content: '';
   position: absolute;
-  left: 50%; /* Center the line horizontally under the nav item */
-  transform: translateX(-50%); /* Adjust to center the line */
-  bottom: -5px; /* Adjust to position the line */
-  width: 50%; /* Set the width to half the size */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -5px;
+  width: 50%;
   height: 4px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.83);
   border-radius: 10px;
+  animation: fadeIn 2s ease forwards;
 }
 
+@keyframes fadeIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 50%;
+    opacity: 1;
+  }
+}
 

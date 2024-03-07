@@ -86,7 +86,7 @@
           </div>
 
         </div>
-        <div class="col mt-5">
+        <div class="col mt-5 hide-on-small-screen">
           <div>
             <div class="card-body">
               VS
@@ -163,7 +163,7 @@
             </thead>
             <tbody>
             <tr>
-              <th class="text-end team-name">
+              <th class="text-end team-name rounded-top-left">
                 <a>{{team1Object?.matchesPlayed}} </a>
                 <ng-container *ngIf="team1Object?.matchesPlayed >= team2Object?.matchesPlayed">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -182,7 +182,7 @@
                 </ng-container>
               </th>
               <td>ODOHRANÉ ZÁPASY</td>
-              <th class="text-start team-name">
+              <th class="text-start team-name rounded-top-right">
                 <ng-container *ngIf="team2Object?.matchesPlayed >= team1Object?.matchesPlayed">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                        class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
@@ -255,7 +255,7 @@
               </th>
             </tr>
             <tr>
-              <th class="text-end team-name">
+              <th class="text-end team-name rounded-bottom-left">
                 <a>{{team1Object?.points}} </a>
                 <ng-container *ngIf="team1Object?.points >= team2Object?.points">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -274,7 +274,7 @@
                 </ng-container>
               </th>
               <td>BODY</td>
-              <th class="text-start team-name">
+              <th class="text-start team-name rounded-bottom-right">
                 <ng-container *ngIf="team2Object?.points >= team1Object?.points">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                        class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16" style="fill: green;">
@@ -307,9 +307,9 @@
             </thead>
             <tbody>
             <tr>
-              <th class="text-end team-name">{{ player1Object?.teamName}}</th>
+              <th class="text-end team-name rounded-top-left">{{ player1Object?.teamName}}</th>
               <td>TÍM</td>
-              <th class="text-start team-name">{{player2Object?.teamName}}</th>
+              <th class="text-start team-name rounded-top-right">{{player2Object?.teamName}}</th>
             </tr>
             <tr>
               <th class="text-end">{{player1Object?.age}}</th>

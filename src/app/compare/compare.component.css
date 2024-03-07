@@ -8,6 +8,22 @@
   padding: 0 0;
 }
 
+.rounded-top-left {
+  border-top-left-radius: 5px;
+}
+
+.rounded-top-right {
+  border-top-right-radius: 5px;
+}
+
+.rounded-bottom-left {
+  border-bottom-right-radius: 5px;
+}
+
+.rounded-bottom-right {
+  border-bottom-right-radius: 5px;
+}
+
 @media (max-width: 768px) {
   .chart-container {
     max-width: 150px;
@@ -23,5 +39,11 @@
   .team-photo {
     max-width: 100%; /* This ensures the image will be responsive on smaller screens */
     height: auto;
+  }
+}
+
+@media (max-width: 374px) {
+  .hide-on-small-screen {
+    display: none;
   }
 }

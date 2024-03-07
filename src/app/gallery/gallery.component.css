@@ -6,15 +6,33 @@
   transition: background-color 0.5s, color 0.9s;
 }
 
+
 @media (max-width: 576px) {
   .custom-button-image {
     padding: 8px 15px;
     font-size: 15px;
   }
 
+  .carousel-item img {
+    width: 100%;
+    height: auto;
+  }
+
   .icon {
     width: 20px;
     height: 20px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+}
+
+@media (min-width: 577px) {
+  .carousel-item img {
+    width: 50%;
+    height: auto;
   }
 }
 

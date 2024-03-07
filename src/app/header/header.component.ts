@@ -26,7 +26,7 @@ import {filter} from "rxjs";
       transition('normal <=> jump', [
         animate('0.3s ease-in-out')
       ])
-    ])
+    ]),
   ]
 
 })

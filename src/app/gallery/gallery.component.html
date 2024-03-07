@@ -1,15 +1,15 @@
 
 <div id="carouselExampleAutoplaying" class="carousel slide bg-light py-3" data-bs-ride="carousel">
-  <div class="carousel-inner" style="overflow: hidden;">
-    <div class="carousel-item " *ngFor="let image of images; let i = index" [class.active]="i === 0">
+  <div class="carousel-inner" style="overflow: hidden;" >
+    <div class="carousel-item " *ngFor="let image of images; let i = index" [class.active]="i === 0" >
       <a>
         <div class="carousel-image">
-          <img [src]="'http://localhost:8080/api/v1/image/' + image.name" class="d-block mx-auto w-50" [alt]="image.alt">
+          <img [src]="'http://localhost:8080/api/v1/image/' + image.name" class="d-block mx-auto  rounded" [alt]="image.alt">
           <button type="button" class="btn-close custom-button-image position-absolute top-0 end-0 mt-0" style="z-index: 100"
                   aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,image.id)">
           </button>
 
-          <button type="button" class="btn btn-success position-absolute bottom-0 end-0 mt-0 button-small" style="z-index: 150;"
+          <button type="button" class="btn btn-outline-dark position-absolute bottom-0 end-0 mt-0 button-small" style="z-index: 150;"
                   aria-label="Add" *ngIf="isAdmin()" data-bs-toggle="modal" data-bs-target="#addImageModal">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-upload icon" viewBox="0 0 16 16">
               <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
