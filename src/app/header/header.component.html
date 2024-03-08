@@ -1,7 +1,5 @@
 <div>
-  <header class="p-2 border-bottom">
-
-    <nav class="navbar navbar-expand-lg  bg-body-tertiary rounded">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid" style="max-width: 1400px">
 
 
@@ -18,84 +16,103 @@
         <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
           <ul class="navbar-nav">
             <li class="nav-item" [class.active]="currentRoute === '/domov'" (mouseenter)="onMouseEnter('home')" (mouseleave)="onMouseLeave('home')" [@jumpOut]="animationState['home']">
-              <a routerLink="/domov" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#house-door"></use>
-                </svg>
-                Domov
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/domov" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#house-door"></use>
+                  </svg>
+                  Domov</a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/vysledky'" (mouseenter)="onMouseEnter('results')" (mouseleave)="onMouseLeave('results')" [@jumpOut]="animationState['results']">
-              <a routerLink="/vysledky" class="nav-link text-black custom-button custom-button:hover text-center">
+              <h6 class="text-uppercase font-weight-bold text-center">
+              <a routerLink="/vysledky" class=" nav-link text-black">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
                   <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#journal-check"></use>
                 </svg>
                 Výsledky
               </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/nasledujuce-zapasy'" (mouseenter)="onMouseEnter('matches')" (mouseleave)="onMouseLeave('matches')" [@jumpOut]="animationState['matches']">
-              <a routerLink="/nasledujuce-zapasy" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#calendar-week"></use>
-                </svg>
-                Nasledujúce zápasy
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/nasledujuce-zapasy" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#calendar-week"></use>
+                  </svg>
+                  Zápasy
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/tabulka'" (mouseenter)="onMouseEnter('table')" (mouseleave)="onMouseLeave('table')" [@jumpOut]="animationState['table']">
-              <a routerLink="/tabulka" class="nav-link text-black custom-button custom-button:hover text-center">
-              <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#table"></use>
-              </svg>
-                Tabuľka
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/tabulka" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#table"></use>
+                  </svg>
+                  Tabuľka
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/hraci'" (mouseenter)="onMouseEnter('players')" (mouseleave)="onMouseLeave('players')" [@jumpOut]="animationState['players']">
-              <a routerLink="/hraci" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#people"></use>
-                </svg>
-                Hráči
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/hraci" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#people"></use>
+                  </svg>
+                  Hráči
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/porovnaj'" (mouseenter)="onMouseEnter('stats')" (mouseleave)="onMouseLeave('stats')" [@jumpOut]="animationState['stats']">
-              <a routerLink="/porovnaj" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#bar-chart-line"></use>
-                </svg>
-                Porovnaj štatistiky
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/porovnaj" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#bar-chart-line"></use>
+                  </svg>
+                  Štatistiky
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/historia'" (mouseenter)="onMouseEnter('history')" (mouseleave)="onMouseLeave('history')" [@jumpOut]="animationState['history']">
-              <a routerLink="/historia" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#hourglass"></use>
-                </svg>
-                História
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/historia" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#hourglass"></use>
+                  </svg>
+                  História
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/galeria'" (mouseenter)="onMouseEnter('gallery')" (mouseleave)="onMouseLeave('gallery')" [@jumpOut]="animationState['gallery']">
-              <a routerLink="/galeria" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#image"></use>
-                </svg>
-                Fotogaléria
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/galeria" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#image"></use>
+                  </svg>
+                  Galéria
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/forum'" (mouseenter)="onMouseEnter('forum')" (mouseleave)="onMouseLeave('forum')" [@jumpOut]="animationState['forum']">
-              <a routerLink="/forum" class="nav-link text-black custom-button custom-button:hover text-center">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#chat-text"></use>
-                </svg>
-                Fórum
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center">
+                <a routerLink="/forum" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#chat-text"></use>
+                  </svg>
+                  Fórum
+                </a>
+              </h6>
             </li>
             <li class="nav-item" [class.active]="currentRoute === '/users'" (mouseenter)="onMouseEnter('users')" (mouseleave)="onMouseLeave('users')" [@jumpOut]="animationState['users']">
-              <a routerLink="/users" class="nav-link text-black custom-button custom-button:hover text-center" *ngIf="isAdmin()">
-                <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#person-gear"></use>
-                </svg>
-                Používatelia
-              </a>
+              <h6 class="text-uppercase font-weight-bold text-center" *ngIf="isAdmin()">
+                <a routerLink="/users" class=" nav-link text-black">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24" fill="black">
+                    <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#person-gear"></use>
+                  </svg>
+                  Používatelia
+                </a>
+              </h6>
             </li>
           </ul>
         </div>
@@ -125,9 +142,6 @@
             <li><a class="dropdown-item custom-button" (click)="logout()">Odhlásiť sa</a></li>
           </ul>
         </div>
-
-
       </div>
     </nav>
-  </header>
 </div>

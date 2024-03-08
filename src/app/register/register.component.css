@@ -1,7 +1,7 @@
 .bgLogin {
   background: url('src/assets/images/loginBg.png');
   background-size: cover;
-  padding: 20px;
+  padding: 3rem;
 }
 
 form {
