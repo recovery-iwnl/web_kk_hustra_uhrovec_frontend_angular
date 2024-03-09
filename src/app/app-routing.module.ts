@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
   { path: 'domov', component: HomeComponent },
   { path: 'hraci', component: PlayersComponent },
-  { path: 'porovnaj', component: CompareComponent },
+  { path: 'statistiky', component: CompareComponent },
   { path: 'tabulka', component: TableComponent },
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },

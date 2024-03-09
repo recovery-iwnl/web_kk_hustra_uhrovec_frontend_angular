@@ -44,9 +44,14 @@ export class HeaderComponent implements OnInit {
 
   currentRoute: any;
 
+  scrollPosition: number = 0;
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
   }
+
+
+
+
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -54,6 +59,18 @@ export class HeaderComponent implements OnInit {
         this.currentRoute = event.url;
       }
     });
+  }
+
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    this.scrollPosition = window.pageYOffset;
+  }
+
+  getBackgroundStyle() {
+    return {
+      'background-position': `center ${this.scrollPosition / 2 }px` // Adjust the speed of the parallax effect by changing the division value
+    };
   }
 
   /**
