@@ -28,7 +28,7 @@
   background: rgba(0, 0, 0, 0.47);
 }
 .rounded-custom {
-  border-radius: 3%;
+  border-radius: 20px;
 }
 
 .image-300-height {
