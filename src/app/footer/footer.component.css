@@ -1,1 +1,6 @@
-
+.footer-image {
+  background-image: url('src/assets/images/kolky.jpg');
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+}

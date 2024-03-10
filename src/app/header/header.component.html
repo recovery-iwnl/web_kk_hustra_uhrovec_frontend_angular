@@ -1,8 +1,11 @@
 <div class="header-image" [ngStyle]="getBackgroundStyle()">
 
   <header class="header">
+
     <div class="text-box">
-      <h1 class="heading-primary mt-5">
+      <img src="assets/images/LogoObrys.png" alt="mdo" width="100" height="150"
+           class=" cursor img-fluid display-small ">
+      <h1 class="small-text mt-lg-5 mt-sm-2 mt-md-2">
         <span class="heading-primary-sub">KK HuStra Uhrovec</span>
       </h1>
     </div>
@@ -98,6 +101,33 @@
             </li>
             </div>
           </ul>
+
+
+        </div>
+
+        <div class="dropdown text-end" *ngIf="!isLoggedIn">
+          <a class="link-body-emphasis text-decoration-none dropdown-toggle "
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
+                 class="rounded-circle border border-dark">
+          </a>
+          <ul class="dropdown-menu dropdown-custom text-small">
+            <li><a class="dropdown-item custom-button" routerLink="/login">Prihlásiť sa</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item custom-button" routerLink="/register">Registrovať sa</a></li>
+          </ul>
+        </div>
+        <div class="dropdown text-center dropdown-toggle cursor  link-body-emphasis text-white" *ngIf="isLoggedIn">
+          <a data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
+                 class="rounded-circle border border-dark ">
+          </a>
+          <ul class="dropdown-menu dropdown-custom text-small">
+            <li><a class="dropdown-item" routerLink="/profil">Profil</a></li>
+            <li><a class="dropdown-item cursor" (click)="logout()">Odhlásiť sa</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -108,31 +138,7 @@
 
 
 
-<!-- Container 5 <div class="dropdown text-end" *ngIf="!isLoggedIn">
-  <a class="link-body-emphasis text-decoration-none dropdown-toggle "
-     data-bs-toggle="dropdown" aria-expanded="false">
-    <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
-         class="rounded-circle border border-dark">
-  </a>
-  <ul class="dropdown-menu text-small">
-    <li><a class="dropdown-item custom-button" routerLink="/login">Prihlásiť sa</a></li>
-    <li>
-      <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item custom-button" routerLink="/register">Registrovať sa</a></li>
-  </ul>
-</div>
-<div class="dropdown text-center " *ngIf="isLoggedIn">
-  <a class="link-body-emphasis text-decoration-none dropdown-toggle "
-     data-bs-toggle="dropdown" aria-expanded="false">
-    <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
-         class="rounded-circle border border-dark">
-  </a>
-  <ul class="dropdown-menu text-small">
-    <li><a class="dropdown-item" routerLink="/profil">Profil</a></li>
-    <li><a class="dropdown-item " (click)="logout()">Odhlásiť sa</a></li>
-  </ul>
-</div> -->
+
 
 
 

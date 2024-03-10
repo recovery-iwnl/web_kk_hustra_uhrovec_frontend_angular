@@ -53,23 +53,52 @@
   background-size: cover;
   background-position: top;
   background-attachment: fixed;
-
 }
 
 .cursor {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .header {
+    height: 10rem;
+  }
+
+  .display-small {
+    max-width: 50px;
+    max-height: 150px;
+  }
+
+  .small-text {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .header {
+    height: 20rem;
+  }
+
+  .no-display {
+  }
+
+}
+
+.dropdown-custom {
+  right: 0; /* Align the dropdown menu to the right */
+  left: auto; /* Ensure it's not positioned to the left */
+  top: auto;
+}
+
+
 .header {
   position: relative;
-  height: 20rem;
   background-color: rgb(16 23 61 / 91%);
 }
 
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke=' rgba(245, 235, 235, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
-
 
 .text-box {
   position: absolute;
