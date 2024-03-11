@@ -1,37 +1,40 @@
-<body class="body-min-height bgLogin">
-<div *ngIf="isLoggedIn">
-  <form>
-    <img src="assets/images/user_profile.jpg" class="img-circle img-fluid" alt="avatar" >
-    <h4 class="text-center form-control" >Ste prihlásený s účtom:</h4>
-     <h4 class="text-center form-control fs-4"> {{ localStorage.getItem("token") }} </h4>
-    <button type="button" class="btn btn-danger mt-4" (click)="logout()">Odhlásiť sa</button>
-  </form>
-</div>
-<div *ngIf="!isLoggedIn">
-<form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
-  <h1>Prihlásenie</h1>
+<div>
+  <div class="body-min-height">
+    <div *ngIf="isLoggedIn">
+      <form>
+        <img src="assets/images/user_profile.jpg" class="img-circle img-fluid" alt="avatar">
+        <h4 class="text-center form-control">Ste prihlásený s účtom:</h4>
+        <h4 class="text-center form-control fs-4"> {{ localStorage.getItem("token") }} </h4>
+        <button type="button" class="btn btn-danger mt-4" (click)="logout()">Odhlásiť sa</button>
+      </form>
+    </div>
+    <div *ngIf="!isLoggedIn">
+      <form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
+        <h1>Prihlásenie</h1>
 
-  <div class="form-control">
-    <label for="email">Email</label>
-    <input
-      formControlName="email"
-      id="email"
-      autocomplete="new-password"
-      type="email"
-    />
-    <label for="password">Heslo</label>
-    <input
-      formControlName="password"
-      id="password"
-      autocomplete="new-password"
-      type="password"
-    />
-  </div>
-  <button type="submit">Prihlásiť</button>
-  <div class="text-center register">
-    <p>Ešte nemáte účet? <a routerLink="/register">Zaregistrujte sa</a></p>
-  </div>
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input
+            formControlName="email"
+            id="email"
+            autocomplete="new-password"
+            type="email"
+          />
+          <label for="password">Heslo</label>
+          <input
+            formControlName="password"
+            id="password"
+            autocomplete="new-password"
+            type="password"
+          />
+        </div>
+        <button type="submit">Prihlásiť</button>
+        <div class="text-center register">
+          <p>Ešte nemáte účet? <a routerLink="/register" style="color: #0849ec">Zaregistrujte sa</a></p>
+        </div>
 
-</form>
+      </form>
+    </div>
+  </div>
 </div>
-<body>
+

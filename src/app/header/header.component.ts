@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
 
   currentRoute: any;
 
-  scrollPosition: number = 0;
+  isSticky: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
   }
@@ -59,19 +59,20 @@ export class HeaderComponent implements OnInit {
         this.currentRoute = event.url;
       }
     });
+    this.onScroll();
   }
 
 
   @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    this.scrollPosition = window.pageYOffset;
+  onScroll(event?: any) {
+    const headerHeight = document.querySelector('.header')?.clientHeight || 0;
+    if (window.pageYOffset > headerHeight) {
+      this.isSticky = true;
+    } else {
+      this.isSticky = false;
+    }
   }
 
-  getBackgroundStyle() {
-    return {
-      'background-position': `center ${this.scrollPosition / 2 }px` // Adjust the speed of the parallax effect by changing the division value
-    };
-  }
 
   /**
    * Checks if a user is currently logged in.

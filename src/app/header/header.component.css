@@ -3,12 +3,22 @@
 }
 
 .font-custom {
-  font-family: 'Custom', "Arial Black", serif;
-  color: white;
-  text-shadow: -1px -1px 0 #000,
-  1px -1px 0 #000,
-  -1px 1px 0 #000,
-  1px 1px 0 #000;
+  font-family: 'TITLE2', sans-serif;
+}
+
+@font-face {
+  font-family: 'TITLE';
+  src: url('src/assets/fonts/TEKKERS3FV.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TITLE2';
+  src: url('src/assets/fonts/NoizeSportFreeVertionRegular-MVwye.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TITLE3';
+  src: url('src/assets/fonts/SportypoReguler-OVGwe.ttf') format('truetype');
 }
 
 .logo-margin {
@@ -84,6 +94,24 @@
 
 }
 
+@media (min-width: 992px) {
+  .hide-log-small {
+    display: none;
+  }
+
+}
+
+@media (max-width: 991px) {
+  .hide-log-big {
+    display: none;
+  }
+
+}
+
+.mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color: #e0e0e0;
+}
+
 .dropdown-custom {
   right: 0; /* Align the dropdown menu to the right */
   left: auto; /* Ensure it's not positioned to the left */
@@ -94,6 +122,18 @@
 .header {
   position: relative;
   background-color: rgb(16 23 61 / 91%);
+}
+
+.navbar {
+  position: relative;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .navbar-toggler-icon {

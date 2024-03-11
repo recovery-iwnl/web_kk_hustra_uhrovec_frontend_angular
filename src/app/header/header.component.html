@@ -1,4 +1,4 @@
-<div class="header-image" [ngStyle]="getBackgroundStyle()">
+<div class="header-image">
 
   <header class="header">
 
@@ -6,29 +6,27 @@
       <img src="assets/images/LogoObrys.png" alt="mdo" width="100" height="150"
            class=" cursor img-fluid display-small ">
       <h1 class="small-text mt-lg-5 mt-sm-2 mt-md-2">
-        <span class="heading-primary-sub">KK HuStra Uhrovec</span>
+        <span class="heading-primary-sub font-custom">KK HuStra Uhrovec</span>
       </h1>
     </div>
   </header>
 
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(41,47,77,0.93);" >
-      <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light" [ngClass]="{ 'sticky': isSticky }" style="background-color: rgba(41,47,77,0.93);" >
+      <div class="container">
 
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10"
-                aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarExample10"
+                aria-controls="navbarExample10" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbarExample10">
           <ul class="navbar-nav">
             <div>
               <li class="nav-item" [class.active]="currentRoute === '/domov'" (mouseenter)="onMouseEnter('home')"
                   (mouseleave)="onMouseLeave('home')" [@jumpOut]="animationState['home']">
                 <h6 class="text-uppercase font-weight-bold text-center">
-                  <a routerLink="/domov" class="nav-link text-custom-color">
+                  <a routerLink="/domov" class="nav-link text-custom-color" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" >
                     Domov</a>
                 </h6>
               </li>
@@ -39,15 +37,15 @@
              || currentRoute === '/tabulka' || currentRoute === '/statistiky'" (mouseenter)="onMouseEnter('results')"
                   (mouseleave)="onMouseLeave('results')" [@jumpOut]="animationState['results']">
                 <h6 class="text-uppercase font-weight-bold text-center">
-                  <a class=" nav-link text-custom-color dropdown-toggle cursor">Výsledky
+                  <a class=" nav-link text-custom-color dropdown-toggle cursor" >Výsledky
                   </a>
                 </h6>
               </li>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" routerLink="/vysledky">Výsledky</a></li>
-                <li><a class="dropdown-item" routerLink="/nasledujuce-zapasy">Zápasy</a></li>
-                <li><a class="dropdown-item" routerLink="/tabulka">Tabuľka</a></li>
-                <li><a class="dropdown-item" routerLink="/statistiky">Štatistiky</a></li>
+                <li><a class="dropdown-item" routerLink="/vysledky" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Výsledky</a></li>
+                <li><a class="dropdown-item" routerLink="/nasledujuce-zapasy" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Zápasy</a></li>
+                <li><a class="dropdown-item" routerLink="/tabulka" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Tabuľka</a></li>
+                <li><a class="dropdown-item" routerLink="/statistiky" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Štatistiky</a></li>
               </ul>
             </div>
 
@@ -55,7 +53,7 @@
               <li class="nav-item" [class.active]="currentRoute === '/hraci'" (mouseenter)="onMouseEnter('players')"
                   (mouseleave)="onMouseLeave('players')" [@jumpOut]="animationState['players']">
                 <h6 class="text-uppercase font-weight-bold text-center">
-                  <a routerLink="/hraci" class=" nav-link text-custom-color">
+                  <a routerLink="/hraci" class=" nav-link text-custom-color" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
                     Hráči
                   </a>
                 </h6>
@@ -63,17 +61,18 @@
             </div>
 
             <div class="dropdown">
-              <li class="nav-item" [class.active]="currentRoute === '/historia' || currentRoute === '/galeria'" (mouseenter)="onMouseEnter('history')"
+              <li class="nav-item" [class.active]="currentRoute === '/historia' || currentRoute === '/galeria'"
+                  (mouseenter)="onMouseEnter('history')"
                   (mouseleave)="onMouseLeave('history')" [@jumpOut]="animationState['history']">
                 <h6 class="text-uppercase font-weight-bold text-center">
-                  <a class=" nav-link text-custom-color dropdown-toggle cursor">
+                  <a class=" nav-link text-custom-color dropdown-toggle cursor" >
                     O nás
                   </a>
                 </h6>
               </li>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" routerLink="/historia">História</a></li>
-                <li><a class="dropdown-item" routerLink="/galeria">Galéria</a></li>
+                <li><a class="dropdown-item" routerLink="/historia" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">História</a></li>
+                <li><a class="dropdown-item" routerLink="/galeria" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Galéria</a></li>
               </ul>
             </div>
 
@@ -81,7 +80,7 @@
               <li class="nav-item" [class.active]="currentRoute === '/forum'" (mouseenter)="onMouseEnter('forum')"
                   (mouseleave)="onMouseLeave('forum')" [@jumpOut]="animationState['forum']">
                 <h6 class="text-uppercase font-weight-bold text-center">
-                  <a routerLink="/forum" class=" nav-link text-custom-color">
+                  <a routerLink="/forum" class=" nav-link text-custom-color" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
                     Fórum
                   </a>
                 </h6>
@@ -90,54 +89,85 @@
 
 
             <div>
-            <li class="nav-item" [class.active]="currentRoute === '/users'" (mouseenter)="onMouseEnter('users')"
-                (mouseleave)="onMouseLeave('users')" [@jumpOut]="animationState['users']">
-              <h6 class="text-uppercase font-weight-bold text-center" *ngIf="isAdmin()">
-                <a routerLink="/users" class=" nav-link text-custom-color">
+              <li class="nav-item" [class.active]="currentRoute === '/users'" (mouseenter)="onMouseEnter('users')"
+                  (mouseleave)="onMouseLeave('users')" [@jumpOut]="animationState['users']">
+                <h6 class="text-uppercase font-weight-bold text-center" *ngIf="isAdmin()">
+                  <a routerLink="/users" class=" nav-link text-custom-color" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
 
-                  Používatelia
-                </a>
-              </h6>
-            </li>
+                    Používatelia
+                  </a>
+                </h6>
+              </li>
             </div>
+
+
+            <div class="hide-log-small">
+              <li class="nav-item mt-5">
+                <h6 class="text-uppercase font-weight-bold text-center">
+                  <div class="row" *ngIf="isLoggedIn">
+                    <div class="col">
+                      <button mat-stroked-button class="text-center text-white" routerLink="/profil" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Profil</button>
+                    </div>
+                    <div class="col">
+                      <button mat-stroked-button color="warn" class="text-center" (click)="logout()" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Odhlásiť sa
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="!isLoggedIn">
+                    <div class="col">
+                      <button mat-stroked-button class="text-center text-white" routerLink="/login" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Prihlásiť sa
+                      </button>
+                    </div>
+                    <div class="col">
+                      <button mat-stroked-button class="text-center text-white" routerLink="/register" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Registrovať sa
+                      </button>
+                    </div>
+                  </div>
+                </h6>
+              </li>
+            </div>
+
           </ul>
 
 
         </div>
 
-        <div class="dropdown text-end" *ngIf="!isLoggedIn">
-          <a class="link-body-emphasis text-decoration-none dropdown-toggle "
-             data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
-                 class="rounded-circle border border-dark">
-          </a>
-          <ul class="dropdown-menu dropdown-custom text-small">
-            <li><a class="dropdown-item custom-button" routerLink="/login">Prihlásiť sa</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item custom-button" routerLink="/register">Registrovať sa</a></li>
-          </ul>
+        <div class="hide-log-big cursor">
+          <div class="dropdown text-end dropdown-toggle link-body-emphasis text-white" *ngIf="!isLoggedIn">
+            <a class="link-body-emphasis text-decoration-none"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
+                   class="rounded-circle border border-dark">
+            </a>
+            <ul class="dropdown-menu dropdown-custom text-small">
+              <li><a class="dropdown-item custom-button" routerLink="/login">Prihlásiť sa</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item custom-button" routerLink="/register">Registrovať sa</a></li>
+            </ul>
+          </div>
+          <div class="dropdown text-center dropdown-toggle link-body-emphasis text-white" *ngIf="isLoggedIn">
+            <a data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
+                   class="rounded-circle border border-dark ">
+            </a>
+            <ul class="dropdown-menu dropdown-custom text-small">
+              <li><a class="dropdown-item" routerLink="/profil">Profil</a></li>
+              <li><a class="dropdown-item cursor" (click)="logout()">Odhlásiť sa</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="dropdown text-center dropdown-toggle cursor  link-body-emphasis text-white" *ngIf="isLoggedIn">
-          <a data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="assets/images/user_profile.jpg" alt="mdo" width="32" height="32"
-                 class="rounded-circle border border-dark ">
-          </a>
-          <ul class="dropdown-menu dropdown-custom text-small">
-            <li><a class="dropdown-item" routerLink="/profil">Profil</a></li>
-            <li><a class="dropdown-item cursor" (click)="logout()">Odhlásiť sa</a></li>
-          </ul>
-        </div>
+
+
       </div>
+
     </nav>
 
 
   </div>
 </div>
-
-
-
 
 
 
