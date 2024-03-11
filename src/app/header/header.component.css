@@ -82,23 +82,23 @@
   .small-text {
     font-size: 20px;
   }
+
+
 }
 
 @media (min-width: 769px) {
   .header {
     height: 20rem;
   }
-
-  .no-display {
-  }
-
 }
 
 @media (min-width: 992px) {
   .hide-log-small {
     display: none;
   }
-
+  .margin {
+    margin-left: 2rem;
+  }
 }
 
 @media (max-width: 991px) {

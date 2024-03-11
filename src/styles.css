@@ -5,11 +5,6 @@
   background-color: #000080;
 }
 
-.cdk-overlay-container {
-  position: fixed !important; /* Override position */
-  z-index: 1055 !important; /* Override z-index */
-}
-
 .custom-button {
   background-color: transparent;
   color: #000000;
