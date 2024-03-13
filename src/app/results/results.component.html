@@ -15,11 +15,11 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsByYear(selectedYear.yearId); setSelectedFilter('Všetky výsledky')">Všetky
+          <a class="dropdown-item custom-button" (click)="getResultsByYear(selectedYear.yearId);resetCollapse(); setSelectedFilter('Všetky výsledky')">Všetky
             výsledky</a>
         </li>
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(selectedYear.yearId); setSelectedFilter('Výsledky Uhrovec')">Výsledky
+          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(selectedYear.yearId);resetCollapse(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
             Uhrovec</a>
         </li>
       </ul>
@@ -36,7 +36,7 @@
       <ul class="dropdown-menu">
         <div *ngFor="let year of years">
           <li>
-            <a class="dropdown-item custom-button" (click)="setSelectedYear(year)"> {{ year.year }}</a>
+            <a class="dropdown-item custom-button" (click)="setSelectedYear(year);resetCollapse();"> {{ year.year }}</a>
           </li>
         </div>
       </ul>
@@ -60,9 +60,9 @@
           <div class="column">
             <div class="match-details">
               <div class="match-point">
-                <span class="match-points-number">{{ result.team1PointsOverall }}</span>
+                <span [ngStyle]="{ color: result.team1PointsOverall > result.team2PointsOverall ? 'rgb(0,31,140)' : 'black' }" class="match-points-number">{{ result.team1PointsOverall }}</span>
                 <span class="match-score-divider">:</span>
-                <span class="match-points-number">{{ result.team2PointsOverall }}</span>
+                <span [ngStyle]="{ color: result.team2PointsOverall > result.team1PointsOverall ? 'rgb(0,31,140)' : 'black' }" class="match-points-number">{{ result.team2PointsOverall }}</span>
               </div>
 
               <div class="match-scores">
@@ -146,417 +146,429 @@
         <h1 class="modal-title fs-5" id="addResultLabel">Pridať výsledok</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body text-center">
+      <div class="modal-body text-center table-responsive">
+        <table class="table tab-content table-sm">
+          <tbody>
+          <tr>
+            <td>
+              <!---DATE---->
+              <div class="">
+                <mat-form-field appearance="outline">
+                  <mat-label>Vyber dátum</mat-label>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="dateShow" readonly required
+                         (ngModelChange)="onDateSelected($event);">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
 
-        <div class="row">
-          <!---DATE---->
-          <div class="col-12 col-md-3">
-            <mat-form-field appearance="outline">
-              <mat-label>Vyber dátum</mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="dateShow" readonly required
-                     (ngModelChange)="onDateSelected($event);">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+                <mat-form-field appearance="outline" style="width: 90%;">
+                  <mat-label>Ročník Ligy</mat-label>
+                  <mat-select [(ngModel)]="result.leagueYear" required>
+                    <mat-option *ngFor="let year of years" [value]="year">{{ year.year }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" style="margin-left: -33px;">
-              <mat-label>Ročník Ligy</mat-label>
-              <mat-select [(ngModel)]="result.leagueYear" required>
-                <mat-option *ngFor="let year of years" [value]="year">{{ year.year }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              </div>
+            </td>
+            <td>
+              <!---TEAM HOME---->
+              <div class="">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tím Domáci</mat-label>
+                  <mat-select [(ngModel)]="teamHome" (ngModelChange)="onTeamHomeSelectionChange($event)" required>
+                    <mat-option *ngFor="let team of teams" [value]="team">{{ team.teamName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          </div>
+                <!---HOME PLAYER 1---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 1 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player1Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---TEAM HOME---->
-          <div class="col-12 col-md-2">
-            <mat-form-field appearance="outline">
-              <mat-label>Tím Domáci</mat-label>
-              <mat-select [(ngModel)]="teamHome" (ngModelChange)="onTeamHomeSelectionChange($event)" required>
-                <mat-option *ngFor="let team of teams" [value]="team">{{ team.teamName }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <!---HOME PLAYER 2---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 2 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player2Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---HOME PLAYER 1---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 1 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player1Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <!---HOME PLAYER 3---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 3 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player3Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---HOME PLAYER 2---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 2 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player2Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <!---HOME PLAYER 4---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 4 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player4Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---HOME PLAYER 3---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 3 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player3Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <!---HOME PLAYER 5---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 5 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player5Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---HOME PLAYER 4---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 4 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player4Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                <!---HOME PLAYER 6---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 6 {{teamHome.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player6Home" required>
+                    <mat-option *ngFor="let player of playersHome"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---HOME PLAYER 5---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 5 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player5Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              </div>
+            </td>
+            <td>
+              <!---SCORE HOME---->
+              <div class="" >
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Spolu</mat-label>
+                    <strong>
+                      <input matInput placeholder="Spolu" [(ngModel)]="result.team1ScoreOverall" style="text-align: center;"
+                             readonly>
+                    </strong>
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 1---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 2---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 3---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 4---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 5---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE HOME PLAYER 6---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreHome"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+              </div>
+            </td>
+            <td>
+              <!---POINTS HOME---->
+              <div class="">
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <strong>
+                      <input type="number" matInput placeholder="Body" [(ngModel)]="result.team1PointsOverall"
+                             style="text-align: center;" required min="0" max="8">
+                    </strong>
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 1---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 2---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 3---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 4---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 5---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS HOME PLAYER 6---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsHome"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+              </div>
+            </td>
+            <td>
+              <!---VS---->
+              <div class="">
+                <div class="d-flex flex-row align-items-center justify-content-center" style="height: 530px; min-width: 50px;">
+                  <div class="vr"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <!---POINTS AWAY---->
+              <div class="">
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <strong>
+                      <input type="number" matInput placeholder="Body" [(ngModel)]="result.team2PointsOverall"
+                             style="text-align: center;" required min="0" max="8">
+                    </strong>
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 1---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 2---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 3---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 4---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 5---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+                <!---POINTS AWAY PLAYER 6---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="points-form-field">
+                    <mat-label>Body</mat-label>
+                    <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsAway"
+                           style="text-align: center;" required min="0" max="1">
+                  </mat-form-field>
+                </p>
+              </div>
+            </td>
+            <td>
+              <!---SCORE AWAY---->
+              <div class="">
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Spolu</mat-label>
+                    <strong>
+                      <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;"
+                             min="0" max="1">
+                    </strong>
 
-            <!---HOME PLAYER 6---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 6 {{teamHome.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player6Home" required>
-                <mat-option *ngFor="let player of playersHome"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+                  </mat-form-field>
+                </p>
 
-          </div>
+                <!---SCORE AWAY PLAYER 1---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE AWAY PLAYER 2---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE AWAY PLAYER 3---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE AWAY PLAYER 4---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE AWAY PLAYER 5---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+                <!---SCORE AWAY PLAYER 6---->
+                <p class="mb-0">
+                  <mat-form-field appearance="outline" class="small-form-field">
+                    <mat-label>Skóre</mat-label>
+                    <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreAway"
+                           (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
+                  </mat-form-field>
+                </p>
+              </div>
+            </td>
+            <td>
+              <!---TEAM AWAY---->
+              <div class="">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tím Hostia</mat-label>
+                  <mat-select [(ngModel)]="teamAway" (ngModelChange)="onTeamAwaySelectionChange($event)" required>
+                    <mat-option *ngFor="let team of teams" [value]="team">{{team.teamName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---SCORE HOME---->
-          <div class="col-12 col-md-1" style="margin-left: -5px;">
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Spolu</mat-label>
-                <strong>
-                  <input matInput placeholder="Spolu" [(ngModel)]="result.team1ScoreOverall" style="text-align: center;"
-                         readonly>
-                </strong>
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 1---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 2---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 3---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 4---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 5---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE HOME PLAYER 6---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreHome"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-          </div>
+                <!---AWAY PLAYER 1---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 1 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player1Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---POINTS HOME---->
-          <div class="col-12 col-md-1">
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <strong>
-                  <input type="number" matInput placeholder="Body" [(ngModel)]="result.team1PointsOverall"
-                         style="text-align: center;" required min="0" max="8">
-                </strong>
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 1---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 2---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 3---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 4---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 5---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS HOME PLAYER 6---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field" style="text-align: center;">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsHome"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-          </div>
+                <!---AWAY PLAYER 2---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 2 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player2Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---VS---->
-          <div class="col-12 col-md-1">
-            <div class="d-flex flex-row align-items-center justify-content-center" style="height: 530px;">
-              <div class="vr"></div>
-            </div>
-          </div>
+                <!---AWAY PLAYER 3---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 3 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player3Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---POINTS AWAY---->
-          <div class="col-12 col-md-1">
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <strong>
-                  <input type="number" matInput placeholder="Body" [(ngModel)]="result.team2PointsOverall"
-                         style="text-align: center;" required min="0" max="8">
-                </strong>
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 1---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player1PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 2---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player2PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 3---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player3PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 4---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player4PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 5---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player5PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-            <!---POINTS AWAY PLAYER 6---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="points-form-field">
-                <mat-label>Body</mat-label>
-                <input type="number" matInput placeholder="Body" [(ngModel)]="result.player6PointsAway"
-                       style="text-align: center;" required min="0" max="1">
-              </mat-form-field>
-            </p>
-          </div>
+                <!---AWAY PLAYER 4---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 4 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player4Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-          <!---SCORE AWAY---->
-          <div class="col-12 col-md-1">
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Spolu</mat-label>
-                <strong>
-                  <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;"
-                         required min="0" max="1">
-                </strong>
+                <!---AWAY PLAYER 5---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 5 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player5Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-              </mat-form-field>
-            </p>
+                <!---AWAY PLAYER 6---->
+                <mat-form-field appearance="outline">
+                  <mat-label>Hráč 6 {{teamAway.teamName}}</mat-label>
+                  <mat-select [(ngModel)]="result.player6Away" required>
+                    <mat-option *ngFor="let player of playersAway"
+                                [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <!---SCORE AWAY PLAYER 1---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player1ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE AWAY PLAYER 2---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player2ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE AWAY PLAYER 3---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player3ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE AWAY PLAYER 4---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player4ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE AWAY PLAYER 5---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player5ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-            <!---SCORE AWAY PLAYER 6---->
-            <p class="mb-0">
-              <mat-form-field appearance="outline" class="small-form-field">
-                <mat-label>Skóre</mat-label>
-                <input type="number" matInput placeholder="Skóre" [(ngModel)]="result.player6ScoreAway"
-                       (change)="updatePoints(result)" style="text-align: center;" required min="0" max="1000">
-              </mat-form-field>
-            </p>
-          </div>
-
-          <!---TEAM AWAY---->
-          <div class="col-12 col-md-1">
-            <mat-form-field appearance="outline">
-              <mat-label>Tím Hostia</mat-label>
-              <mat-select [(ngModel)]="teamAway" (ngModelChange)="onTeamAwaySelectionChange($event)" required>
-                <mat-option *ngFor="let team of teams" [value]="team">{{team.teamName}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 1---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 1 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player1Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 2---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 2 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player2Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 3---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 3 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player3Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 4---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 4 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player4Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 5---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 5 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player5Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!---AWAY PLAYER 6---->
-            <mat-form-field appearance="outline">
-              <mat-label>Hráč 6 {{teamAway.teamName}}</mat-label>
-              <mat-select [(ngModel)]="result.player6Away" required>
-                <mat-option *ngFor="let player of playersAway"
-                            [value]="player">{{ player.name }} {{ player.surname }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-          </div>
-        </div>
-        <div class="d-flex justify-content-end modal-footer">
-          <button type="submit" mat-raised-button color="basic"
-                  [disabled]="!isFormValid() || !areInputsValid() || areTeamsOrPlayersSame()" data-bs-dismiss="modal"
-                  (click)="addResult()">Pridať výsledok
-          </button>
-        </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer d-flex justify-content-end ">
+        <button type="submit" mat-raised-button color="basic"
+                [disabled]="!isFormValid() || !areInputsValid() || areTeamsOrPlayersSame()" data-bs-dismiss="modal"
+                (click)="addResult()">Pridať výsledok
+        </button>
       </div>
     </div>
   </div>

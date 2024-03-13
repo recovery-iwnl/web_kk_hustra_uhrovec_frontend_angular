@@ -7,6 +7,7 @@
       type="button"
       data-bs-toggle="dropdown"
       aria-expanded="false"
+      style="background-color: rgb(38, 44, 72);color:white;"
     >
       {{selectedFilter}}
     </button>
@@ -20,33 +21,40 @@
     </ul>
   </div>
 
-  <div class="row row-cols-1 py-3">
-    <div *ngFor="let match of matches" class="container match-margin" id="zapasy1">
-      <mat-card>
-        <mat-card-content>
-          <button type="button" class="btn-close custom-button position-absolute top-0 end-0 me-50 mt-0 aria"
-                  aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,match)">
+  <div class="row row-cols-2 py-3">
+    <div *ngFor="let match of matches" class="match-margin" id="zapasy1">
+      <div class="match">
+        <div class="match-header text-center" style="position: relative;">
+          <div class="match-tournament">{{ match.date }}</div>
+          <button type="button" class="btn-close" aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,match)"
+                  style="position: absolute; top: 0; right: 0;">
           </button>
-          <div class="match-container w-100">
-            <div class="date">
-              {{ match.date }}
-            </div>
-            <div class="teamHome">
-              {{ match.teamHome.teamName }}
-            </div>
-            <div>
-              VS
-            </div>
-            <div class="teamAway">
-              {{ match.teamAway.teamName }}
+        </div>
+        <div class="match-content">
+          <div class="column">
+            <div class="team">
+              <h2 class="team-name">{{ match.teamHome.teamName }}</h2>
             </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+          <div class="column">
+            <div class="match-details">
+              <div class="match-point">
+                <span class="match-score-divider">VS</span>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="team">
+              <h2 class="team-name"> {{ match.teamAway.teamName }}</h2>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addMatchModal"
-            *ngIf="isAdmin()">
+            *ngIf="isAdmin()" style="height: 130px">
       <span class="fw-bold text-black">+</span>Pridať
     </button>
   </div>

@@ -2,66 +2,95 @@
   margin-bottom: 20px;
 }
 
-.match-container {
+.match {
+  background-color: rgba(245, 245, 245, 0.7);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  min-width: 282px;
+  max-width: 600px;
+  height: 130px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+}
+
+.match-header {
+  padding: 5px;
+  max-height: 30px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.match-tournament {
+  font-weight: 600;
+}
+
+.match-content {
+  display: flex;
+  position: relative;
+  max-height: 175px;
+}
+
+.match-details {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.teamHome {
-  flex: 4.88;
-  text-align: center;
-  font-weight: bold;
+.match-point {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.team {
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+}
+
+.column {
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100%/3);
+}
+
+.match-score-divider {
   font-size: 20px;
+  line-height: 1;
+  color: rgb(38, 44, 72);
+  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+@media(max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  .row-cols-2>* {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media(max-width: 1199px) {
+  .match{
+    height: 160px;
+  }
+}
+
+
+.team-name {
+  text-align:center;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .vsMargin {
   padding: 15px;
 }
 
-.teamAway {
-  flex: 5.5;
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-}
 
-
-@media (max-width: 767px) {
-  .match-container {
-    display: flex;
-    flex-direction: row !important;
-  }
-
-  .date{
-    font-size: 12px;
-  }
-
-  .teamHome {
-    font-size: 14px !important;
-  }
-
-  .teamAway {
-    font-size: 14px !important;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .result-margin {
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 479px) {
-  .teamHome {
-    font-size: 12px !important;
-  }
-
-  .teamAway {
-    font-size: 12px !important;
-  }
-
-  .date{
-    font-size: 10px;
-  }
-}

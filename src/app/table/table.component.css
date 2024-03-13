@@ -7,3 +7,26 @@
   color: black;
   font-weight: bold;
 }
+
+.custom-row-color {
+  background-color: rgb(38, 44, 72)!important;
+  color: white;
+}
+
+.rounded-left-top {
+  border-top-left-radius: 10px;
+}
+
+.rounded-right-top {
+  border-top-right-radius: 10px;
+}
+
+.rounded-left-bottom {
+  border-bottom-left-radius: 10px;
+}
+
+.rounded-right-bottom {
+  border-bottom-right-radius: 10px;
+}
+
+

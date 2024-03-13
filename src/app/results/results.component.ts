@@ -110,10 +110,17 @@ export class ResultsComponent implements OnInit{
     this.getAllYearsAndResultsForFirstYear();
     this.selectedFilter = "Všetky výsledky";
     this.isCollapsed = new Array(this.results.length).fill(true);
+    this.results.forEach(() => {
+      this.isCollapsed.push(false);
+    });
   }
 
   toggleCollapse(index: number): void {
     this.isCollapsed[index] = !this.isCollapsed[index];
+  }
+
+  resetCollapse() {
+    this.isCollapsed = this.isCollapsed.map(() => false);
   }
 
   setSelectedFilter(filter : string) {
@@ -539,7 +546,7 @@ export class ResultsComponent implements OnInit{
       tap((resp: any) => {
         console.log(resp);
         this.results.push(resp);
-        this.getAllResults();
+        this.getResultsByYear(this.selectedYear.yearId);
         this.resetForm();
         this.detectChanges();
       }),
