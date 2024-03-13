@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
 import {ResultService} from "../services/resultService/result.service";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
@@ -9,6 +9,7 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-d
 import {MatDialog} from "@angular/material/dialog";
 import {LeagueYearService} from "../services/leagueYearService/league-year.service";
 import {MatSelectChange} from "@angular/material/select";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 /**
  * ResultsComponent is an Angular component responsible for managing and displaying sports results.
@@ -19,12 +20,20 @@ import {MatSelectChange} from "@angular/material/select";
   selector: 'app-vysledky',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css'],
+  animations: [
+    trigger('rotateArrow', [
+      state('up', style({
+        transform: 'rotate(180deg)'
+      })),
+      state('down', style({
+        transform: 'rotate(0)'
+      })),
+      transition('down => up', animate('200ms ease-in')),
+      transition('up => down', animate('200ms ease-out'))
+    ]),
+  ]
 })
-export class ResultsComponent {
-  /**
-   * Represents the selected sports league for displaying results.
-   */
-  selectedLeague: string = '1.KL Západ';
+export class ResultsComponent implements OnInit{
 
   /**
    * Array containing all sports results.
@@ -75,6 +84,8 @@ export class ResultsComponent {
 
   selectedFilter: any = {};
 
+  isCollapsed: boolean[] = [];
+
 
 
   /**
@@ -98,6 +109,11 @@ export class ResultsComponent {
     this.getAllTeams();
     this.getAllYearsAndResultsForFirstYear();
     this.selectedFilter = "Všetky výsledky";
+    this.isCollapsed = new Array(this.results.length).fill(true);
+  }
+
+  toggleCollapse(index: number): void {
+    this.isCollapsed[index] = !this.isCollapsed[index];
   }
 
   setSelectedFilter(filter : string) {
@@ -110,7 +126,7 @@ export class ResultsComponent {
         this.years = resp;
         if (this.years.length > 0) {
           this.getResultsByYear(this.years[0].yearId);
-          this.selectedYear = this.years[0].year;
+          this.selectedYear = this.years[0];
         }
         console.log(this.years)
         this.detectChanges();
@@ -547,8 +563,8 @@ export class ResultsComponent {
   /**
    * Fetches results specific to Uhrovec.
    */
-  getResultsUhrovec() {
-    this.resultService.getResultsUhrovec().pipe(
+  getResultsUhrovec(id : any) {
+    this.resultService.getResultsUhrovec(id).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.results = resp;
@@ -587,7 +603,11 @@ export class ResultsComponent {
   protected readonly console = console;
 
   setSelectedYear(year: any) {
-    this.selectedYear = year.year;
-    this.getResultsByYear(year.yearId);
+    this.selectedYear = year;
+    if (this.selectedFilter == "Všetky výsledky") {
+      this.getResultsByYear(year.yearId);
+    } else {
+      this.getResultsUhrovec(year.yearId);
+    }
   }
 }

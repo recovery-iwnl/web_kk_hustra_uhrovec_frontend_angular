@@ -56,8 +56,9 @@ export class ResultService {
    *
    * @returns An HTTP GET request to get the list of results for Uhrovec.
    */
-  public getResultsUhrovec() {
-    return this.http.get(this.API+'/api/v1/result/getResultsUhrovecList');
+  public getResultsUhrovec(id : any) {
+    const params = { id };
+    return this.http.get(this.API+'/api/v1/result/getResultsUhrovecList', { params });
   }
 
   /**

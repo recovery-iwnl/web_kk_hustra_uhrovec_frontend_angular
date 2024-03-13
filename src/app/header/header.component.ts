@@ -3,7 +3,6 @@ import {AuthService} from '../services/auth/auth.service';
 import {NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../services/userService/user.service";
 import {trigger, state, style, animate, transition} from '@angular/animations';
-import {filter} from "rxjs";
 
 /**
  * HeaderComponent is an Angular component responsible for displaying the header of the application.
@@ -27,6 +26,18 @@ import {filter} from "rxjs";
         animate('0.3s ease-in-out')
       ])
     ]),
+    trigger('dropdownAnimation', [
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(-10px)'
+      })),
+      state('visible', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      transition('hidden => visible', animate('500ms ease-out')),
+      transition('visible => hidden', animate('300ms ease-in'))
+    ])
   ]
 
 })
@@ -46,11 +57,10 @@ export class HeaderComponent implements OnInit {
 
   isSticky: boolean = false;
 
+  isDropdownVisible: boolean = false;
+
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
   }
-
-
-
 
 
   ngOnInit(): void {
@@ -62,16 +72,18 @@ export class HeaderComponent implements OnInit {
     this.onScroll();
   }
 
+  toggleDropdown() {
+    this.isDropdownVisible = !this.isDropdownVisible;
+  }
+
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event?: any) {
     const headerHeight = document.querySelector('.header')?.clientHeight || 0;
-    if (window.pageYOffset > headerHeight) {
-      this.isSticky = true;
-    } else {
-      this.isSticky = false;
-    }
+    this.isSticky = window.pageYOffset > headerHeight;
   }
+
+
 
 
   /**
@@ -97,6 +109,7 @@ export class HeaderComponent implements OnInit {
   onMouseLeave(item: string) {
     this.animationState[item] = 'normal';
   }
+
 
   /**
    * Checks if the currently logged-in user has the 'ADMIN' role.

@@ -1,160 +1,191 @@
-.match-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin: 5px;
-}
-
-.head2head-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 5px;
-}
-
 .small-form-field {
   width: 100%;
   max-width: 100px;
 }
-
 .points-form-field {
   width: 100%;
   max-width: 70px;
 }
 
-@media (max-width: 767px) {
-  .match-container {
-    display: flex;
-    flex-direction: row !important;
-  }
-
-  .date{
-    font-size: 12px;
-  }
-
-  .teamHome {
-    font-size: 14px !important;
-  }
-
-  .teamAway {
-    font-size: 14px !important;
-  }
-
-  .resultHeader {
-    font-size: 15px !important;
-  }
-
-  .head2head-container {
-    width: 100%;
-    font-size: 14px !important;
-  }
+.match {
+  background-color: rgba(245, 245, 245, 0.7);
+  display: flex;
+  flex-direction: column;
+  min-width: 282px;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-  .result-margin {
-    margin-bottom: 10px;
-  }
-  .resultHeader {
-    font-size: 15px !important;
-  }
-
-  .head2head-container {
-    font-size: 10px !important;
-  }
+.head2head {
+  background-color: rgba(245, 245, 245, 0.7);
+  display: flex;
+  flex-direction: column;
+  min-width: 282px;
+  max-width: 600px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
 }
 
-
-@media (max-width: 479px) {
-  .resultHeader {
-    font-size: 12.1px !important;
-  }
-  .result {
-    font-size: 14px !important;
-  }
-
-  .scoreHeader {
-    font-size: 13px!important;
-  }
-
-  .teamHome {
-    font-size: 12px !important;
-  }
-
-  .teamAway {
-    font-size: 12px !important;
-  }
-
-  .head2head-container {
-    font-size: 15px !important;
-  }
-  .fs-5 {
-    font-size: 14px !important;
-  }
-
-  .date{
-    font-size: 10px;
-  }
+.match-header {
+  padding: 5px;
+  max-height: 30px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
+
+.match-tournament {
+  font-weight: 600;
+}
+
+.match-content {
+  display: flex;
+  position: relative;
+  max-height: 175px;
+}
+
+.head2head-content {
+  display: flex;
+  position: relative;
+  max-height: 100px;
+}
+
+.column {
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100%/3);
+}
+
 
 .team {
-  flex: 8;
-  text-align: center;
-}
-
-.teamHome {
-  flex: 4.88;
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.teamAway {
-  flex: 5.5;
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.scoreHeader {
-  font-size: 18px;
-}
-
-.result {
-  flex: 2;
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.resultHeader {
-  flex: 2;
-  text-align: center;
-  font-weight: bold;
-  font-size: 25px;
-}
-
-
-.player {
-  flex: 8;
-  text-align: center;
-  padding: 5px;
-}
-
-.result-margin {
-  margin-bottom: 20px;
-}
-
-.button-container {
   display: flex;
+  flex-direction:column;
+  align-items: center;
 }
 
-.button-container > button,
-.button-container > ul {
-  margin-right: 5px; /* Adjust margin as needed */
+
+.team-name {
+  text-align:center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.player-name {
+  text-align:center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.match-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.match-point {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.player-point {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.player-points-number {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.match-points-number {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1;
+}
+@media (max-width: 991px) {
+
+  .match-points-number {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .team-name {
+    text-align:center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.match-score-divider {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: black;
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+
+.match-scores {
+  display: flex;
+  margin-top: 8px;
+  padding-bottom: 12px;
+}
+
+
+.match-score {
+  border: 1px solid rgb(38, 44, 72);
+  background-color: #F9F9F9;
+  border-radius: 4px;
+  color: grey;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.match-show-more {
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  background-color: rgb(38, 44, 72);
+  border-radius: 6px;
+  padding: 6px 10px;
+  max-height: 35px;
+  color: white;
+  font-size: 14px;
+  z-index: 999;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.match-show-more:hover {
+  background-color: #3f435e;
+}
+
+@media(max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  .row-cols-2>* {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 481px) {
+  .btn-margin-bottom {
+    margin-bottom: 5px;
+  }
 }
 
 
