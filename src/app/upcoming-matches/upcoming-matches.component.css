@@ -60,11 +60,13 @@
 .match-score-divider {
   font-size: 20px;
   line-height: 1;
+  font-weight: 600;
   color: rgb(38, 44, 72);
   margin-left: 10px;
   margin-bottom: 20px;
   margin-right: 10px;
 }
+
 
 @media(max-width: 768px) {
   .row {

@@ -22,29 +22,29 @@
   </div>
 
 
-  <div class="container text-center table-responsive mt-3 bi-border-left" >
-    <table id="table1" class="table tab-content table-sm table-hover">
+  <div class="table-container card text-center table-responsive mt-3">
+    <table id="table1" class="table table-striped tab-content table-sm table-hover rounded">
       <thead>
       <tr>
-        <th *ngFor="let column of columns; let i = index"
-            [ngClass]="{'rounded-left-top': i === 0, 'rounded-right-top': i === columns.length - 1}"
+        <th *ngFor="let column of columns; let i = index "
             class="text-center" style="background-color: rgb(38, 44, 72); color: white;">
           <span>{{column}}</span>
         </th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let team of teams; let i = index" >
-        <td class="text-center border" style="font-weight: 600" [ngClass]="{'rounded-left-bottom': i === teams.length - 1}">{{ i + 1 }}</td>
+      <tr *ngFor="let team of teams; let i = index">
+        <td class="text-center" style="font-weight: 600">
+          {{ i + 1 }}</td>
         <td class="font-weight-bold" style="min-width: 200px;">
-          <a routerLink="/vysledky" class="text-decoration-none a-text-custom" >{{ team.teamName }}</a>
+          <a routerLink="/vysledky" class="text-decoration-none a-text-custom">{{ team.teamName }}</a>
         </td>
         <td class="text-center" style="min-width: 20px;">{{ team.matchesPlayed }}</td>
         <td class="text-center " style="min-width: 20px;">{{ team.matchesWon }}</td>
         <td class="text-center " style="min-width: 20px;">{{ team.matchesDrawn }}</td>
         <td class="text-center " style="min-width: 20px;">{{ team.matchesLost }}</td>
         <td class="text-center " style="min-width: 20px;">{{ team.average | number:'1.1-2'  }}</td>
-        <td class="text-center border" style="min-width: 50px;font-weight: 600">{{ team.points }}</td>
+        <td class="text-center" style="min-width: 50px;font-weight: 600">{{ team.points }}</td>
       </tr>
       </tbody>
     </table>

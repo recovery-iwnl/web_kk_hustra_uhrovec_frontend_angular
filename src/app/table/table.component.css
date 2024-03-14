@@ -29,4 +29,15 @@
   border-bottom-right-radius: 10px;
 }
 
+.table-container {
+  border-radius: 10px;
+  border: 2px solid rgb(38, 44, 72);
+}
+
+table {
+  margin-bottom: 0;
+}
+tbody tr:last-child {
+  border-color: white;
+}
 

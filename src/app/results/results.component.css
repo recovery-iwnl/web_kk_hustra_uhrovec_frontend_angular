@@ -106,6 +106,7 @@
 }
 
 .match-points-number {
+  color: rgb(38, 44, 72);
   font-size: 48px;
   font-weight: 600;
   line-height: 1;

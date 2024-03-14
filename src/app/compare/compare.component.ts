@@ -233,9 +233,9 @@ export class CompareComponent implements OnInit {
   fetchPlayer1Statistics(playerId: any, yearId: any): Observable<any> {
     return forkJoin([
       this.playerResultService.getMatchesPlayed(playerId, yearId),
-      this.playerResultService.getDuelsWon(playerId),
-      this.playerResultService.getDuelsDrawn(playerId),
-      this.playerResultService.getDuelsLost(playerId),
+      this.playerResultService.getDuelsWon(playerId, yearId),
+      this.playerResultService.getDuelsDrawn(playerId, yearId),
+      this.playerResultService.getDuelsLost(playerId, yearId),
       this.playerResultService.getPlayersBest(playerId, yearId),
       this.playerResultService.getPlayersWorst(playerId, yearId),
       this.playerResultService.getAverage(playerId, yearId),
@@ -267,9 +267,9 @@ export class CompareComponent implements OnInit {
   fetchPlayer2Statistics(playerId: any, yearId: any): Observable<any> {
     return forkJoin([
       this.playerResultService.getMatchesPlayed(playerId, yearId),
-      this.playerResultService.getDuelsWon(playerId),
-      this.playerResultService.getDuelsDrawn(playerId),
-      this.playerResultService.getDuelsLost(playerId),
+      this.playerResultService.getDuelsWon(playerId, yearId),
+      this.playerResultService.getDuelsDrawn(playerId, yearId),
+      this.playerResultService.getDuelsLost(playerId, yearId),
       this.playerResultService.getPlayersBest(playerId, yearId),
       this.playerResultService.getPlayersWorst(playerId, yearId),
       this.playerResultService.getAverage(playerId, yearId),

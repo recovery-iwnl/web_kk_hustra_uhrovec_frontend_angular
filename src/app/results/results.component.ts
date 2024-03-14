@@ -86,6 +86,11 @@ export class ResultsComponent implements OnInit{
 
   isCollapsed: boolean[] = [];
 
+  initialResultsCount: number = 6;
+
+  additionalResultsCount: number = 6;
+
+  displayedResults: any[] = [];
 
 
   /**
@@ -114,6 +119,11 @@ export class ResultsComponent implements OnInit{
       this.isCollapsed.push(false);
     });
   }
+  loadMoreResults() {
+    const startIndex = this.displayedResults.length;
+    const endIndex = startIndex + this.additionalResultsCount;
+    this.displayedResults = this.displayedResults.concat(this.results.slice(startIndex, endIndex));
+  }
 
   toggleCollapse(index: number): void {
     this.isCollapsed[index] = !this.isCollapsed[index];
@@ -135,20 +145,6 @@ export class ResultsComponent implements OnInit{
           this.getResultsByYear(this.years[0].yearId);
           this.selectedYear = this.years[0];
         }
-        console.log(this.years)
-        this.detectChanges();
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    ).subscribe();
-  }
-
-  getAllYears() {
-    this.leagueYearService.getAllYears().pipe(
-      tap((resp: any) => {
-        this.years = resp;
         console.log(this.years)
         this.detectChanges();
       }),
@@ -528,6 +524,7 @@ export class ResultsComponent implements OnInit{
       tap((resp: any) => {
         console.log(resp);
         this.results = resp;
+        this.displayedResults = this.results.slice(0, this.initialResultsCount);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -575,6 +572,7 @@ export class ResultsComponent implements OnInit{
       tap((resp: any) => {
         console.log(resp);
         this.results = resp;
+        this.displayedResults = this.results.slice(0, this.initialResultsCount);
         this.detectChanges();
       }),
       catchError((err) => {

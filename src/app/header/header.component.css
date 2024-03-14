@@ -125,12 +125,14 @@
 }
 
 .navbar {
+  background-color: rgba(41,47,77,0.93);
   position: relative;
   z-index: 1000;
   transition: top 0.3s;
 }
 
 .sticky {
+  background-color: rgb(41,47,77);
   position: fixed;
   top: 0;
   width: 100%;
