@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component } from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {TeamService} from "../services/teamService/team.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -13,22 +13,28 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-d
   templateUrl: './upcoming-matches.component.html',
   styleUrls: ['./upcoming-matches.component.css']
 })
-export class UpcomingMatchesComponent {
+export class UpcomingMatchesComponent implements OnInit {
 
 
   teamHome: any = {};
 
   teamAway: any = {};
 
-  teams : any[] = [];
+  teams: any[] = [];
 
-  matches : any[] = [];
+  matches: any[] = [];
 
-  match : any = {};
+  match: any = {};
 
-  dateShow : any = {};
+  dateShow: any = {};
 
   selectedFilter: any = {};
+
+  initialMatchesCount: number = 6;
+
+  additionalMatchesCount: number = 6;
+
+  displayedMatches: any[] = [];
 
   constructor(private datePipe: DatePipe,
               private teamService: TeamService,
@@ -44,15 +50,29 @@ export class UpcomingMatchesComponent {
     this.selectedFilter = "Všetky zápasy";
   }
 
-  setSelectedFilter(filter : string) {
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
+      this.loadMoreMatches();
+    }
+  }
+
+  loadMoreMatches() {
+    const startIndex = this.displayedMatches.length;
+    const endIndex = startIndex + this.additionalMatchesCount;
+    this.displayedMatches = this.displayedMatches.concat(this.matches.slice(startIndex, endIndex));
+  }
+
+  setSelectedFilter(filter: string) {
     this.selectedFilter = filter;
   }
 
   addMatch() {
-    this.matchService.addMatch(this.match.teamHome.teamId,this.match.teamAway.teamId, this.match).pipe(
+    this.matchService.addMatch(this.match.teamHome.teamId, this.match.teamAway.teamId, this.match).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.matches.push(resp);
+        this.displayedMatches.push(resp);
         this.getAllMatches();
         this.resetForm();
         this.detectChanges();
@@ -71,10 +91,11 @@ export class UpcomingMatchesComponent {
     this.dateShow = {};
   }
 
-  deleteMatch(match : any) {
+  deleteMatch(match: any) {
     this.matchService.deleteMatch(match.matchId).pipe(
       tap((resp: any) => {
         this.matches = this.matches.filter(m => m.matchId !== match.matchId);
+        this.displayedMatches = this.displayedMatches.filter(m => m.matchId !== match.matchId);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -90,6 +111,7 @@ export class UpcomingMatchesComponent {
       tap((resp: any) => {
         console.log(resp);
         this.matches = resp;
+        this.displayedMatches = this.matches.slice(0, this.initialMatchesCount);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -104,6 +126,7 @@ export class UpcomingMatchesComponent {
       tap((resp: any) => {
         console.log(resp);
         this.matches = resp;
+        this.displayedMatches = this.matches.slice(0, this.initialMatchesCount);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -113,7 +136,7 @@ export class UpcomingMatchesComponent {
     ).subscribe();
   }
 
-  confirmDelete(event: Event,matchN:any): void {
+  confirmDelete(event: Event, matchN: any): void {
     event.preventDefault();
     event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -160,7 +183,8 @@ export class UpcomingMatchesComponent {
   private detectChanges(): void {
     try {
       this.cdRef.detectChanges();
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
   isAdmin(): boolean {

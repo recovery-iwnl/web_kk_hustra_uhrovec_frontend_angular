@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, NgZone, OnInit} from '@angular/core';
 import {ResultService} from "../services/resultService/result.service";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
@@ -119,6 +119,14 @@ export class ResultsComponent implements OnInit{
       this.isCollapsed.push(false);
     });
   }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight-400) {
+      this.loadMoreResults();
+    }
+  }
+
   loadMoreResults() {
     const startIndex = this.displayedResults.length;
     const endIndex = startIndex + this.additionalResultsCount;
@@ -164,6 +172,7 @@ export class ResultsComponent implements OnInit{
     this.resultService.deleteResult(result.resultId).pipe(
       tap((resp: any) => {
         this.results = this.results.filter(r => r.resultId !== result.resultId);
+        this.displayedResults = this.displayedResults.filter(r => r.resultId !== result.resultId);
         this.detectChanges();
       }),
       catchError((err) => {

@@ -126,6 +126,7 @@ export class HeaderComponent implements OnInit {
    */
   logout() {
     this.authService.logout();
+    this.isDropdownVisible = false;
   }
 
   protected readonly localStorage = localStorage;

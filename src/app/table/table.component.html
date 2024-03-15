@@ -12,7 +12,7 @@
       {{ selectedYear.year }}
     </button>
 
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" style="z-index:1">
       <div *ngFor="let year of years">
         <li>
           <a class="dropdown-item custom-button" (click)="setSelectedYear(year);"> {{ year.year }}</a>

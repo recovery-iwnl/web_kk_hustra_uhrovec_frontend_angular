@@ -13,13 +13,15 @@
       >
         {{selectedFilter}}
       </button>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" style="z-index:1">
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsByYear(selectedYear.yearId);resetCollapse(); setSelectedFilter('Všetky výsledky')">Všetky
+          <a class="dropdown-item custom-button"
+             (click)="getResultsByYear(selectedYear.yearId);resetCollapse(); setSelectedFilter('Všetky výsledky')">Všetky
             výsledky</a>
         </li>
         <li>
-          <a class="dropdown-item custom-button" (click)="getResultsUhrovec(selectedYear.yearId);resetCollapse(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
+          <a class="dropdown-item custom-button"
+             (click)="getResultsUhrovec(selectedYear.yearId);resetCollapse(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
             Uhrovec</a>
         </li>
       </ul>
@@ -33,7 +35,7 @@
       >
         {{ selectedYear.year }}
       </button>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" style="z-index:1">
         <div *ngFor="let year of years">
           <li>
             <a class="dropdown-item custom-button" (click)="setSelectedYear(year);resetCollapse();"> {{ year.year }}</a>
@@ -43,11 +45,18 @@
     </div>
   </div>
   <div class=" row row-cols-2">
+    <div *ngIf="isAdmin()">
+      <button class="btn btn-circle btn-light btn-lg mt-4 add-button" data-bs-toggle="modal"
+              data-bs-target="#addResultModal">
+        <span class="fw-bold text-black">+</span>Pridať
+      </button>
+    </div>
     <div *ngFor="let result of displayedResults; let i = index" class="mt-4" id="vysledky{{i}}">
       <div class="match">
         <div class="match-header text-center" style="position: relative;">
           <div class="match-tournament">{{ result.date }}</div>
-          <button type="button" class="btn-close" aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,result)"
+          <button type="button" class="btn-close" aria-label="Close" *ngIf="isAdmin()"
+                  (click)="confirmDelete($event,result)"
                   style="position: absolute; top: 0; right: 0;">
           </button>
         </div>
@@ -78,8 +87,8 @@
                       [attr.aria-controls]="'collapseExample' + i"
                       (click)="toggleCollapse(i)">
                 {{ isCollapsed[i] ? 'Zobraziť menej' : 'Zobraziť viac' }}
-                <svg class="bi" width="15" height="15" fill="white" [@rotateArrow]="isCollapsed[i] ? 'up' : 'down'">
-                  <use xlink:href="assets/icons/bootstrap-icons/bootstrap-icons.svg#chevron-down"></use>
+                <svg class="" width="15" height="15" fill="white" [@rotateArrow]="isCollapsed[i] ? 'up' : 'down'">
+                  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
                 </svg>
               </button>
             </div>
@@ -133,16 +142,8 @@
       </div>
     </div>
 
-    <button class="btn btn-circle btn-light btn-lg mt-4" data-bs-toggle="modal"
-            data-bs-target="#addResultModal" style="min-width: 125px;min-height: 150px"
-            *ngIf="isAdmin()">
-      <span class="fw-bold text-black">+</span>Pridať
-    </button>
-
 
   </div>
-
-  <button *ngIf="this.results.length > 6" class="btn btn-primary mt-3" style="left: 50%" (click)="loadMoreResults()">Načítať viac</button>
 </div>
 
 
@@ -245,12 +246,13 @@
             </td>
             <td>
               <!---SCORE HOME---->
-              <div class="" >
+              <div class="">
                 <p class="mb-0">
                   <mat-form-field appearance="outline" class="small-form-field">
                     <mat-label>Spolu</mat-label>
                     <strong>
-                      <input matInput placeholder="Spolu" [(ngModel)]="result.team1ScoreOverall" style="text-align: center;"
+                      <input matInput placeholder="Spolu" [(ngModel)]="result.team1ScoreOverall"
+                             style="text-align: center;"
                              readonly>
                     </strong>
                   </mat-form-field>
@@ -370,7 +372,8 @@
             <td>
               <!---VS---->
               <div class="">
-                <div class="d-flex flex-row align-items-center justify-content-center" style="height: 530px; min-width: 50px;">
+                <div class="d-flex flex-row align-items-center justify-content-center"
+                     style="height: 530px; min-width: 50px;">
                   <div class="vr"></div>
                 </div>
               </div>
@@ -444,7 +447,8 @@
                   <mat-form-field appearance="outline" class="small-form-field">
                     <mat-label>Spolu</mat-label>
                     <strong>
-                      <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall" style="text-align: center;"
+                      <input matInput placeholder="Spolu" [(ngModel)]="result.team2ScoreOverall"
+                             style="text-align: center;"
                              min="0" max="1">
                     </strong>
 

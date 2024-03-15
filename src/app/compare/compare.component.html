@@ -12,7 +12,7 @@
       {{selectedCompare}}
     </button>
 
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" style="z-index:1">
       <div>
         <li>
           <a class="dropdown-item custom-button" (click)="setSelectedCompare('Porovnaj Tímy');"> Porovnaj Tímy </a>
@@ -74,7 +74,7 @@
               {{ selectedYear1.year }}
             </button>
 
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="z-index:1">
               <div *ngFor="let year of years">
                 <li>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
@@ -143,7 +143,7 @@
               {{ selectedYear2.year }}
             </button>
 
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="z-index:1">
               <div *ngFor="let year of years">
                 <li>
                   <a class="dropdown-item custom-button" *ngIf="selectedCompare === 'Porovnaj Tímy'"
