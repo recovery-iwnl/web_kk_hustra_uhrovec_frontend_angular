@@ -84,8 +84,6 @@ export class HeaderComponent implements OnInit {
   }
 
 
-
-
   /**
    * Checks if a user is currently logged in.
    *
