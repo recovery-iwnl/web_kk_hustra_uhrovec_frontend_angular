@@ -204,8 +204,12 @@
   margin-bottom: 30px;
 }
 
-.dropdown:hover>.dropdown-menu {
-  display: block;
+
+@media(min-width: 992px) {
+  .dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+
 }
 
 .dropdown-menu {
