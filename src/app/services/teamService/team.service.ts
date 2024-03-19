@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ConfigService} from "../configService/config.service";
 
 /**
  * Service for team-related operations, such as adding, fetching, updating, and deleting teams.
@@ -15,14 +16,14 @@ export class TeamService {
   /**
    * API base URL for team-related operations.
    */
-  private API = "http://localhost:8080";
+  private API = this.config.apiUrl;
 
   /**
    * Creates an instance of TeamService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private config: ConfigService) { }
 
 
   /**

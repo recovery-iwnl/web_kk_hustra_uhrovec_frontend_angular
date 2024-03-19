@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {ConfigService} from "../configService/config.service";
 
 /**
  * Service for result-related operations, such as adding, fetching, and deleting results.
@@ -14,14 +15,14 @@ export class ResultService {
   /**
    * API base URL for result-related operations.
    */
-  private API = "http://localhost:8080";
+  private API = this.config.apiUrl;
 
   /**
    * Creates an instance of ResultService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private config: ConfigService) { }
 
   /**
    * Adds a result between two teams.

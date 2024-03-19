@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {ConfigService} from "../configService/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,14 @@ export class TeamResultService {
   /**
    * API base URL for player-related operations.
    */
-  private API = "http://localhost:8080";
+  private API = this.config.apiUrl;
 
   /**
    * Creates an instance of PlayerService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private config: ConfigService) { }
 
   public getAverage(id: any, leagueYearId : any) {
     const params = { id, leagueYearId };

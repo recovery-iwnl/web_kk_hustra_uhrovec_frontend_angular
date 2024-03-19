@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {ConfigService} from "../configService/config.service";
 
 /**
  * Service for user-related operations, such as registration, login, fetching, updating, and deleting users.
@@ -15,14 +16,14 @@ export class UserService {
   /**
    * API base URL for user-related operations.
    */
-  private API = "http://localhost:8080";
+  private API = this.config.apiUrl;
 
   /**
    * Creates an instance of UserService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private config: ConfigService) { }
 
   /**
    * Registers a new user.

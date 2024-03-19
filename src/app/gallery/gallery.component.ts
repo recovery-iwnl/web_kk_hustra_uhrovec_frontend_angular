@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {FileUploadService} from "../services/fileUploadService/file-upload.service";
@@ -9,6 +9,7 @@ import {MatchService} from "../services/matchService/match.service";
 import {ToastrService} from "ngx-toastr";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ConfigService} from "../services/configService/config.service";
 
 
 /**
@@ -21,7 +22,7 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css']
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnInit{
 
   /**
    * Array containing information about all images in the gallery.
@@ -32,6 +33,8 @@ export class GalleryComponent {
    * The selected file to be uploaded.
    */
   file: File | undefined;
+
+  url = this.configService.apiUrl + '/api/v1/image/';
 
   /**
    * Creates an instance of GalleryComponent.
@@ -44,7 +47,7 @@ export class GalleryComponent {
    * @param dialog - Reference to the MatDialog service for displaying dialogs.
    */
   constructor(private http: HttpClient, private fileUploadService: FileUploadService, private authService: AuthService,
-              private cdRef: ChangeDetectorRef, private toastr : ToastrService, private dialog: MatDialog) {
+              private cdRef: ChangeDetectorRef, private toastr : ToastrService, private dialog: MatDialog, private configService: ConfigService) {
   }
 
   /**
@@ -93,6 +96,18 @@ export class GalleryComponent {
     this.fileUploadService.getAllImages().pipe(
       tap((resp: any) => {
         this.images = resp;
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  loadImage(name :any) : any {
+    this.fileUploadService.getImageByName(name).pipe(
+      tap((resp: any) => {
+        return resp;
       }),
       catchError((err) => {
         console.log(err);

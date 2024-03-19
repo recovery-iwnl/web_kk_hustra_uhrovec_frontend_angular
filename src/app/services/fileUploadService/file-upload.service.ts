@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {ConfigService} from "../configService/config.service";
 
 /**
  * Service for uploading and managing images using HTTP requests.
@@ -13,14 +14,15 @@ export class FileUploadService {
   /**
    * API base URL for image-related operations.
    */
-  private API = "http://localhost:8080";
+  private API = this.config.apiUrl;
 
   /**
    * Creates an instance of FileUploadService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
+   * @param config
    */
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private config: ConfigService) { }
 
   /**
    * Uploads a file to the server.
@@ -41,6 +43,11 @@ export class FileUploadService {
    */
   public getAllImages() {
     return this.http.get<any[]>(this.API + '/api/v1/image/all');
+  }
+
+  public getImageByName(name: any) {
+    const params = { name };
+    return this.http.get(this.API + '/api/v1/image/getImagebyName', {params});
   }
 
   /**
