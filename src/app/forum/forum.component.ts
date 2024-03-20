@@ -59,6 +59,8 @@ export class ForumComponent {
    */
   type : any = 1;
 
+  typeName: any = "Najnovšie";
+
 
   /**
    * Creates an instance of ForumComponent.
@@ -121,6 +123,21 @@ export class ForumComponent {
         return of(null);
       })
     ).subscribe();
+  }
+
+  options = [
+    { label: 'Najnovšie', value: '1' },
+    { label: 'Najstaršie', value: '2' },
+    { label: 'Najoblúbenejšie', value: '3' }
+  ];
+
+  setType(value: string) {
+    this.type = value;
+    this.getComments();
+  }
+
+  setTypeName(name: string) {
+    this.typeName = name;
   }
 
   /**

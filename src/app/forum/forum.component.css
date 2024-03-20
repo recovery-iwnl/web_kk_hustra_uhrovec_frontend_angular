@@ -18,3 +18,13 @@ a{
   color: rgba(178, 4, 18, 0.83);
 }
 
+.comment-button {
+  background-color: transparent;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+  border: 1px solid transparent;
+}
+
+.comment-button:hover {
+  border-color: rgb(38, 44, 72) !important;
+  color: #343a40;
+}
