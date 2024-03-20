@@ -31,6 +31,7 @@
             </h6>
           </li>
 
+
           <li class="nav-item dropdown" (mouseenter)="toggleDropdown()" (mouseleave)="toggleDropdown()">
             <h6 class=" text-uppercase font-weight-bold text-center" [class.active]="currentRoute === '/vysledky' || currentRoute === '/nasledujuce-zapasy'
              || currentRoute === '/tabulka' || currentRoute === '/statistiky'" (mouseenter)="onMouseEnter('results')"
@@ -81,9 +82,9 @@
 
 
           <li class="nav-item">
-            <h6 class="text-uppercase font-weight-bold text-center" [class.active]="currentRoute === '/forum'" (mouseenter)="onMouseEnter('forum')"
+            <h6 class="text-uppercase font-weight-bold text-center" [class.active]="currentRoute === '/fan-zone'" (mouseenter)="onMouseEnter('forum')"
                 (mouseleave)="onMouseLeave('forum')" [@jumpOut]="animationState['forum']">
-              <a routerLink="/forum" class=" nav-link text-custom-color" data-bs-toggle="collapse"
+              <a routerLink="/fan-zone" class=" nav-link text-custom-color" data-bs-toggle="collapse"
                  data-bs-target=".navbar-collapse.show">Fan zóna</a>
             </h6>
           </li>

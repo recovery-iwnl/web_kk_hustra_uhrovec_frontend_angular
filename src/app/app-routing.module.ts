@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'vysledky', component: ResultsComponent },
   { path: 'historia', component: HistoryComponent },
   { path: 'galeria', component: GalleryComponent },
-  { path: 'forum', component: ForumComponent },
+  { path: 'fan-zone', component: ForumComponent },
   { path: 'login', component: LoginComponent },
   { path: 'nasledujuce-zapasy', component: UpcomingMatchesComponent },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },

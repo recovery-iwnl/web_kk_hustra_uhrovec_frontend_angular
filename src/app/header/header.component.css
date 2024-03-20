@@ -240,16 +240,18 @@
   padding: 5px;
 }
 
-.arrow-trans {
-  transition: transform 0.3s ease-in-out;
-}
+@media (min-width: 992px) {
+  .arrow-trans {
+    transition: transform 0.3s ease-in-out;
+  }
 
-.arrow-trans.rotate-down {
-  transform: rotate(0deg);
-}
+  .arrow-trans.rotate-down {
+    transform: rotate(0deg);
+  }
 
-.nav-item:hover .arrow-trans.rotate-down {
-  transform: rotate(180deg);
+  .nav-item:hover .arrow-trans.rotate-down {
+    transform: rotate(180deg);
+  }
 }
 
 

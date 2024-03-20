@@ -5,7 +5,7 @@
   <div class="carousel-item" *ngFor="let image of images; let i = index" [class.active]="i === 0" >
     <a>
       <div>
-        <img [src]="url + image.name" class="d-block mx-auto my-auto rounded" [alt]="image.alt">
+        <img [src]="url + image.name" loading="lazy" class="d-block mx-auto my-auto rounded" [alt]="image.alt">
         <button type="button" class="btn-close btn-light custom-button-image position-absolute top-0 end-0 mt-0" style="z-index: 100"
                 aria-label="Close" *ngIf="isAdmin()" (click)="confirmDelete($event,image.id)">
         </button>
