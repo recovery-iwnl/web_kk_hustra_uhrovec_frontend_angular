@@ -1,15 +1,19 @@
 .icon-1x {
   font-size: 24px !important;
 }
-a{
-  text-decoration:none;
+
+a {
+  text-decoration: none;
 }
+
 .text-primary, a.text-primary:focus, a.text-primary:hover {
   color: rgba(0, 0, 0, 0.82) !important;
 }
+
 .text-blue, .text-hover-blue:hover {
   color: #0849ec !important;
 }
+
 .font-weight-bold {
   font-weight: 700 !important;
 }
@@ -28,3 +32,34 @@ a{
   border-color: rgb(38, 44, 72) !important;
   color: #343a40;
 }
+
+.wobble-vertical-left {
+  animation: wobble-vertical-left .8s linear both;
+}
+
+.animate {
+  animation-name: wobble-vertical-left;
+}
+
+@keyframes wobble-vertical-left {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+    transform-origin: 50% 50%;
+  }
+  15% {
+    transform: translateY(-30px) rotate(-6deg);
+  }
+  30% {
+    transform: translateY(15px) rotate(6deg);
+  }
+  45% {
+    transform: translateY(-15px) rotate(-3.6deg);
+  }
+  60% {
+    transform: translateY(9px) rotate(2.4deg);
+  }
+  75% {
+    transform: translateY(-6px) rotate(-1.2deg);
+  }
+}
+

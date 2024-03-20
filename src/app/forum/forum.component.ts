@@ -9,6 +9,7 @@ import {DatePipe} from "@angular/common";
 import * as moment from 'moment';
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {UserService} from "../services/userService/user.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
 /**
