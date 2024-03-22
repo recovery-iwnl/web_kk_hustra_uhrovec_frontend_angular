@@ -46,17 +46,6 @@ export class UserService {
   }
 
   /**
-   * Retrieves details of a user based on the specified email.
-   *
-   * @param email - The email of the user to be retrieved.
-   * @returns An HTTP GET request to get the user by email.
-   */
-  public getUserDetails(email: string) {
-    const params = { email };
-    return this.http.get(this.API + '/api/v1/user/getUser', { params });
-  }
-
-  /**
    * Retrieves a list of all users.
    *
    * @returns An HTTP GET request to get the list of all users.

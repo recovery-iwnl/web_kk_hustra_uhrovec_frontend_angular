@@ -5,7 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
 import {MatchService} from "../services/matchService/match.service";
 import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
@@ -188,8 +188,13 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    const loggedInUser = this.authService.getLoggedInUser();
-    return loggedInUser && loggedInUser.role === 'ADMIN';
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      return tokenPayload.role === 'ADMIN';
+    } else {
+      console.error("Token is null. User is not authenticated.");
+      return false;
+    }
   }
-
 }

@@ -307,9 +307,15 @@ export class ForumComponent {
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const loggedInUser = this.authService.getLoggedInUser();
-    this.email = <string>localStorage.getItem("token");
-    return loggedInUser && loggedInUser.role === 'ADMIN';
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      this.email = tokenPayload.email;
+      return tokenPayload.role === 'ADMIN';
+    } else {
+      console.error("Token is null. User is not authenticated.");
+      return false;
+    }
   }
 
   /**

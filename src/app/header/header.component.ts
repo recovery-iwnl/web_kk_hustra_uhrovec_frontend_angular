@@ -3,6 +3,7 @@ import {AuthService} from '../services/auth/auth.service';
 import {NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../services/userService/user.service";
 import {trigger, state, style, animate, transition} from '@angular/animations';
+import {map, Observable} from "rxjs";
 
 /**
  * HeaderComponent is an Angular component responsible for displaying the header of the application.
@@ -115,8 +116,14 @@ export class HeaderComponent implements OnInit {
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const loggedInUser = this.authService.getLoggedInUser();
-    return loggedInUser && loggedInUser.role === 'ADMIN';
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      return tokenPayload.role === 'ADMIN';
+    } else {
+      console.error("Token is null. User is not authenticated.");
+      return false;
+    }
   }
 
   /**

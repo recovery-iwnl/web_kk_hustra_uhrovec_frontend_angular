@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
+
+
+const USER_KEY = 'user';
 
 /**
  * LoginComponent is an Angular component responsible for handling user login functionality.
@@ -71,8 +74,7 @@ export class LoginComponent {
           positionClass: 'toast-center-center',
         });
       } else if (resultData.message == "Login Successful") {
-        localStorage.setItem("token", <string>this.loginForm.value.email);
-        localStorage.setItem("pass", <string>this.loginForm.value.password);
+        localStorage.setItem("token", resultData.token);
         this.authService.login();
         this.router.navigateByUrl('/domov');
       } else {
@@ -80,7 +82,7 @@ export class LoginComponent {
           positionClass: 'toast-center-center',
         });
       }
-    })
+    });
   }
 
   /**

@@ -40,6 +40,10 @@ export class ProfileComponent {
    */
   isProfileChanged: boolean = false;
 
+  passwordInput: string = '';
+
+  passwordPlaceholder: string = '********';
+
   /**
    * Creates an instance of ProfileComponent.
    *
@@ -47,6 +51,9 @@ export class ProfileComponent {
    * @param authService - Reference to the AuthService for handling user authentication.
    * @param dialog - Reference to the MatDialog service for displaying dialogs.
    */
+
+
+
   constructor(private userService: UserService, private authService: AuthService, private dialog: MatDialog) {
   }
 
@@ -58,17 +65,24 @@ export class ProfileComponent {
     this.getDetails();
   }
 
+  clearPassword() {
+    this.passwordPlaceholder = '';
+  }
+
+  hidePassword() {
+    if (!this.passwordInput) {
+      this.passwordPlaceholder = '********';
+    }
+  }
 
   /**
    * Retrieves user details and initializes the 'initialUserDetails' property.
    */
   getDetails() {
-    const email = <string>localStorage.getItem("token");
-    this.userService.getUserDetails(email).pipe(
+    this.authService.getUserDetails(<string>localStorage.getItem("token")).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.userDetails = resp;
-        this.userDetails.password = localStorage.getItem("pass");
       }),
       catchError((err) => {
         console.log(err);
@@ -101,8 +115,7 @@ export class ProfileComponent {
    * Deletes the user account, logs out the user, and redirects to the login page.
    */
   deleteAccount() {
-    const email = <string>localStorage.getItem("token");
-    this.userService.deleteUser(email).pipe(
+    this.userService.deleteUser(this.userDetails.email).pipe(
       tap((resp: any) => {
         console.log("Account deleted");
       }),
@@ -122,9 +135,6 @@ export class ProfileComponent {
     this.userService.updateUser(this.userDetails).pipe(
       tap((resp: any) => {
         console.log(resp);
-        localStorage.setItem("token", this.userDetails.email);
-        localStorage.setItem("pass", this.userDetails.password);
-        //this.userDetails.password =  localStorage.getItem("pass");
         this.initialUserDetails = {...this.userDetails};
       }),
       catchError((err) => {
@@ -237,6 +247,7 @@ export class ProfileComponent {
    * Sets the 'isProfileChanged' flag to true.
    */
   onPasswordChange() {
+    this.userDetails.password = this.passwordInput;
     this.isProfileChanged = true;
   }
 

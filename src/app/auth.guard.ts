@@ -43,9 +43,16 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/login']);
         return false;
       }
-      if (url == '/users' && this.authService.getLoggedInUser().role != 'ADMIN') {
-        this.router.navigate(['/domov']);
-        return false;
+      const token = localStorage.getItem("token");
+      if (token) {
+        const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+        if (url == '/users' && tokenPayload.role != 'ADMIN') {
+          this.router.navigate(['/domov']);
+          return false;
+        }
+      } else {
+        console.error("Token is null. User is not authenticated.");
+        this.router.navigate(['/login']);
       }
 
       return true;

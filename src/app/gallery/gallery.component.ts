@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {FileUploadService} from "../services/fileUploadService/file-upload.service";
 import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {MatchService} from "../services/matchService/match.service";
 import {ToastrService} from "ngx-toastr";
@@ -189,8 +189,14 @@ export class GalleryComponent implements OnInit{
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const loggedInUser = this.authService.getLoggedInUser();
-    return loggedInUser && loggedInUser.role === 'ADMIN';
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      return tokenPayload.role === 'ADMIN';
+    } else {
+      console.error("Token is null. User is not authenticated.");
+      return false;
+    }
   }
 
 

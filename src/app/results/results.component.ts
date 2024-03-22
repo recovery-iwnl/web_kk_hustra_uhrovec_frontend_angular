@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, HostListener, NgZone, OnInit} from '@angular/core';
 import {ResultService} from "../services/resultService/result.service";
 import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {TeamService} from "../services/teamService/team.service";
 import {DatePipe} from "@angular/common";
@@ -607,8 +607,14 @@ export class ResultsComponent implements OnInit{
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const loggedInUser = this.authService.getLoggedInUser();
-    return loggedInUser && loggedInUser.role === 'ADMIN';
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      return tokenPayload.role === 'ADMIN';
+    } else {
+      console.error("Token is null. User is not authenticated.");
+      return false;
+    }
   }
 
   /**

@@ -5,17 +5,13 @@ import {ToastrService} from "ngx-toastr";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../userService/user.service";
 import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
+import {Observable, of} from "rxjs";
+import {ConfigService} from "../configService/config.service";
 
 /**
  * Represents the key for storing the authentication status in local storage.
  */
 const AUTH_KEY = 'loggedIn';
-
-/**
- * Represents the key for storing the user information in local storage.
- */
-const USER_KEY = 'user';
 
 /**
  * AuthService provides authentication-related functionalities such as login, logout,
@@ -31,10 +27,6 @@ export class AuthService {
    */
   private loggedIn: boolean = false;
 
-  /**
-   * Represents the logged-in user.
-   */
-  loggedUser : any
 
   /**
    * Creates an instance of AuthService.
@@ -44,7 +36,7 @@ export class AuthService {
    * @param http - Reference to the HttpClient for making HTTP requests.
    * @param userService - Reference to the UserService for user-related operations.
    */
-  constructor(private router : Router, private toastr : ToastrService, private http: HttpClient, private userService : UserService) {
+  constructor(private router : Router, private toastr : ToastrService, private http: HttpClient, private userService : UserService, private config: ConfigService) {
     this.loggedIn = localStorage.getItem(AUTH_KEY) === 'true';
   }
 
@@ -66,18 +58,12 @@ export class AuthService {
     this.toastr.success('', 'Úspešne ste sa prihlásili!', {
       positionClass: 'toast-bottom-right',
     });
+  }
 
-    this.userService.getUserDetails(<string>localStorage.getItem("token")).pipe(
-      tap((resp: any) => {
-        console.log(resp);
-        this.loggedUser = resp;
-        this.setLoggedInUser(this.loggedUser);
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    ).subscribe();
+  getUserDetails(token: string) {
+    return this.http.get(this.config.apiUrl + '/api/v1/user/getUserDetails', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   }
 
   /**
@@ -86,32 +72,10 @@ export class AuthService {
   logout() {
     this.loggedIn = false;
     localStorage.removeItem(AUTH_KEY);
-    localStorage.removeItem(USER_KEY);
     localStorage.removeItem("token");
-    localStorage.removeItem("pass");
-    const currentUrl = this.router.url;
       this.router.navigateByUrl('/domov');
     this.toastr.success('', 'Úspešne ste sa odhlásili!', {
       positionClass: 'toast-bottom-right',
     });
-  }
-
-  /**
-   * Sets the logged-in user's information in local storage.
-   *
-   * @param user - The user information to be stored.
-   */
-  setLoggedInUser(user: any) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  /**
-   * Retrieves the logged-in user's information from local storage.
-   *
-   * @returns The logged-in user's information or null if not available.
-   */
-  getLoggedInUser(): any {
-    const userData = localStorage.getItem(USER_KEY);
-    return userData ? JSON.parse(userData) : null;
   }
 }
