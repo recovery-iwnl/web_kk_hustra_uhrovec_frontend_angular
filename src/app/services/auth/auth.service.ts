@@ -37,7 +37,7 @@ export class AuthService {
    * @param userService - Reference to the UserService for user-related operations.
    */
   constructor(private router : Router, private toastr : ToastrService, private http: HttpClient, private userService : UserService, private config: ConfigService) {
-    this.loggedIn = localStorage.getItem(AUTH_KEY) === 'true';
+    this.loggedIn = !!localStorage.getItem("token");
   }
 
   /**
@@ -54,7 +54,6 @@ export class AuthService {
    */
   login() {
     this.loggedIn = true;
-    localStorage.setItem(AUTH_KEY, 'true');
     this.toastr.success('', 'Úspešne ste sa prihlásili!', {
       positionClass: 'toast-bottom-right',
     });
@@ -71,7 +70,6 @@ export class AuthService {
    */
   logout() {
     this.loggedIn = false;
-    localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem("token");
       this.router.navigateByUrl('/domov');
     this.toastr.success('', 'Úspešne ste sa odhlásili!', {

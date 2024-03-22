@@ -223,6 +223,7 @@
 
 .dropdown-menu .dropdown-item:hover {
   background-color: rgb(56, 63, 101);
+  border-radius: 3px;
 }
 
 .dropdown-menu .dropdown-item::after {

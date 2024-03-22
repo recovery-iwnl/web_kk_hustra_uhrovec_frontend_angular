@@ -4,7 +4,7 @@
       <form>
         <img src="assets/images/user_profile.jpg" class="img-circle img-fluid" alt="avatar">
         <h4 class="text-center form-control">Ste prihlásený s účtom:</h4>
-        <h4 class="text-center form-control fs-4"> {{ localStorage.getItem("token") }} </h4>
+        <h4 class="text-center form-control fs-4"> {{ this.account }} </h4>
         <button type="button" class="btn btn-danger mt-4" (click)="logout()">Odhlásiť sa</button>
       </form>
     </div>
@@ -29,7 +29,7 @@
           />
         </div>
         <button type="submit"
-                style="background-color: #1c62c7;color: #fff;padding: 8px 24px;border-radius: 10px;width: 100%;font-size: 1.2rem;">
+                style="background-color: rgb(38, 44, 72);color: #fff;padding: 8px 24px;border-radius: 10px;width: 100%;font-size: 1.2rem;">
           Prihlásiť
         </button>
         <div class="text-center register">

@@ -29,6 +29,9 @@ export class LoginComponent {
     }
   );
 
+  account : any = {};
+
+
   /**
    * Creates an instance of LoginComponent.
    *
@@ -40,6 +43,14 @@ export class LoginComponent {
    */
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {
 
+  }
+
+  ngOnInit() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      this.account = tokenPayload.username;
+    }
   }
 
   /**
@@ -97,4 +108,6 @@ export class LoginComponent {
    * @readonly
    */
   protected readonly localStorage = localStorage;
+  protected readonly atob = atob;
+  protected readonly JSON = JSON;
 }
