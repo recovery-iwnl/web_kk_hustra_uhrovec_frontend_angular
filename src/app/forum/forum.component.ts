@@ -36,11 +36,6 @@ export class ForumComponent {
   comments: any[] = [];
 
   /**
-   * Array containing all users in the forum.
-   */
-  users: any[] = [];
-
-  /**
    * Number of characters left for the user to type in a comment.
    */
   charactersLeft: number = 255;
@@ -49,6 +44,10 @@ export class ForumComponent {
    * Email of the currently logged-in user.
    */
   email : any;
+
+  username : any;
+
+  numberOfUsers : any;
 
   /**
    * Username of the newest user in the forum.
@@ -82,7 +81,8 @@ export class ForumComponent {
    */
   ngOnInit(): void {
     this.getComments();
-    this.getUsers();
+    this.getNewestUser();
+    this.getNumberOfUsers();
   }
 
   /**
@@ -91,8 +91,7 @@ export class ForumComponent {
    */
   addComment() {
     this.comment.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
-    const email = <string>localStorage.getItem("token");
-    this.forumService.addComment(email,this.comment).pipe(
+    this.forumService.addComment(this.email,this.comment).pipe(
       tap((resp: any) => {
         console.log(resp);
         this.comments.push(resp);
@@ -219,27 +218,29 @@ export class ForumComponent {
    */
   getUniqueAuthorsCount(): number {
     const uniqueAuthors = new Set<string>();
-    this.comments.forEach(comment => uniqueAuthors.add(comment.user.userName));
+    this.comments.forEach(comment => uniqueAuthors.add(comment.username));
     return uniqueAuthors.size;
   }
 
-  /**
-   * Retrieves all users and sorts them based on their user IDs.
-   * Sets the 'newestUserName' to the username of the newest user.
-   * Triggers change detection.
-   */
-  getUsers() {
-    this.userService.getAllUsers().pipe(
+  getNewestUser() {
+    this.userService.getNewestUser().pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.users = resp;
+        this.newestUserName = resp;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
 
-        this.users.sort((a: any, b: any) => b.userID - a.userID);
-
-        if (this.users.length > 0) {
-          this.newestUserName = this.users[0].userName;
-        }
-
+  getNumberOfUsers() {
+    this.userService.getNumberOfUsers().pipe(
+      tap((resp: any) => {
+        console.log(resp);
+        this.numberOfUsers = resp;
         this.detectChanges();
       }),
       catchError((err) => {
@@ -311,6 +312,7 @@ export class ForumComponent {
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       this.email = tokenPayload.email;
+      this.username = tokenPayload.username;
       return tokenPayload.role === 'ADMIN';
     } else {
       console.error("Token is null. User is not authenticated.");

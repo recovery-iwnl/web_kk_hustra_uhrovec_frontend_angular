@@ -42,13 +42,13 @@
           <div class="col-md-1">
             <div
               style="width: 56px; height: 56px;  border-radius: 50%; border: 1px solid rgb(38, 44, 72); display: flex; justify-content: center; align-items: center;">
-              <i *ngIf="comment.user.role === 'ADMIN'" class="bi bi-shield-lock"
+              <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
                  style="font-size: 45px; cursor: pointer" title="Admin">
               </i>
-              <i *ngIf="comment.user.role === 'FAN'" class="bi bi-person-heart" style="font-size: 40px;cursor: pointer"
+              <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="font-size: 40px;cursor: pointer"
                  title="Fanúšik">
               </i>
-              <i *ngIf="comment.user.role === 'PLAYER'" class="bi bi-person-check-fill"
+              <i *ngIf="comment.role === 'PLAYER'" class="bi bi-person-check-fill"
                  style="font-size: 40px;cursor: pointer" title="Hráč klubu">
               </i>
             </div>
@@ -75,14 +75,14 @@
             <div class="mb-3">
               <a style="background-color: rgba(204,204,204,0.29); border-radius: 5px; padding: 3px; font-size: 15px">
                 By
-                <a class="text-blue">{{ comment.user.userName }}</a>
-                <i *ngIf="comment.user.role === 'ADMIN'" class="bi bi-shield-lock"
+                <a class="text-blue">{{ comment.username }}</a>
+                <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
                    style="color: rgb(38, 44, 72); padding: 4px; cursor: pointer" title="Admin">
                 </i>
-                <i *ngIf="comment.user.role === 'FAN'" class="bi bi-person-heart" style="padding: 4px; cursor: pointer"
+                <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="padding: 4px; cursor: pointer"
                    title="Fanúšik">
                 </i>
-                <i *ngIf="comment.user.role === 'PLAYER'" class="bi bi-person-check-fill"
+                <i *ngIf="comment.role === 'PLAYER'" class="bi bi-person-check-fill"
                    style="padding: 4px; cursor: pointer" title="Hráč klubu">
                 </i>
               </a>
@@ -95,7 +95,7 @@
               </i>
               <span style="font-size: 20px;"> {{comment.likes}}</span>
             </button>
-            <button *ngIf="(email === comment.user.email || isAdmin())" type="button" class="btn border-start "
+            <button *ngIf="(username === comment.username || isAdmin())" type="button" class="btn border-start "
                     (click)="confirmDelete($event,comment.id)" style="margin-right: 20px; border-radius: 0">
               <i class="bi bi-trash3"
                  style="padding: 4px; cursor: pointer; font-size: 25px;" title="Vymazať">
@@ -154,7 +154,7 @@
             </div>
             <div class="row d-flex flex-row">
               <div class="col-sm-6 flex-ew text-center py-3 border-right mx-0"><a class="d-block lead font-weight-bold"
-              > {{ users.length }}</a> Členovia
+              > {{ numberOfUsers }}</a> Členovia
               </div>
               <div class="col-sm-6 flex-ew text-center py-3 mx-0"><a
                 class="d-block lead font-weight-bold">{{ newestUserName }}</a> Nový člen

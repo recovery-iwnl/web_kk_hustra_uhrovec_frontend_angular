@@ -7,7 +7,6 @@
       <tr class="text-center">
         <th>ID</th>
         <th>Používateľské meno</th>
-        <th>Email</th>
         <th>Rola</th>
         <th style="width: 80px;" >Upraviť</th>
         <th style="width: 80px;">Vymazať</th>
@@ -17,7 +16,6 @@
       <tr *ngFor="let user of users" class="text-center ">
         <td>{{ user.userID }}</td>
         <td>{{ user.userName }}</td>
-        <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
         <td>
           <button mat-stroked-button color="primary" data-bs-toggle="modal" data-bs-target="#editUserModal" (click)="editUser(user)" [disabled]="user.role === 'ADMIN'">Upraviť</button>
@@ -45,10 +43,6 @@
             <div class="col-md-12">
               <label for="username" class="form-label">Používateľské meno:</label>
               <input type="text" class="form-control" id="username" [(ngModel)]="editedUser.userName"  [ngModelOptions]="{standalone: true}" disabled>
-            </div>
-            <div class="col-md-12">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control" id="email" [(ngModel)]="editedUser.email"  [ngModelOptions]="{standalone: true}" disabled>
             </div>
             <div class="col-md-12">
               <label for="role" class="form-label">Rola:</label>

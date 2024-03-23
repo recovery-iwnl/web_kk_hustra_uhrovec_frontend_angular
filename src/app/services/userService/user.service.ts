@@ -54,6 +54,15 @@ export class UserService {
     return this.http.get(this.API + '/api/v1/user/getUsersList');
   }
 
+  public getNewestUser() {
+    return this.http.get(this.API + '/api/v1/user/getNewestUser', {responseType: "text"});
+  }
+
+  public getNumberOfUsers() {
+    return this.http.get(this.API + '/api/v1/user/getNumberOfUsers', {responseType: "text"});
+  }
+
+
   /**
    * Deletes a user based on the specified email.
    *
