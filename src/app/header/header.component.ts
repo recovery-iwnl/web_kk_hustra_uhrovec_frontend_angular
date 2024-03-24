@@ -60,6 +60,8 @@ export class HeaderComponent implements OnInit {
 
   isDropdownVisible: boolean = false;
 
+  role : any;
+
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
   }
 
@@ -119,9 +121,9 @@ export class HeaderComponent implements OnInit {
     const token = localStorage.getItem("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      this.role = tokenPayload.role;
       return tokenPayload.role === 'ADMIN';
     } else {
-      console.error("Token is null. User is not authenticated.");
       return false;
     }
   }

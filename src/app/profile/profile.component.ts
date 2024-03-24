@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from "../services/userService/user.service";
-import {tap, catchError} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {AuthService} from "../services/auth/auth.service";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
@@ -79,17 +79,20 @@ export class ProfileComponent {
    * Retrieves user details and initializes the 'initialUserDetails' property.
    */
   getDetails() {
-    this.authService.getUserDetails(<string>localStorage.getItem("token")).pipe(
-      tap((resp: any) => {
-        console.log(resp);
-        this.userDetails = resp;
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    ).subscribe();
-    this.initialUserDetails = {...this.userDetails};
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      this.userDetails = {
+        userID: decodedToken.userId,
+        userName: decodedToken.username,
+        email: decodedToken.email,
+        password: this.passwordInput,
+        role: decodedToken.role
+      };
+    } else {
+      console.error("Token is null. User is not authenticated.");
+    }
+    this.initialUserDetails = { ...this.userDetails };
   }
 
   /**
@@ -135,22 +138,17 @@ export class ProfileComponent {
     this.userService.updateUser(this.userDetails).pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.initialUserDetails = {...this.userDetails};
+        if (resp == "Email is already registered") {
+          this.emailErrorMessage = "Účet s týmto emailom už existuje";
+        } else if (resp == "Username is already taken") {
+          this.usernameErrorMessage = "Účet s týmto používateľským menom už existuje";
+        } else if (resp != "User not found"){
+          this.initialUserDetails = {...this.userDetails};
+          this.authService.logout();
+        }
       }),
       catchError((err) => {
         console.log(err);
-
-        if (typeof err === 'string') {
-
-          if (err == "Email is already registered") {
-            this.emailErrorMessage = "Účet s týmto emailom už existuje";
-          } else if (err == "Username is already taken") {
-            this.usernameErrorMessage = "Účet s týmto používateľským menom už existuje";
-          }
-        } else {
-          this.emailErrorMessage = err.error?.email || 'Something went wrong.';
-          this.usernameErrorMessage = err.error?.username || 'Something went wrong.';
-        }
         return of(null);
       })
     ).subscribe();
@@ -164,7 +162,7 @@ export class ProfileComponent {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: 'Upozornenie',
-        content: 'Naozaj chcete úložiť zmeny?',
+        content: 'Naozaj chcete úložiť zmeny? Po uložení budete automaticky odhlásený.',
       },
     });
 
@@ -199,7 +197,7 @@ export class ProfileComponent {
    * @returns True if the password is invalid, false otherwise.
    */
   isPasswordInvalid(): boolean {
-    return !this.userDetails.password || this.userDetails.password.length < 8;
+    return !!this.userDetails.password && this.userDetails.password.length < 8;
   }
 
   /**

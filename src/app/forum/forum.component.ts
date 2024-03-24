@@ -315,7 +315,6 @@ export class ForumComponent {
       this.username = tokenPayload.username;
       return tokenPayload.role === 'ADMIN';
     } else {
-      console.error("Token is null. User is not authenticated.");
       return false;
     }
   }

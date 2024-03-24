@@ -80,7 +80,7 @@ export class UsersListComponent {
   }
 
   deleteAccount() {
-    this.userService.deleteUser(this.editedUser.email).pipe(
+    this.userService.deleteUser(this.editedUser.userID).pipe(
       tap((resp: any) => {
         console.log("Account "+ this.editedUser.userName + " deleted");
         this.users = this.users.filter(u => u.userID !== this.editedUser.userID);

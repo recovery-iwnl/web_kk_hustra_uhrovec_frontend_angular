@@ -193,7 +193,6 @@ export class UpcomingMatchesComponent implements OnInit {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       return tokenPayload.role === 'ADMIN';
     } else {
-      console.error("Token is null. User is not authenticated.");
       return false;
     }
   }

@@ -64,13 +64,13 @@ export class UserService {
 
 
   /**
-   * Deletes a user based on the specified email.
+   * Deletes a user based on the specified id.
    *
-   * @param email - The email of the user to be deleted.
+   * @param id - The id of the user to be deleted.
    * @returns An HTTP DELETE request to delete the user.
    */
-  public deleteUser(email: any) {
-    return this.http.delete(this.API + '/api/v1/user/deleteUser?email=' + email, {responseType: 'text'});
+  public deleteUser(id: any) {
+    return this.http.delete(this.API + '/api/v1/user/deleteUser?id=' + id, {responseType: 'text'});
   }
 
   /**
@@ -80,17 +80,7 @@ export class UserService {
    * @returns An HTTP PUT request to update the user.
    */
   public updateUser(user: any): Observable<any> {
-    return this.http.put(`${this.API}/api/v1/user/updateUser`, user).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Update User Error:', error);
-
-        if (error.status === 400) {
-          return throwError(error.error);
-        } else {
-          return throwError('Something went wrong.');
-        }
-      })
-    );
+    return this.http.put(`${this.API}/api/v1/user/updateUser`, user,  {responseType: "text"})
   }
 
   /**

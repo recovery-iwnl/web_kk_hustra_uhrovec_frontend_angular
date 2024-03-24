@@ -51,7 +51,6 @@ export class AuthGuard implements CanActivate {
           return false;
         }
       } else {
-        console.error("Token is null. User is not authenticated.");
         this.router.navigate(['/login']);
       }
 

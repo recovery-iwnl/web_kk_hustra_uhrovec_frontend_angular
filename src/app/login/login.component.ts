@@ -7,8 +7,6 @@ import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
 
 
-const USER_KEY = 'user';
-
 /**
  * LoginComponent is an Angular component responsible for handling user login functionality.
  * It includes features such as form validation, user login, and error handling.
@@ -74,9 +72,6 @@ export class LoginComponent {
       "email": this.loginForm.value.email,
       "password": this.loginForm.value.password
     };
-
-    console.log(this.loginForm.value.email);
-    console.log(this.loginForm.value.password);
 
     this.userService.loginUser(data).subscribe((resultData: any) => {
       console.log(resultData);
