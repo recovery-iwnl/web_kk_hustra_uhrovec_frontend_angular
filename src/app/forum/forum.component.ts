@@ -268,27 +268,27 @@ export class ForumComponent {
     const secondsDifference = Math.floor(timeDifference / 1000);
 
     if (secondsDifference < 60) {
-      return `${secondsDifference} seconds ago`;
+      return `${secondsDifference} sekundami`;
     }
 
     // Convert the difference to minutes
     const minutesDifference = Math.floor(secondsDifference / 60);
 
     if (minutesDifference < 60) {
-      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+      return `${minutesDifference} ${minutesDifference === 1 ? 'minútou' : 'minútami'}`;
     }
 
     // Convert the difference to hours
     const hoursDifference = Math.floor(minutesDifference / 60);
 
     if (hoursDifference < 24) {
-      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
+      return `${hoursDifference} ${hoursDifference === 1 ? 'hodinou' : 'hodinami'}`;
     }
 
     // Convert the difference to days
     const daysDifference = Math.floor(hoursDifference / 24);
 
-    return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
+    return `${daysDifference} ${daysDifference === 1 ? 'dňom' : 'dňami'}`;
   }
 
   /**

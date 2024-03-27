@@ -1,39 +1,30 @@
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-<div class="container body-min-height">
+<div class="container px-3 py-5 body-min-height">
+
+  <div class="col pb-2 d-flex align-items-center justify-content-between border-bottom">
+    <h2>Fan zóna</h2>
+    <button id="commentDropdown"
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="background-color: rgb(38, 44, 72);color:white;">
+      {{ typeName }}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1;">
+      <li *ngFor="let option of options">
+        <a class="dropdown-item custom-button"
+           (click)="setType(option.value); setTypeName(option.label)">{{ option.label }}</a>
+      </li>
+    </ul>
+  </div>
 
 
   <div class="row ">
 
 
     <!-- Main content -->
-    <div class="col-lg-9 mb-3">
-
-      <div class="row mt-5 border-bottom">
-        <div class="col mt-3">
-          <h2>Fan zóna</h2>
-        </div>
-
-        <div class="col d-flex justify-content-end mt-3">
-          <div>
-            <button id="commentDropdown"
-                    class="btn dropdown-toggle "
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style="background-color: rgb(38, 44, 72);color:white;">
-              {{ typeName }}
-            </button>
-            <ul class="dropdown-menu">
-              <li *ngFor="let option of options">
-                <a class="dropdown-item custom-button"
-                   (click)="setType(option.value); setTypeName(option.label)">{{ option.label }}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
+    <div class="col-lg-12">
 
       <!-- End of post 1 -->
       <div *ngFor="let comment of comments" class="card px-3 border-bottom comment-button"
@@ -68,13 +59,12 @@
             <div>
               <p class="text-sm mt-5" style="margin-bottom: 0.1rem;">
                 <i class="bi bi-pencil-square" style="padding: 4px; cursor: pointer" [title]="comment.date"></i>
-                <span>Posted</span>
+                <span>pred </span>
                 <a> {{ formatDate(comment.date) }}</a>
               </p>
             </div>
             <div class="mb-3">
               <a style="background-color: rgba(204,204,204,0.29); border-radius: 5px; padding: 3px; font-size: 15px">
-                By
                 <a class="text-blue">{{ comment.username }}</a>
                 <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
                    style="color: rgb(38, 44, 72); padding: 4px; cursor: pointer" title="Admin">
@@ -138,7 +128,7 @@
       </div>
     </div>
     <!-- Sidebar content -->
-    <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+    <div class="col-lg-12 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
       <div
         style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div>
       <div style="margin-top: 7rem;">
@@ -153,10 +143,10 @@
               </div>
             </div>
             <div class="row d-flex flex-row">
-              <div class="col-sm-6 flex-ew text-center py-3 border-right mx-0"><a class="d-block lead font-weight-bold"
+              <div class="col-sm-6 flex-ew text-center py-3 border-top mx-0"><a class="d-block lead font-weight-bold"
               > {{ numberOfUsers }}</a> Členovia
               </div>
-              <div class="col-sm-6 flex-ew text-center py-3 mx-0"><a
+              <div class="col-sm-6 flex-ew text-center py-3 mx-0 border-top "><a
                 class="d-block lead font-weight-bold">{{ newestUserName }}</a> Nový člen
               </div>
             </div>

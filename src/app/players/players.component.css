@@ -20,3 +20,10 @@
   height: 210px;
 }
 
+.dropdown-menu {
+  position: fixed;
+  /* Adjust the top and left values as needed */
+  top: 50px; /* Adjust to the desired distance from the top of the viewport */
+  left: 0; /* Adjust to the desired horizontal position */
+  z-index: 1050; /* Ensure the dropdown appears above other content */
+}

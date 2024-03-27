@@ -1,48 +1,52 @@
 <div class="container px-3 py-5 body-min-height">
-  <div class="pb-2 dropdown d-flex align-items-center justify-content-between border-bottom">
+  <div class="pb-2 d-flex align-items-center justify-content-between border-bottom">
     <h2 >Výsledky 1.KL Západ</h2>
 
     <div class="mx-4">
-      <button
-        id="leagueDropdown"
-        class="btn dropdown-toggle me-2 btn-margin-bottom"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        style="background-color: rgb(38, 44, 72);color:white;"
-      >
-        {{selectedFilter}}
-      </button>
-      <ul class="dropdown-menu" style="z-index:1">
-        <li>
-          <a class="dropdown-item custom-button"
-             (click)="getResultsByYear(selectedYear.yearId);resetCollapse(); setSelectedFilter('Všetky výsledky')">Všetky
-            výsledky</a>
-        </li>
-        <li>
-          <a class="dropdown-item custom-button"
-             (click)="getResultsUhrovec(selectedYear.yearId);resetCollapse(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
-            Uhrovec</a>
-        </li>
-      </ul>
-      <button
-        id="leagueYearDropdown"
-        class="btn dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        style="background-color: rgb(38, 44, 72);color:white;"
-      >
-        {{ selectedYear.year }}
-      </button>
-      <ul class="dropdown-menu" style="z-index:1">
-        <div *ngFor="let year of years">
+
+        <button
+          id="leagueDropdown"
+          class="btn dropdown-toggle me-2 btn-margin-bottom"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          style="background-color: rgb(38, 44, 72);color:white;"
+        >
+          {{selectedFilter}}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" style="z-index:1">
           <li>
-            <a class="dropdown-item custom-button" (click)="setSelectedYear(year);resetCollapse();"> {{ year.year }}</a>
+            <a class="dropdown-item custom-button"
+               (click)="getResultsByYear(selectedYear.yearId);resetCollapse(); setSelectedFilter('Všetky výsledky')">Všetky
+              výsledky</a>
           </li>
-        </div>
-      </ul>
-    </div>
+          <li>
+            <a class="dropdown-item custom-button"
+               (click)="getResultsUhrovec(selectedYear.yearId);resetCollapse(); setSelectedFilter('Výsledky Uhrovec')">Výsledky
+              Uhrovec</a>
+          </li>
+        </ul>
+
+
+       <button
+         id="leagueYearDropdown"
+         class="btn dropdown-toggle"
+         type="button"
+         data-bs-toggle="dropdown"
+         aria-expanded="false"
+         style="background-color: rgb(38, 44, 72);color:white;"
+       >
+         {{ selectedYear.year }}
+       </button>
+       <ul class="dropdown-menu dropdown-menu-end" style="z-index:1">
+         <div *ngFor="let year of years">
+           <li>
+             <a class="dropdown-item custom-button" (click)="setSelectedYear(year);resetCollapse();"> {{ year.year }}</a>
+           </li>
+         </div>
+       </ul>
+     </div>
+
   </div>
   <div class=" row row-cols-2">
     <div *ngIf="isAdmin()">

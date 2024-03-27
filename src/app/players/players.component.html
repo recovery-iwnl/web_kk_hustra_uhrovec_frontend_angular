@@ -1,20 +1,27 @@
-<div class="container px-3 py-5 body-min-height" id="team-a">
-  <h2 class="pb-2 border-bottom">KK HuStra Uhrovec</h2>
-
-  <div class="container text-center">
+<div class="container px-3 py-5 body-min-height">
+  <div class="pb-2 d-flex align-items-center justify-content-between border-bottom">
+    <h2>KK HuStra Uhrovec</h2>
+  </div>
+  <div class="container text-center mt-2">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative" (click)="getPlayerDetails(player.playerID); getAverageByPlayer(player.playerID); getMatchesPlayedByPlayer(player.playerID); getPlayersBest(player.playerID) " data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
-        <a class="text-decoration-none text-reset" >
-          <img src="assets/images/user_profile.jpg" alt="Player {{ player.id }}" width="110" height="110" class="rounded-circle">
+      <div *ngFor="let player of players" class="col-6 col-sm-4 col-md-3 custom-button position-relative"
+           (click)="getPlayerDetails(player.playerID); getAverageByPlayer(player.playerID); getMatchesPlayedByPlayer(player.playerID); getPlayersBest(player.playerID) "
+           data-bs-toggle="modal" data-bs-target="#playerDetailsModal">
+        <a class="text-decoration-none text-reset">
+          <img src="assets/images/user_profile.jpg" alt="Player {{ player.id }}" width="110" height="110"
+               class="rounded-circle">
           <p>{{ player.name }} {{ player.surname }}</p>
         </a>
-        <button class="btn btn-light" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal" data-bs-target="#updatePlayerModal" *ngIf="isAdmin()">
+        <button class="btn btn-light" (click)="getPlayerDetails(player.playerID)" data-bs-toggle="modal"
+                data-bs-target="#updatePlayerModal" *ngIf="isAdmin()">
           <span class="fw-bold"></span> Upraviť
         </button>
-        <button type="button" class="btn-close position-absolute top-0 end-0 me-2 mt-2 aria" aria-label="Close" (mousedown)="confirmDelete($event,player)" *ngIf="isAdmin()">
+        <button type="button" class="btn-close position-absolute top-0 end-0 me-2 mt-2 aria" aria-label="Close"
+                (mousedown)="confirmDelete($event,player)" *ngIf="isAdmin()">
         </button>
       </div>
-      <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal" data-bs-target="#addPlayerModal" *ngIf="isAdmin()">
+      <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal"
+              data-bs-target="#addPlayerModal" *ngIf="isAdmin()">
         <span class="fw-bold text-black">+</span>Pridať
       </button>
     </div>
@@ -40,16 +47,20 @@
 
           <div class="mb-3 text-start">
             <label for="name" class="form-label">Meno hráča:</label>
-            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newPlayer.name" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
-            <div *ngIf="playerForm.controls['name']?.hasError('pattern') && playerForm.controls['name'].touched" class="text-danger">
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newPlayer.name" required
+                   pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="playerForm.controls['name']?.hasError('pattern') && playerForm.controls['name'].touched"
+                 class="text-danger">
               Meno hráča môže obsahovať len písmená a špeciálne znaky.
             </div>
           </div>
 
           <div class="mb-3 text-start">
             <label for="surname" class="form-label">Priezvisko hráča:</label>
-            <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="newPlayer.surname" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
-            <div *ngIf="playerForm.controls['surname']?.hasError('pattern') && playerForm.controls['surname'].touched" class="text-danger">
+            <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="newPlayer.surname" required
+                   pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="playerForm.controls['surname']?.hasError('pattern') && playerForm.controls['surname'].touched"
+                 class="text-danger">
               Priezvisko hráča môže obsahovať len písmená a špeciálne znaky.
             </div>
           </div>
@@ -57,13 +68,16 @@
           <div class="mb-3 text-start">
             <label for="age" class="form-label">Vek hráča:</label>
             <input type="number" class="form-control" id="age" name="age" [(ngModel)]="newPlayer.age" required min="1">
-            <div *ngIf="playerForm.controls['age']?.hasError('min') && playerForm.controls['age'].touched" class="text-danger">
+            <div *ngIf="playerForm.controls['age']?.hasError('min') && playerForm.controls['age'].touched"
+                 class="text-danger">
               Vek hráča musí byť väčší alebo rovný 1.
             </div>
           </div>
 
           <div class="d-flex justify-content-end">
-            <button type="submit" mat-raised-button color="basic" [disabled]="playerForm.invalid" data-bs-dismiss="modal">Pridať hráča</button>
+            <button type="submit" mat-raised-button color="basic" [disabled]="playerForm.invalid"
+                    data-bs-dismiss="modal">Pridať hráča
+            </button>
           </div>
 
         </form>
@@ -73,7 +87,8 @@
 </div>
 
 
-<div class="modal fade" id="updatePlayerModal" tabindex="-1" aria-labelledby="updatePlayerModalLabel" aria-hidden="true">
+<div class="modal fade" id="updatePlayerModal" tabindex="-1" aria-labelledby="updatePlayerModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -92,30 +107,38 @@
 
           <div class="mb-3 text-start">
             <label for="name" class="form-label">Meno hráča:</label>
-            <input type="text" class="form-control" id="nameUpdate" name="name" [(ngModel)]="shownPlayer.name" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
-            <div *ngIf="updateForm.controls['name']?.hasError('pattern') && updateForm.controls['name'].touched" class="text-danger">
+            <input type="text" class="form-control" id="nameUpdate" name="name" [(ngModel)]="shownPlayer.name" required
+                   pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="updateForm.controls['name']?.hasError('pattern') && updateForm.controls['name'].touched"
+                 class="text-danger">
               Meno hráča môže obsahovať len písmená a špeciálne znaky.
             </div>
           </div>
 
           <div class="mb-3 text-start">
             <label for="surname" class="form-label">Priezvisko hráča:</label>
-            <input type="text" class="form-control" id="surnameUpdate" name="surname" [(ngModel)]="shownPlayer.surname" required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
-            <div *ngIf="updateForm.controls['surname']?.hasError('pattern') && updateForm.controls['surname'].touched" class="text-danger">
+            <input type="text" class="form-control" id="surnameUpdate" name="surname" [(ngModel)]="shownPlayer.surname"
+                   required pattern="^[a-zA-ZščťžýáíéúäôöüěřščřžýáíéúäôöüěřščřžľďťňĺŕŠČŤŽÝÁÍÉÚÄÔÖÜĚŘŠČŘŽĹĽ]+$">
+            <div *ngIf="updateForm.controls['surname']?.hasError('pattern') && updateForm.controls['surname'].touched"
+                 class="text-danger">
               Priezvisko hráča môže obsahovať len písmená a špeciálne znaky.
             </div>
           </div>
 
           <div class="mb-3 text-start">
             <label for="age" class="form-label">Vek hráča:</label>
-            <input type="number" class="form-control" id="ageUpdate" name="age" [(ngModel)]="shownPlayer.age" required min="1">
-            <div *ngIf="updateForm.controls['age']?.hasError('min') && updateForm.controls['age'].touched" class="text-danger">
+            <input type="number" class="form-control" id="ageUpdate" name="age" [(ngModel)]="shownPlayer.age" required
+                   min="1">
+            <div *ngIf="updateForm.controls['age']?.hasError('min') && updateForm.controls['age'].touched"
+                 class="text-danger">
               Vek hráča musí byť väčší alebo rovný 1.
             </div>
           </div>
 
           <div class="d-flex justify-content-end">
-            <button type="submit" mat-raised-button color="basic" [disabled]="updateForm.invalid" data-bs-dismiss="modal">Upraviť hráča</button>
+            <button type="submit" mat-raised-button color="basic" [disabled]="updateForm.invalid"
+                    data-bs-dismiss="modal">Upraviť hráča
+            </button>
           </div>
 
         </form>
@@ -125,7 +148,8 @@
 </div>
 
 
-<div class="modal fade" id="playerDetailsModal" tabindex="-1" aria-labelledby="playerDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="playerDetailsModal" tabindex="-1" aria-labelledby="playerDetailsModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -144,10 +168,11 @@
         >
           {{ selectedYear.year }}
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu  dropdown-menu-end">
           <div *ngFor="let year of years">
             <li>
-              <a class="dropdown-item custom-button" (click)="setSelectedYear(year); getPlayerDetails(shownPlayer.playerID); getAverageByPlayer(shownPlayer.playerID); getMatchesPlayedByPlayer(shownPlayer.playerID); getPlayersBest(shownPlayer.playerID) "> {{ year.year }}</a>
+              <a class="dropdown-item custom-button"
+                 (click)="setSelectedYear(year); getPlayerDetails(shownPlayer.playerID); getAverageByPlayer(shownPlayer.playerID); getMatchesPlayedByPlayer(shownPlayer.playerID); getPlayersBest(shownPlayer.playerID) "> {{ year.year }}</a>
             </li>
           </div>
         </ul>
@@ -157,7 +182,8 @@
 
 
         <div class="profile-picture-container mb-3">
-          <img src="assets/images/user_profile.jpg" alt="Player {{ shownPlayer?.id }}" class="rounded-circle profile-picture">
+          <img src="assets/images/user_profile.jpg" alt="Player {{ shownPlayer?.id }}"
+               class="rounded-circle profile-picture">
         </div>
 
         <h2>{{ shownPlayer?.name }} {{ shownPlayer?.surname }}</h2>
@@ -183,7 +209,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button mat-raised-button color="basic" data-bs-dismiss="modal" >OK</button>
+        <button mat-raised-button color="basic" data-bs-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
