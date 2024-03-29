@@ -7,11 +7,8 @@ import {UserService} from "../userService/user.service";
 import {catchError, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {ConfigService} from "../configService/config.service";
+import {TokenExpirationService} from "../tokenExpiration/token-expiration.service";
 
-/**
- * Represents the key for storing the authentication status in local storage.
- */
-const AUTH_KEY = 'loggedIn';
 
 /**
  * AuthService provides authentication-related functionalities such as login, logout,
@@ -36,8 +33,15 @@ export class AuthService {
    * @param http - Reference to the HttpClient for making HTTP requests.
    * @param userService - Reference to the UserService for user-related operations.
    */
-  constructor(private router : Router, private toastr : ToastrService, private http: HttpClient, private userService : UserService, private config: ConfigService) {
+  constructor(private router: Router,
+              private toastr: ToastrService,
+              private http: HttpClient,
+              private userService: UserService,
+              private tokenExpiration: TokenExpirationService) {
     this.loggedIn = !!localStorage.getItem("token");
+    this.tokenExpiration.onTokenExpired().subscribe(() => {
+      this.logout();
+    });
   }
 
   /**
@@ -54,24 +58,21 @@ export class AuthService {
    */
   login() {
     this.loggedIn = true;
+    this.tokenExpiration.startTokenCheck();
     this.toastr.success('', 'Úspešne ste sa prihlásili!', {
       positionClass: 'toast-bottom-right',
     });
   }
 
-  getUserDetails(token: string) {
-    return this.http.get(this.config.apiUrl + '/api/v1/user/getUserDetails', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-  }
 
   /**
    * Performs a logout operation and sets the user as logged out.
    */
   logout() {
     this.loggedIn = false;
+    this.tokenExpiration.stopTokenCheck();
     localStorage.removeItem("token");
-      this.router.navigateByUrl('/domov');
+    this.router.navigateByUrl('/domov');
     this.toastr.success('', 'Úspešne ste sa odhlásili!', {
       positionClass: 'toast-bottom-right',
     });
