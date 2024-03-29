@@ -36,6 +36,8 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { ForumComponent } from './forum/forum.component';
 import { CompareComponent } from './compare/compare.component';
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
+import { CountUpModule } from 'ngx-countup';
+
 
 
 @NgModule({
@@ -80,7 +82,8 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    CountUpModule
   ],
   providers: [ { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, DatePipe ],
   bootstrap: [AppComponent]

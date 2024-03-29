@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
-import {ResultService} from "../services/resultService/result.service";
 import {ForumService} from "../services/forumService/forum.service";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs";
@@ -9,7 +8,6 @@ import {DatePipe} from "@angular/common";
 import * as moment from 'moment';
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {UserService} from "../services/userService/user.service";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
 /**
