@@ -1,68 +1,211 @@
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-size: 18px;
-  background-color: #f5f5f5;
+
+
+img {
+  width: 100%;
 }
 
-.container h2 {
-  border-bottom: 2px solid #333;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+@font-face {
+  font-family: 'TITLE2';
+  src: url('src/assets/fonts/NoizeSportFreeVertionRegular-MVwye.ttf') format('truetype');
+}
+
+.headline {
+  font-family: "TITLE2", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgb(38, 44, 72);
+  margin-top: 5rem;
+}
+
+.highlight {
+  font-style: italic;
+  font-weight: bold;
+  padding: 0rem 2rem;
+  width: 100%;
+}
+
+.highlight-3 {
+  color: white;
+  background: rgb(38, 44, 72);
+  box-shadow: 10px 10px 2px rgb(133, 140, 176);
+}
+.article-meta {
+  max-width: 96rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.author svg {
+  height: 3rem;
+  width: 3rem;
+  margin: 0 1rem 0 0;
 }
 
 .article {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.article2 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  font-size: 1.8rem;
+  line-height: 2;
 }
 
-
-.article p {
+.justify-text {
+  width : 100%;
+  white-space: pre;           /* CSS 2.0 */
+  white-space: pre-wrap;      /* CSS 2.1 */
+  white-space: pre-line;      /* CSS 3.0 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  word-wrap: break-word;
+  -moz-hyphens:auto;
+  -webkit-hyphens:auto;
+  -o-hyphens:auto;
+  hyphens:auto;
   text-align: justify;
-  margin-bottom: 20px;
-  flex: 1;
 }
 
-.article2 p {
-  text-align: justify;
-  margin-bottom: 20px;
-  flex: 1;
+.article-para-1 {
+  font-size: 2rem;
+  line-height: 1.5;
+  color: gray;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+.article-row {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: stretch;
+}
+.article-col {
+  flex: 1 1;
+  justify-content: stretch;
+}
+aside {
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+blockquote {
+  text-indent: 0.5rem;
+  box-shadow: -20px 0px 0px rgb(38, 44, 72);
+}
+.bq-long {
+  font-size: 2.5rem;
+  border-left: 10px solid rgb(133, 140, 176);
+  box-shadow: -20px 0px 0px rgb(38, 44, 72);
+}
+.bq-short {
+  font-size: 2.5rem;
+  border-left: 10px solid rgb(133, 140, 176);
+}
+.bq-medium {
+  font-size: 2.5rem;
+  box-shadow: -20px 0px 0px rgb(38, 44, 72);
+  border-left: 10px solid rgb(133, 140, 176);
+}
+blockquote {
+  text-indent: 0;
+  hanging-punctuation: first;
+}
+.bq-short::before {
+  content: open-quote;
+  color: rgb(38, 44, 72);
+}
+.bq-short::after {
+  content: close-quote;
+  color: rgb(38, 44, 72);
 }
 
-
-.article img {
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  border-radius: 15px;
+.bq-long::before {
+  content: open-quote;
+  color: rgb(38, 44, 72);
+}
+.bq-long::after {
+  content: close-quote;
+  color: rgb(38, 44, 72);
+}
+.bq-medium::before {
+  content: open-quote;
+  color: rgb(38, 44, 72);
+}
+.bq-medium::after {
+  content: close-quote;
+  color: rgb(38, 44, 72);
 }
 
-.article2 img {
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  border-radius: 15px;
+@media screen and (min-width: 768px) {
+  .headline {
+    font-size: 4rem;
+  }
+  .subhead {
+    font-size: 3.6rem;
+  }
+  .tag {
+    margin-right: 2rem;
+    font-size: 1.6rem;
+  }
+  aside {
+    font-size: 3.6rem;
+  }
+  .article-para-1 {
+    font-size: 2rem;
+  }
 }
 
-@media (max-width: 768px) {
-  .article {
-    flex-direction: column;
+@media screen and (max-width: 767px) {
+  .headline {
+    font-size: 3rem;
+  }
+  .article-col {
+    font-size: 1rem;
   }
 
-  .article img {
-    max-width: 100%;
-    margin: 0;
+  .article-para-1 {
+    font-size: 1.4rem;
+  }
+
+  .bq-long {
+    font-size: 1.6rem;
+
+  }
+  .bq-short {
+    font-size: 1.6rem;
+
+  }
+  .bq-medium {
+    font-size: 1.6rem;
   }
 }
 
+@media screen and (min-width: 1024px) {
+
+  .article-meta {
+    flex-direction: row;
+    align-items: center;
+  }
+  .author {
+    margin-bottom: unset;
+  }
+  .article-row {
+    flex-direction: row;
+  }
+  .article-col-1,
+  .article-col-2 {
+    margin-right: 2rem;
+  }
+  .article-col {
+    font-size: 1.5rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body {
+    max-width: 102.4rem;
+  }
+}

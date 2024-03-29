@@ -1,6 +1,8 @@
-<body class="body-min-height mt-5">
-
-<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+<body class="px-3 py-5 body-min-height">
+<div class="  container pb-2 d-flex align-items-center justify-content-between border-bottom">
+  <h2>Galéria</h2>
+</div>
+<div id="carouselExampleAutoplaying" class="carousel slide mt-4" data-bs-ride="carousel">
 <div class="carousel-inner" style="overflow: hidden;" >
   <div class="carousel-item" *ngFor="let image of images; let i = index" [class.active]="i === 0" >
     <a>

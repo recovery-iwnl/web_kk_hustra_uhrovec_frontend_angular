@@ -37,6 +37,7 @@ import { ForumComponent } from './forum/forum.component';
 import { CompareComponent } from './compare/compare.component';
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import { CountUpModule } from 'ngx-countup';
+import { ScrollAnimationDirective } from './directives/scroll-animation.directive';
 
 
 
@@ -58,7 +59,8 @@ import { CountUpModule } from 'ngx-countup';
     UpcomingMatchesComponent,
     GalleryComponent,
     ForumComponent,
-    CompareComponent
+    CompareComponent,
+    ScrollAnimationDirective
   ],
   imports: [
     BrowserModule,
