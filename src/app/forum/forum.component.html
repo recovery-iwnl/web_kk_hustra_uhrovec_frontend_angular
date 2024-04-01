@@ -20,135 +20,135 @@
   </div>
 
 
-  <div class="row">
+  <div>
+    <!-- End of post 1 -->
+    <div *ngFor="let comment of comments" class="px-3 border-bottom position-relative"
+         style="border-radius: 0;">
+      <div class="position-absolute top-0 end-0">
+        <button *ngIf="(username === comment.username || isAdmin())" type="button" class="btn"
+                (click)="confirmDelete($event,comment.id)" style="border-radius: 0">
+          <i class="bi bi-trash3" style="padding: 4px; cursor: pointer; font-size: 25px;" title="Vymazať"></i>
+        </button>
+      </div>
+      <div class="row align-items-start mt-3">
+        <div class="col-md-1">
+          <div
+            style="width: 56px; height: 56px;  border-radius: 50%; border: 1px solid rgb(38, 44, 72); display: flex; justify-content: center; align-items: center;">
+            <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
+               style="font-size: 45px; cursor: pointer" title="Admin">
+            </i>
+            <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="font-size: 40px;cursor: pointer"
+               title="Fanúšik">
+            </i>
+            <i *ngIf="comment.role === 'PLAYER'" class="bi bi-person-check-fill"
+               style="font-size: 40px;cursor: pointer" title="Hráč klubu">
+            </i>
+          </div>
+        </div>
 
+        <div class="col-md-9 mb-sm-0">
+          <h4>
+            <a class="text-primary"> {{ comment.subject }}</a>
+          </h4>
+          <a class="text-primary"> {{ comment.text }}</a>
 
-    <!-- Main content -->
-    <div class="col-lg-12">
-
-      <!-- End of post 1 -->
-      <div *ngFor="let comment of comments" class="px-3 border-bottom"
-           style=" border-radius: 0; position: relative;">
-        <div class="row align-items-start mt-3">
-          <div class="col-md-1">
-            <div
-              style="width: 56px; height: 56px;  border-radius: 50%; border: 1px solid rgb(38, 44, 72); display: flex; justify-content: center; align-items: center;">
+          <div>
+            <p class="text-sm mt-5" style="margin-bottom: 0.1rem;">
+              <i class="bi bi-pencil-square" style="padding: 4px; cursor: pointer" [title]="comment.date"></i>
+              <span>pred </span>
+              <a> {{ formatDate(comment.date) }}</a>
+            </p>
+          </div>
+          <div class="mb-2">
+            <a style="background-color: rgba(204,204,204,0.29); border-radius: 5px; padding: 3px; font-size: 15px">
+              <a class="text-blue">{{ comment.username }}</a>
               <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
-                 style="font-size: 45px; cursor: pointer" title="Admin">
+                 style="color: rgb(38, 44, 72); padding: 4px; cursor: pointer" title="Admin">
               </i>
-              <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="font-size: 40px;cursor: pointer"
+              <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="padding: 4px; cursor: pointer"
                  title="Fanúšik">
               </i>
               <i *ngIf="comment.role === 'PLAYER'" class="bi bi-person-check-fill"
-                 style="font-size: 40px;cursor: pointer" title="Hráč klubu">
+                 style="padding: 4px; cursor: pointer" title="Hráč klubu">
               </i>
-            </div>
-          </div>
-          <div class="col-md-11 mb-sm-0">
-            <h4>
-              <a class="text-primary"> {{ comment.subject }}</a>
-            </h4>
-            <a class="text-primary"> {{ comment.text }}</a>
-          </div>
-        </div>
-        <div class="row align-items-center">
-
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-8 mb-3">
-            <div>
-              <p class="text-sm mt-5" style="margin-bottom: 0.1rem;">
-                <i class="bi bi-pencil-square" style="padding: 4px; cursor: pointer" [title]="comment.date"></i>
-                <span>pred </span>
-                <a> {{ formatDate(comment.date) }}</a>
-              </p>
-            </div>
-            <div class="mb-3">
-              <a style="background-color: rgba(204,204,204,0.29); border-radius: 5px; padding: 3px; font-size: 15px">
-                <a class="text-blue">{{ comment.username }}</a>
-                <i *ngIf="comment.role === 'ADMIN'" class="bi bi-shield-lock"
-                   style="color: rgb(38, 44, 72); padding: 4px; cursor: pointer" title="Admin">
-                </i>
-                <i *ngIf="comment.role === 'FAN'" class="bi bi-person-heart" style="padding: 4px; cursor: pointer"
-                   title="Fanúšik">
-                </i>
-                <i *ngIf="comment.role === 'PLAYER'" class="bi bi-person-check-fill"
-                   style="padding: 4px; cursor: pointer" title="Hráč klubu">
-                </i>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3 mb-1">
-            <button class="btn" [disabled]="!isLoggedIn()" (click)="likeComment(comment.id)">
-              <i class="bi bi-hand-thumbs-up"
-                 style="padding: 4px; cursor: pointer; font-size: 25px;" title="Páči sa mi to">
-              </i>
-              <span style="font-size: 20px;"> {{comment.likes}}</span>
-            </button>
-            <button *ngIf="(username === comment.username || isAdmin())" type="button" class="btn border-start "
-                    (click)="confirmDelete($event,comment.id)" style="margin-right: 20px; border-radius: 0">
-              <i class="bi bi-trash3"
-                 style="padding: 4px; cursor: pointer; font-size: 25px;" title="Vymazať">
-              </i>
-            </button>
+            </a>
           </div>
         </div>
       </div>
-      <!-- /End of post 1 -->
-
-      <div *ngIf="isLoggedIn()" class="mt-5">
-        <div class="mb-3">
-          <h2>
-            Nový príspevok
-          </h2>
-        </div>
-
-        <div class="input-group mb-3">
-          <input [(ngModel)]="comment.subject" type="text" class="form-control font-weight-bold"
-                 placeholder="Predmet" aria-label="Predmet" aria-describedby="basic-addon1" maxlength="255">
-        </div>
-
-
-        <div class="input-group">
-        <textarea class="form-control" placeholder="Pridaj komentár" aria-label="Pridaj komentár"
-                  [(ngModel)]="comment.text" (input)="updateCharacterCount()" maxlength="255"
-                  style="height: 110px;"></textarea>
-        </div>
-        <div>
-          <small class="text-muted">Zostávajúci počet znakov: {{ charactersLeft }}</small>
-        </div>
-
-
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn mb-5" (click)="addComment()"
-                  style="background-color: rgb(38, 44, 72); color: white;"
-                  [disabled]="!comment.text || !comment.subject || !isLoggedIn()">Pridať príspevok
-          </button>
+      <div class="position-absolute bottom-0 end-0">
+        <div class="mt-5">
+          <i class="bi bi-hand-thumbs-up"
+             [style.cursor]="isLoggedIn() ? 'pointer' : 'not-allowed'"
+             style="padding: 5px; font-size: 25px;"
+             [title]="isLoggedIn() ? 'Páči sa mi to' : 'Nutné prihlásenie'"
+             (click)="isLoggedIn() && likeComment(comment.id)">
+            <span style="font-size: 20px;"> {{comment.likes}}</span>
+          </i>
+          <i class="bi bi-hand-thumbs-down"
+             [style.cursor]="isLoggedIn() ? 'pointer' : 'not-allowed'"
+             style="padding: 5px; font-size: 25px;"
+             [title]="isLoggedIn() ? 'Nepáči sa mi to' : 'Nutné prihlásenie'"
+             (click)="isLoggedIn() && likeComment(comment.id)">
+            <span style="font-size: 20px;"> {{comment.likes}}</span>
+          </i>
         </div>
       </div>
     </div>
-    <!-- Sidebar content -->
-    <div class="col-lg-12 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
-      <div
-        style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div>
-      <div style="margin-top: 7rem;">
-        <div class="sticky-inner">
-          <div class="bg-white text-sm">
-            <div class="row text-center d-flex flex-row mx-0 ">
-              <div class="col-sm-6 flex-ew text-center py-3 border-bottom" appScrollAnimation><a
-                class="d-block lead font-weight-bold">{{ getUniqueAuthorsCount() }}</a> Prispievajúci
-              </div>
-              <div class="col-sm-6 col flex-ew text-center py-3 border-bottom mx-0" appScrollAnimation><a
-                class="d-block lead font-weight-bold">{{ comments.length }}</a> Príspevky
-              </div>
+    <!-- /End of post 1 -->
+
+    <div *ngIf="isLoggedIn()" class="mt-5">
+      <div class="mb-3">
+        <h2>
+          Nový príspevok
+        </h2>
+      </div>
+
+      <div class="input-group mb-3">
+        <input [(ngModel)]="comment.subject" type="text" class="form-control font-weight-bold"
+               placeholder="Predmet" aria-label="Predmet" aria-describedby="basic-addon1" maxlength="255">
+      </div>
+
+
+      <div class="input-group">
+        <textarea class="form-control" placeholder="Pridaj komentár" aria-label="Pridaj komentár"
+                  [(ngModel)]="comment.text" (input)="updateCharacterCount()" maxlength="255"
+                  style="height: 110px;"></textarea>
+      </div>
+      <div>
+        <small class="text-muted">Zostávajúci počet znakov: {{ charactersLeft }}</small>
+      </div>
+
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn mb-5" (click)="addComment()"
+                style="background-color: rgb(38, 44, 72); color: white;"
+                [disabled]="!comment.text || !comment.subject || !isLoggedIn()">Pridať príspevok
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Sidebar content -->
+  <div class="col-lg-12 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+    <div
+      style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div>
+    <div style="margin-top: 7rem;">
+      <div class="sticky-inner">
+        <div class="bg-white text-sm">
+          <div class="row text-center d-flex flex-row mx-0 ">
+            <div class="col-sm-6 flex-ew text-center py-3 border-bottom" appScrollAnimation><a
+              class="d-block lead font-weight-bold">{{ getUniqueAuthorsCount() }}</a> Prispievajúci
             </div>
-            <div class="row d-flex flex-row  mx-0 text-center ">
-              <div class="col-sm-6 flex-ew text-center border-bottom border-none py-3 mx-0 " appScrollAnimation><a class="d-block lead font-weight-bold"
-              > {{ numberOfUsers }}</a> Členovia
-              </div>
-              <div class="col-sm-6 flex-ew text-center py-3 mx-0" appScrollAnimation><a
-                class="d-block lead font-weight-bold">{{ newestUserName }}</a> Nový člen
-              </div>
+            <div class="col-sm-6 col flex-ew text-center py-3 border-bottom mx-0" appScrollAnimation><a
+              class="d-block lead font-weight-bold">{{ comments.length }}</a> Príspevky
+            </div>
+          </div>
+          <div class="row d-flex flex-row  mx-0 text-center ">
+            <div class="col-sm-6 flex-ew text-center border-bottom border-none py-3 mx-0 " appScrollAnimation><a
+              class="d-block lead font-weight-bold"
+            > {{ numberOfUsers }}</a> Členovia
+            </div>
+            <div class="col-sm-6 flex-ew text-center py-3 mx-0" appScrollAnimation><a
+              class="d-block lead font-weight-bold">{{ newestUserName }}</a> Nový člen
             </div>
           </div>
         </div>
