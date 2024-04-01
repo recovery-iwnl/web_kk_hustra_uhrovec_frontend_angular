@@ -18,7 +18,6 @@ img {
 }
 
 .highlight {
-  font-style: italic;
   font-weight: bold;
   padding: 0rem 2rem;
   width: 100%;
@@ -27,7 +26,6 @@ img {
 .highlight-3 {
   color: white;
   background: rgb(38, 44, 72);
-  box-shadow: 10px 10px 2px rgb(133, 140, 176);
 }
 .article-meta {
   max-width: 96rem;
@@ -98,17 +96,17 @@ blockquote {
 }
 .bq-long {
   font-size: 2.5rem;
-  border-left: 10px solid rgb(133, 140, 176);
+  color: rgb(38, 44, 72);
   box-shadow: -20px 0px 0px rgb(38, 44, 72);
 }
 .bq-short {
+  color: rgb(38, 44, 72);
   font-size: 2.5rem;
-  border-left: 10px solid rgb(133, 140, 176);
 }
 .bq-medium {
   font-size: 2.5rem;
+  color: rgb(38, 44, 72);
   box-shadow: -20px 0px 0px rgb(38, 44, 72);
-  border-left: 10px solid rgb(133, 140, 176);
 }
 blockquote {
   text-indent: 0;
@@ -155,7 +153,23 @@ blockquote {
     font-size: 3.6rem;
   }
   .article-para-1 {
-    font-size: 2rem;
+    font-size: 1.4rem;
+  }
+
+  .bq-long {
+    font-size: 1.5rem;
+
+  }
+  .bq-short {
+    font-size: 1.5rem;
+
+  }
+  .bq-medium {
+    font-size: 1.5rem;
+  }
+
+  .article-col {
+    font-size: 1.1rem;
   }
 }
 
@@ -200,9 +214,7 @@ blockquote {
   .article-col-2 {
     margin-right: 2rem;
   }
-  .article-col {
-    font-size: 1.5rem;
-  }
+
 }
 @media screen and (min-width: 1200px) {
   body {

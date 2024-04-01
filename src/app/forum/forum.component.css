@@ -6,17 +6,6 @@
   font-weight: 700 !important;
 }
 
-.comment-button {
-  background-color: transparent;
-  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
-  border: 1px solid transparent;
-}
-
-.comment-button:hover {
-  border-color: rgb(38, 44, 72) !important;
-  color: #343a40;
-}
-
 .wobble-vertical-left {
   animation: wobble-vertical-left .8s linear both;
 }
@@ -47,14 +36,12 @@
   }
 }
 
-/* Define the initial state of the animated elements */
 .col-sm-6, .col-sm-6.flex-ew {
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 0.5s, transform 0.5s;
 }
 
-/* Define the final state of the animated elements when they become visible */
 .col-sm-6.visible, .col-sm-6.flex-ew.visible {
   opacity: 1;
   transform: translateY(0);
