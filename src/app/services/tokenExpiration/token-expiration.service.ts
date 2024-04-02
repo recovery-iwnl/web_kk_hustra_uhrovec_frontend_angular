@@ -33,9 +33,7 @@ export class TokenExpirationService {
       this.checkTokenExpiration(token).subscribe(
         (isTokenInValid: boolean) => {
           if (!isTokenInValid) {
-            console.log('Token is valid');
           } else {
-            console.log('Token is expired');
             this.tokenExpiredSubject.next(); // Emit token expiration event
             this.toastr.error(
               "Your session has expired. Please log in again.",

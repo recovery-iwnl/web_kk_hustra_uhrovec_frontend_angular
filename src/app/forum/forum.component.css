@@ -6,36 +6,6 @@
   font-weight: 700 !important;
 }
 
-.wobble-vertical-left {
-  animation: wobble-vertical-left .8s linear both;
-}
-
-.animate {
-  animation-name: wobble-vertical-left;
-}
-
-@keyframes wobble-vertical-left {
-  0%, 100% {
-    transform: translateY(0) rotate(0);
-    transform-origin: 50% 50%;
-  }
-  15% {
-    transform: translateY(-30px) rotate(-6deg);
-  }
-  30% {
-    transform: translateY(15px) rotate(6deg);
-  }
-  45% {
-    transform: translateY(-15px) rotate(-3.6deg);
-  }
-  60% {
-    transform: translateY(9px) rotate(2.4deg);
-  }
-  75% {
-    transform: translateY(-6px) rotate(-1.2deg);
-  }
-}
-
 .col-sm-6, .col-sm-6.flex-ew {
   opacity: 0;
   transform: translateY(100%);
@@ -53,4 +23,18 @@
   }
 }
 
+.justify-text {
+  width : 100%;
+  white-space: pre;           /* CSS 2.0 */
+  white-space: pre-wrap;      /* CSS 2.1 */
+  white-space: pre-line;      /* CSS 3.0 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  word-wrap: break-word;
+  -moz-hyphens:auto;
+  -webkit-hyphens:auto;
+  -o-hyphens:auto;
+  hyphens:auto;
+  text-align: justify;
+}
 

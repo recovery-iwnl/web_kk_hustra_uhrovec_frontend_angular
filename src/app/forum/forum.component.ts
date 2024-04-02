@@ -3,7 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
 import {ForumService} from "../services/forumService/forum.service";
 import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
+import {forkJoin, map, Observable, of, switchMap} from "rxjs";
 import {DatePipe} from "@angular/common";
 import * as moment from 'moment';
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
@@ -59,6 +59,11 @@ export class ForumComponent {
 
   typeName: any = "Najnovšie";
 
+  currentPage: number = 1;
+  commentsPerPage: number = 5;
+
+  totalPages: any;
+
 
   /**
    * Creates an instance of ForumComponent.
@@ -95,6 +100,7 @@ export class ForumComponent {
         this.comments.push(resp);
         this.getComments();
         this.comment.text = '';
+        this.comment.subject = '';
         this.charactersLeft = 255;
         this.detectChanges();
       }),
@@ -110,17 +116,58 @@ export class ForumComponent {
    * Updates the 'comments' array with the fetched comments and triggers change detection.
    */
   getComments() {
+    const startIndex = (this.currentPage - 1) * this.commentsPerPage;
+    const endIndex = startIndex + this.commentsPerPage;
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      this.email = tokenPayload.email;
+    }
     this.forumService.getComments(this.type).pipe(
-      tap((resp: any) => {
-        console.log(resp);
-        this.comments = resp;
-        this.detectChanges();
+      switchMap((comments: any[]): Observable<any[]> => {
+        this.calculateTotalPages(comments.length);
+        const observables = comments.slice(startIndex, endIndex).map(comment => {
+          const likes$ = this.forumService.getLikes(comment.id);
+          const isLiked$ = this.forumService.isLiked(this.email, comment.id);
+          return forkJoin({ comment: of(comment), likes: likes$, isLiked: isLiked$ });
+        });
+        return forkJoin(observables);
+      }),
+      map((commentsWithLikes: any[]) => {
+        return commentsWithLikes.map(({ comment, likes, isLiked }) => {
+          comment.likes = likes;
+          comment.isLiked = isLiked;
+
+          return comment;
+        });
+      }),
+      tap((commentsWithLikes: any[]) => {
+        this.comments = commentsWithLikes;
       }),
       catchError((err) => {
         console.log(err);
         return of(null);
       })
     ).subscribe();
+    this.detectChanges();
+  }
+  calculateTotalPages(totalComments: number) {
+    this.totalPages = Math.ceil(totalComments / this.commentsPerPage);
+  }
+
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getComments();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getComments();
+    }
   }
 
   options = [
@@ -149,12 +196,12 @@ export class ForumComponent {
    * Likes a specific comment by its ID.
    * Fetches updated comments and triggers change detection.
    *
+   * @param email
    * @param id - The ID of the comment to be liked.
    */
-  likeComment(id : any) {
-    this.forumService.likeComment(id).pipe(
+  likeComment(email:any,id : any) {
+    this.forumService.likeComment(this.email, id).pipe(
       tap((resp: any) => {
-        console.log(resp);
         this.getComments();
         this.detectChanges();
       }),
@@ -223,7 +270,6 @@ export class ForumComponent {
   getNewestUser() {
     this.userService.getNewestUser().pipe(
       tap((resp: any) => {
-        console.log(resp);
         this.newestUserName = resp;
         this.detectChanges();
       }),
@@ -237,7 +283,6 @@ export class ForumComponent {
   getNumberOfUsers() {
     this.userService.getNumberOfUsers().pipe(
       tap((resp: any) => {
-        console.log(resp);
         this.numberOfUsers = resp;
         this.detectChanges();
       }),

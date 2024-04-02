@@ -18,7 +18,6 @@ export class AppComponent {
       this.tokenExpiration.checkTokenExpiration(token).subscribe(
         (isTokenInValid: boolean) => {
           if (!isTokenInValid) {
-            console.log('Token is valid');
           } else {
             this.authService.logout();
             this.toastr.error(
