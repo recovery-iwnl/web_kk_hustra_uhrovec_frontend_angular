@@ -51,7 +51,8 @@ export class UserService {
    * @returns An HTTP GET request to get the list of all users.
    */
   public getAllUsers() {
-    return this.http.get(this.API + '/api/v1/user/getUsersList');
+    return this.http.get(this.API + '/api/v1/user/getUsersList', {
+      headers: { Authorization: `Bearer ${<string>localStorage.getItem("token")}`} }) ;
   }
 
   public getNewestUser() {
