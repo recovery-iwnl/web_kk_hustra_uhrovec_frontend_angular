@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfigService} from "../services/configService/config.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 /**
@@ -47,7 +48,8 @@ export class GalleryComponent implements OnInit{
    * @param dialog - Reference to the MatDialog service for displaying dialogs.
    */
   constructor(private http: HttpClient, private fileUploadService: FileUploadService, private authService: AuthService,
-              private cdRef: ChangeDetectorRef, private toastr : ToastrService, private dialog: MatDialog, private configService: ConfigService) {
+              private cdRef: ChangeDetectorRef, private toastr : ToastrService, private dialog: MatDialog, private configService: ConfigService,
+              private cookie: CookieService) {
   }
 
   /**
@@ -189,7 +191,7 @@ export class GalleryComponent implements OnInit{
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       return tokenPayload.role === 'ADMIN';

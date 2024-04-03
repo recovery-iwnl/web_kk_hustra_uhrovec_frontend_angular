@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {LeagueYearService} from "../services/leagueYearService/league-year.service";
 import {MatSelectChange} from "@angular/material/select";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * ResultsComponent is an Angular component responsible for managing and displaying sports results.
@@ -104,7 +105,10 @@ export class ResultsComponent implements OnInit{
    * @param cdRef - Reference to the ChangeDetectorRef for manually detecting changes.
    * @param ngZone - Reference to the NgZone for managing change detection within or outside Angular zones.
    */
-  constructor(private datePipe: DatePipe, private teamService: TeamService, private leagueYearService: LeagueYearService, private dialog: MatDialog, private authService: AuthService, private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor(private datePipe: DatePipe, private teamService: TeamService, private leagueYearService: LeagueYearService,
+              private dialog: MatDialog, private authService: AuthService,
+              private resultService: ResultService, private cdRef: ChangeDetectorRef, private ngZone: NgZone,
+              private cookie: CookieService) {
   }
 
   /**
@@ -607,7 +611,7 @@ export class ResultsComponent implements OnInit{
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       return tokenPayload.role === 'ADMIN';

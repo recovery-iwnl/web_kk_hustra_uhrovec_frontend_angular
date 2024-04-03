@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ConfigService} from "../configService/config.service";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * Service for user-related operations, such as registration, login, fetching, updating, and deleting users.
@@ -23,7 +24,9 @@ export class UserService {
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient, private config: ConfigService) { }
+  constructor(private http: HttpClient, private config: ConfigService,
+              private cookie: CookieService) {
+  }
 
   /**
    * Registers a new user.
@@ -31,7 +34,7 @@ export class UserService {
    * @param userData - The data of the user to be registered.
    * @returns An HTTP POST request to register the user.
    */
-  public registerUser(userData : any) {
+  public registerUser(userData: any) {
     return this.http.post(this.API + '/api/v1/user/save', userData, {responseType: 'text'})
   }
 
@@ -41,7 +44,7 @@ export class UserService {
    * @param userData - The data of the user for login.
    * @returns An HTTP POST request to log in the user.
    */
-  public loginUser(userData : any) {
+  public loginUser(userData: any) {
     return this.http.post(this.API + '/api/v1/user/login', userData, {responseType: 'json'})
   }
 
@@ -52,7 +55,8 @@ export class UserService {
    */
   public getAllUsers() {
     return this.http.get(this.API + '/api/v1/user/getUsersList', {
-      headers: { Authorization: `Bearer ${<string>localStorage.getItem("token")}`} }) ;
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    });
   }
 
   public getNewestUser() {
@@ -71,7 +75,10 @@ export class UserService {
    * @returns An HTTP DELETE request to delete the user.
    */
   public deleteUser(id: any) {
-    return this.http.delete(this.API + '/api/v1/user/deleteUser?id=' + id, {responseType: 'text'});
+    return this.http.delete(this.API + '/api/v1/user/deleteUser?id=' + id, {
+      responseType: 'text',
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    });
   }
 
   /**
@@ -81,7 +88,10 @@ export class UserService {
    * @returns An HTTP PUT request to update the user.
    */
   public updateUser(user: any): Observable<any> {
-    return this.http.put(`${this.API}/api/v1/user/updateUser`, user,  {responseType: "text"})
+    return this.http.put(`${this.API}/api/v1/user/updateUser`, user, {
+      responseType: "text",
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    })
   }
 
   /**
@@ -91,9 +101,9 @@ export class UserService {
    * @param role - The new role to be assigned.
    * @returns An HTTP PUT request to update the user's role.
    */
-  public updateUserRole(id : any, role :any): Observable<any> {
-    const params = { id, role};
+  public updateUserRole(id: any, role: any): Observable<any> {
+    const params = {id, role};
     const url = `${this.API}/api/v1/user/updateUserRole?id=${id}&role=${role}`;
-    return this.http.put(url, { params });
+    return this.http.put(url, {params}, {headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}});
   }
 }

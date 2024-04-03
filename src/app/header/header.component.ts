@@ -4,6 +4,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../services/userService/user.service";
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {map, Observable} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * HeaderComponent is an Angular component responsible for displaying the header of the application.
@@ -62,7 +63,8 @@ export class HeaderComponent implements OnInit {
 
   role : any;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
+  constructor(private authService: AuthService, private router: Router, private userService: UserService,
+              private cookie: CookieService) {
   }
 
 
@@ -118,7 +120,7 @@ export class HeaderComponent implements OnInit {
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       this.role = tokenPayload.role;

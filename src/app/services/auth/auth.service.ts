@@ -8,6 +8,7 @@ import {catchError, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {ConfigService} from "../configService/config.service";
 import {TokenExpirationService} from "../tokenExpiration/token-expiration.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 /**
@@ -37,8 +38,9 @@ export class AuthService {
               private toastr: ToastrService,
               private http: HttpClient,
               private userService: UserService,
-              private tokenExpiration: TokenExpirationService) {
-    this.loggedIn = !!localStorage.getItem("token");
+              private tokenExpiration: TokenExpirationService,
+              private cookie: CookieService) {
+    this.loggedIn = !!this.cookie.get("token");
     this.tokenExpiration.onTokenExpired().subscribe(() => {
       this.logout();
     });
@@ -71,7 +73,7 @@ export class AuthService {
   logout() {
     this.loggedIn = false;
     this.tokenExpiration.stopTokenCheck();
-    localStorage.removeItem("token");
+    this.cookie.delete("token");
     this.router.navigateByUrl('/domov');
     this.toastr.success('', 'Úspešne ste sa odhlásili!', {
       positionClass: 'toast-bottom-right',

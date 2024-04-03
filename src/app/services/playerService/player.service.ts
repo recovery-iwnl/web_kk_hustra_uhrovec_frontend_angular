@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ConfigService} from "../configService/config.service";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * Service for player-related operations, such as adding, fetching, updating, and deleting players.
@@ -23,17 +24,7 @@ export class PlayerService {
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient, private config: ConfigService) { }
-
-  /**
-   * Adds a player to the specified team.
-   *
-   * @param id - The team ID to which the player will be added.
-   * @param playerData - The data of the player to be added.
-   * @returns An HTTP POST request to add the player.
-   */
-  public addPlayer(id: any, playerData: any) {
-    return this.http.post(this.API+'/api/v1/player/save?id=' +id , playerData, {responseType : 'json'})
+  constructor(private http: HttpClient, private config: ConfigService, private cookie: CookieService) {
   }
 
   /**
@@ -43,7 +34,10 @@ export class PlayerService {
    * @returns An HTTP POST request to add the player.
    */
   public addPlayerUhrovec(playerData: any) {
-    return this.http.post(this.API+'/api/v1/player/saveUhrovec', playerData, {responseType : 'json'})
+    return this.http.post(this.API + '/api/v1/player/saveUhrovec', playerData, {
+      responseType: 'json',
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    })
   }
 
   /**
@@ -53,23 +47,23 @@ export class PlayerService {
    * @returns An HTTP GET request to get player details.
    */
   public getPlayer(id: any) {
-    const params = { id };
-    return this.http.get(this.API+'/api/v1/player/getPlayer',{ params } );
+    const params = {id};
+    return this.http.get(this.API + '/api/v1/player/getPlayer', {params});
   }
 
   public getPlayerByName(name: any, surname: any) {
-    const params = { name, surname };
-    return this.http.get(this.API+'/api/v1/player/getPlayerByName',{ params } );
+    const params = {name, surname};
+    return this.http.get(this.API + '/api/v1/player/getPlayerByName', {params});
   }
 
-  public getTeamNameByPlayer(id : any) {
-    const params = { id };
-    return this.http.get(this.API+'/api/v1/player/getTeamNameByPlayer',{ params } );
+  public getTeamNameByPlayer(id: any) {
+    const params = {id};
+    return this.http.get(this.API + '/api/v1/player/getTeamNameByPlayer', {params});
   }
 
-  public getAge(id : any) {
-    const params = { id };
-    return this.http.get(this.API+'/api/v1/player/getAge',{ params } );
+  public getAge(id: any) {
+    const params = {id};
+    return this.http.get(this.API + '/api/v1/player/getAge', {params});
   }
 
   /**
@@ -78,7 +72,7 @@ export class PlayerService {
    * @returns An HTTP GET request to get the list of all players.
    */
   public getAllPlayers() {
-    return this.http.get(this.API+'/api/v1/player/getPlayersList');
+    return this.http.get(this.API + '/api/v1/player/getPlayersList');
   }
 
   /**
@@ -88,7 +82,10 @@ export class PlayerService {
    * @returns An HTTP DELETE request to delete the player.
    */
   public deletePlayer(id: any) {
-    return this.http.delete(this.API + '/api/v1/player/deletePlayer?id=' + id,{responseType: 'text'});
+    return this.http.delete(this.API + '/api/v1/player/deletePlayer?id=' + id, {
+      responseType: 'text',
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    });
   }
 
   /**
@@ -98,7 +95,10 @@ export class PlayerService {
    * @returns An HTTP PUT request to update the player.
    */
   public updatePlayer(player: any): Observable<any> {
-    return this.http.put(this.API + '/api/v1/player/updatePlayer', player);
+    return this.http.put(this.API + '/api/v1/player/updatePlayer', player,
+      {
+        headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+      });
   }
 
 }

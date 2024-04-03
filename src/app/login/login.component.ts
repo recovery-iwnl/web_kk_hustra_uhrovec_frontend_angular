@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../services/auth/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 /**
@@ -39,12 +40,13 @@ export class LoginComponent {
    * @param toastr - Reference to the ToastrService for displaying notifications.
    * @param userService - Reference to the UserService for managing user-related operations.
    */
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService) {
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private toastr: ToastrService, private userService: UserService,
+              private cookie: CookieService) {
 
   }
 
   ngOnInit() {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       this.account = tokenPayload.username;
@@ -80,7 +82,7 @@ export class LoginComponent {
           positionClass: 'toast-center-center',
         });
       } else if (resultData.message == "Login Successful") {
-        localStorage.setItem("token", resultData.token);
+        this.cookie.set("token", resultData.token);
         this.authService.login();
         this.router.navigateByUrl('/domov');
       } else {

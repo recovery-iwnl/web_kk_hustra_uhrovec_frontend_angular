@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ConfigService} from "../configService/config.service";
+import {CookieService} from "ngx-cookie-service";
+
 /**
  * Service for match-related operations, such as adding, fetching, and deleting matches.
  *
@@ -20,7 +22,8 @@ export class MatchService {
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient, private config: ConfigService) { }
+  constructor(private http: HttpClient, private config: ConfigService, private cookie: CookieService) {
+  }
 
   /**
    * Adds a match between two teams.
@@ -30,9 +33,11 @@ export class MatchService {
    * @param matchData - The data of the match to be added.
    * @returns An HTTP POST request to add the match.
    */
-  public addMatch(teamIdHome : any, teamIdAway : any, matchData:any) {
-    const params = { teamIdHome, teamIdAway };
-    return this.http.post(this.API + '/api/v1/match/save', matchData,{ params })
+  public addMatch(teamIdHome: any, teamIdAway: any, matchData: any) {
+    const params = {teamIdHome, teamIdAway};
+    return this.http.post(this.API + '/api/v1/match/save', matchData, {
+      params, headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    })
   }
 
   /**
@@ -41,7 +46,7 @@ export class MatchService {
    * @returns An HTTP GET request to fetch all matches.
    */
   public getAllMatches() {
-    return this.http.get(this.API+'/api/v1/match/getMatchesList');
+    return this.http.get(this.API + '/api/v1/match/getMatchesList');
   }
 
   /**
@@ -50,7 +55,7 @@ export class MatchService {
    * @returns An HTTP GET request to fetch matches for Uhrovec.
    */
   public getMatchesUhrovec() {
-    return this.http.get(this.API+'/api/v1/match/getMatchesUhrovecList');
+    return this.http.get(this.API + '/api/v1/match/getMatchesUhrovecList');
   }
 
   /**
@@ -59,8 +64,11 @@ export class MatchService {
    * @param id - The ID of the match to be deleted.
    * @returns An HTTP DELETE request to delete the match.
    */
-  public deleteMatch(id : any) {
-    const params = { id };
-    return this.http.delete(this.API+'/api/v1/match/deleteMatch?id=' + id, {responseType: 'text'}  );
+  public deleteMatch(id: any) {
+    const params = {id};
+    return this.http.delete(this.API + '/api/v1/match/deleteMatch?id=' + id, {
+      responseType: 'text',
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    });
   }
 }

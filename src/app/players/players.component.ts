@@ -8,6 +8,7 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-d
 import {TeamService} from "../services/teamService/team.service";
 import {PlayerResultService} from "../services/playerResultService/player-result.service";
 import {LeagueYearService} from "../services/leagueYearService/league-year.service";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * PlayersComponent is an Angular component responsible for managing and displaying player information.
@@ -59,7 +60,10 @@ export class PlayersComponent {
    * @param authService - Reference to the AuthService for handling user authentication.
    * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
    */
-  constructor(private playerService: PlayerService, private leagueYearService: LeagueYearService, private playerResultService: PlayerResultService, private teamService: TeamService,private dialog: MatDialog, private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private playerService: PlayerService, private leagueYearService: LeagueYearService, private playerResultService: PlayerResultService,
+              private teamService: TeamService,private dialog: MatDialog, private authService: AuthService,
+              private cdRef: ChangeDetectorRef,
+              private cookie: CookieService) {
   }
 
   /**
@@ -274,7 +278,7 @@ export class PlayersComponent {
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       return tokenPayload.role === 'ADMIN';

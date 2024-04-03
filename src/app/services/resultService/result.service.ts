@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ConfigService} from "../configService/config.service";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * Service for result-related operations, such as adding, fetching, and deleting results.
@@ -22,7 +23,8 @@ export class ResultService {
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
    */
-  constructor(private http : HttpClient, private config: ConfigService) { }
+  constructor(private http: HttpClient, private config: ConfigService, private cookie: CookieService) {
+  }
 
   /**
    * Adds a result between two teams.
@@ -32,9 +34,12 @@ export class ResultService {
    * @param resultData - The data of the result to be added.
    * @returns An HTTP POST request to add the result.
    */
-  public addResultSimple(teamIdHome : any, teamIdAway : any, resultData:any) {
-    const params = { teamIdHome, teamIdAway };
-    return this.http.post(this.API + '/api/v1/result/saveSimple', resultData,{ params })
+  public addResultSimple(teamIdHome: any, teamIdAway: any, resultData: any) {
+    const params = {teamIdHome, teamIdAway};
+    return this.http.post(this.API + '/api/v1/result/saveSimple', resultData, {
+      params,
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    })
   }
 
   /**
@@ -43,13 +48,13 @@ export class ResultService {
    * @returns An HTTP GET request to get the list of all results.
    */
   public getAllResults() {
-    return this.http.get(this.API+'/api/v1/result/getResultsList');
+    return this.http.get(this.API + '/api/v1/result/getResultsList');
   }
 
 
-  public getResultsByYear(id : any) {
-    const params = { id };
-    return this.http.get(this.API+'/api/v1/result/getResultsByYear', { params } );
+  public getResultsByYear(id: any) {
+    const params = {id};
+    return this.http.get(this.API + '/api/v1/result/getResultsByYear', {params});
   }
 
   /**
@@ -57,9 +62,9 @@ export class ResultService {
    *
    * @returns An HTTP GET request to get the list of results for Uhrovec.
    */
-  public getResultsUhrovec(id : any) {
-    const params = { id };
-    return this.http.get(this.API+'/api/v1/result/getResultsUhrovecList', { params });
+  public getResultsUhrovec(id: any) {
+    const params = {id};
+    return this.http.get(this.API + '/api/v1/result/getResultsUhrovecList', {params});
   }
 
   /**
@@ -68,8 +73,10 @@ export class ResultService {
    * @param id - The ID of the result to be deleted.
    * @returns An HTTP DELETE request to delete the result.
    */
-  public deleteResult(id : any) {
-    const params = { id };
-    return this.http.delete(this.API+'/api/v1/result/deleteResult?id=' + id, {responseType: 'text'}  );
+  public deleteResult(id: any) {
+    return this.http.delete(this.API + '/api/v1/result/deleteResult?id=' + id, {
+      responseType: 'text',
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    });
   }
 }

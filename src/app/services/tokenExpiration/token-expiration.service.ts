@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
 import {interval, Observable, Subject, Subscription} from "rxjs";
 import {ConfigService} from "../configService/config.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,13 @@ export class TokenExpirationService {
     private toastr: ToastrService,
     private http: HttpClient,
     private config: ConfigService,
+    private cookie: CookieService
   ) {}
 
   startTokenCheck() {
     this.subscription = interval(this.checkInterval).subscribe(() => {
 
-      const token = localStorage.getItem("token");
+      const token = this.cookie.get("token");
       if (!token) {
         return;
       }

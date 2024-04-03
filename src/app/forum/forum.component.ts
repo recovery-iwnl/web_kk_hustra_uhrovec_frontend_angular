@@ -8,6 +8,7 @@ import {DatePipe} from "@angular/common";
 import * as moment from 'moment';
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {UserService} from "../services/userService/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 /**
@@ -75,7 +76,11 @@ export class ForumComponent {
    * @param cdRef - Reference to the ChangeDetectorRef for manual change detection.
    * @param datePipe - Reference to the DatePipe for formatting dates.
    */
-  constructor(private dialog: MatDialog, private authService: AuthService, private forumService: ForumService, private userService: UserService, private cdRef: ChangeDetectorRef, private datePipe: DatePipe) {
+  constructor(private dialog: MatDialog,
+              private authService: AuthService, private forumService: ForumService,
+              private userService: UserService, private cdRef: ChangeDetectorRef,
+              private datePipe: DatePipe,
+              private cookie: CookieService) {
   }
 
   /**
@@ -118,7 +123,7 @@ export class ForumComponent {
   getComments() {
     const startIndex = (this.currentPage - 1) * this.commentsPerPage;
     const endIndex = startIndex + this.commentsPerPage;
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       this.email = tokenPayload.email;
@@ -351,7 +356,7 @@ export class ForumComponent {
    * @returns True if the user is an admin, false otherwise.
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       this.email = tokenPayload.email;

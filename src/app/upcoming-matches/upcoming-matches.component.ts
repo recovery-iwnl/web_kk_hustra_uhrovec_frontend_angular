@@ -7,6 +7,7 @@ import {MatchService} from "../services/matchService/match.service";
 import {catchError, tap} from "rxjs/operators";
 import {map, Observable, of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-upcoming-matches',
@@ -41,7 +42,8 @@ export class UpcomingMatchesComponent implements OnInit {
               private dialog: MatDialog,
               private authService: AuthService,
               private matchService: MatchService,
-              private cdRef: ChangeDetectorRef,) {
+              private cdRef: ChangeDetectorRef,
+              private cookie: CookieService) {
   }
 
   ngOnInit(): void {
@@ -188,7 +190,7 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       return tokenPayload.role === 'ADMIN';

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from "./services/auth/auth.service";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * Guard that checks whether a user is authenticated and has the required role to access a route.
@@ -17,7 +18,8 @@ export class AuthGuard implements CanActivate {
    * @param authService - The authentication service.
    * @param router - The Angular router service.
    */
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,
+              private cookie: CookieService) {}
 
   /**
    * Determines whether the route can be activated.
@@ -43,7 +45,7 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/login']);
         return false;
       }
-      const token = localStorage.getItem("token");
+      const token = this.cookie.get("token");
       if (token) {
         const tokenPayload = JSON.parse(atob(token.split('.')[1]));
         if (url == '/users' && tokenPayload.role != 'ADMIN') {

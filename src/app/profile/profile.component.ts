@@ -5,6 +5,7 @@ import {of} from 'rxjs';
 import {AuthService} from "../services/auth/auth.service";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * ProfileComponent is an Angular component responsible for managing user profile information.
@@ -54,7 +55,8 @@ export class ProfileComponent {
 
 
 
-  constructor(private userService: UserService, private authService: AuthService, private dialog: MatDialog) {
+  constructor(private userService: UserService, private authService: AuthService, private dialog: MatDialog,
+              private cookie: CookieService) {
   }
 
   /**
@@ -79,7 +81,7 @@ export class ProfileComponent {
    * Retrieves user details and initializes the 'initialUserDetails' property.
    */
   getDetails() {
-    const token = localStorage.getItem("token");
+    const token = this.cookie.get("token");
     if (token) {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       this.userDetails = {
@@ -118,7 +120,7 @@ export class ProfileComponent {
    * Deletes the user account, logs out the user, and redirects to the login page.
    */
   deleteAccount() {
-    this.userService.deleteUser(this.userDetails.email).pipe(
+    this.userService.deleteUser(this.userDetails.userID).pipe(
       tap((resp: any) => {
         console.log("Account deleted");
       }),
