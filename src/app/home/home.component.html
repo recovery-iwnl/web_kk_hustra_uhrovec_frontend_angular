@@ -57,96 +57,76 @@
   <div class="container">
     <h2 class="pb-2 border-bottom" style="color: rgb(38, 44, 72);">Novinky</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div class="col">
-        <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/kolkaren2.jpg" alt="news1" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi enim nunc faucibus a.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">9 minutes ago</small>
-            </div>
-          </div>
-        </div>
-        </a>
-      </div>
-      <div class="col">
-        <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/pobedim_zapas.png" alt="news2" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Consequat interdum varius sit amet mattis vulputate enim nulla aliquet.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">59 minutes ago</small>
-            </div>
-          </div>
-        </div>
-        </a>
-      </div>
-      <div class="col">
-        <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/fotoKlub.jpg" alt="news2" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. Habitant morbi tristique senectus et netus et.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">5 days ago</small>
-            </div>
-          </div>
-        </div>
-        </a>
-      </div>
 
-      <div class="col">
+      <div class="col" *ngFor="let article of news">
         <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/hustraCup.jpg" alt="news2" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-              ut labore et dolore magna aliqua. Non diam phasellus vestibulum lorem sed risus.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">1 week ago</small>
+          <div class="card shadow-sm">
+            <img [src]="url + article.image.name" alt="news1" class="bd-placeholder-img card-img-top image-300-height">
+            <div class="card-body">
+              <p class="card-title" style="font-weight: bold">{{ article.subject }}</p>
+              <p class="card-text">{{ article.text.length > 190 ? (article.text | slice:0:190) + '...' : article.text }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-body-secondary">{{ article.date }}</small>
+              </div>
             </div>
           </div>
-        </div>
         </a>
       </div>
-      <div class="col">
-        <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/poharRS.jpg" alt="news2" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">2 weeks ago</small>
-            </div>
-          </div>
-        </div>
-        </a>
+      <button class="btn btn-circle btn-light btn-lg add-button" style="height: 210px;" data-bs-toggle="modal"
+              data-bs-target="#addNewsModal" *ngIf="isAdmin()">
+        <span class="fw-bold text-black">+</span>Pridať
+      </button>
+    </div>
+  </div>
+
+</div>
+</body>
+
+
+<div class="modal fade" id="addNewsModal" tabindex="-1" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 1200px; max-height: 400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addNewsLabel">Pridať novinku</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="col">
-        <a class="text-reset text-decoration-none" routerLink="/">
-        <div class="card shadow-sm">
-          <img src="assets/images/kolkarskeG.jpg" alt="news2" class="bd-placeholder-img card-img-top image-300-height">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Semper risus in hendrerit gravida rutrum quisque non tellus orci.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-body-secondary">3 weeks ago</small>
-            </div>
+      <div class="modal-body text-center">
+
+        <img *ngIf="newNews.image" [src]="url + newNews.image.name" alt="Uploaded Photo" class="mb-3" style="max-width: 250px; max-height: 250px">
+
+
+        <div class="mb-4">
+          <div class="mb-3">
+            <label for="fileInput" class="form-label">Vyberte súbor s fotkou:</label>
+            <input type="file" class="form-control" id="fileInput" (change)="selectFile($event)" accept="image/*" />
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-outline-primary" style="max-width: 250px" (click)="uploadFile()">Upload</button>
           </div>
         </div>
-        </a>
+
+        <form (ngSubmit)="addNews()"  #newsForm="ngForm">
+          <div class="mb-3 text-start">
+            <label for="title" class="form-label">Nadpis:</label>
+            <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newNews.subject" required>
+          </div>
+          <div class="mb-3 text-start">
+            <label for="content" class="form-label">Kontent:</label>
+            <textarea type="text" class="form-control" id="content" name="content" [(ngModel)]="newNews.text" required></textarea>
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic" [disabled]="newsForm.invalid || newNews.image === undefined"
+                    data-bs-dismiss="modal">Pridať novinku
+            </button>
+          </div>
+
+        </form>
       </div>
     </div>
   </div>
 </div>
-</body>
 
 
 </html>
