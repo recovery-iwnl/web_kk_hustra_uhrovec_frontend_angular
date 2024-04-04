@@ -31,11 +31,11 @@ export class UpcomingMatchesComponent implements OnInit {
 
   selectedFilter: any = {};
 
-  initialMatchesCount: number = 6;
 
-  additionalMatchesCount: number = 6;
+  currentPage: number = 1;
+  matchesPerPage: number = 6;
 
-  displayedMatches: any[] = [];
+  totalPages: any;
 
   constructor(private datePipe: DatePipe,
               private teamService: TeamService,
@@ -52,19 +52,6 @@ export class UpcomingMatchesComponent implements OnInit {
     this.selectedFilter = "Všetky zápasy";
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
-      this.loadMoreMatches();
-    }
-  }
-
-  loadMoreMatches() {
-    const startIndex = this.displayedMatches.length;
-    const endIndex = startIndex + this.additionalMatchesCount;
-    this.displayedMatches = this.displayedMatches.concat(this.matches.slice(startIndex, endIndex));
-  }
-
   setSelectedFilter(filter: string) {
     this.selectedFilter = filter;
   }
@@ -74,7 +61,6 @@ export class UpcomingMatchesComponent implements OnInit {
       tap((resp: any) => {
         console.log(resp);
         this.matches.push(resp);
-        this.displayedMatches.push(resp);
         this.getAllMatches();
         this.resetForm();
         this.detectChanges();
@@ -97,7 +83,6 @@ export class UpcomingMatchesComponent implements OnInit {
     this.matchService.deleteMatch(match.matchId).pipe(
       tap((resp: any) => {
         this.matches = this.matches.filter(m => m.matchId !== match.matchId);
-        this.displayedMatches = this.displayedMatches.filter(m => m.matchId !== match.matchId);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -109,11 +94,13 @@ export class UpcomingMatchesComponent implements OnInit {
 
 
   getAllMatches() {
+    const startIndex = (this.currentPage - 1) * this.matchesPerPage;
+    const endIndex = startIndex + this.matchesPerPage;
     this.matchService.getAllMatches().pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.matches = resp;
-        this.displayedMatches = this.matches.slice(0, this.initialMatchesCount);
+        this.calculateTotalPages(resp.length);
+        this.matches = resp.slice(startIndex, endIndex);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -124,11 +111,13 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   getMatchesUhrovec() {
+    const startIndex = (this.currentPage - 1) * this.matchesPerPage;
+    const endIndex = startIndex + this.matchesPerPage;
     this.matchService.getMatchesUhrovec().pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.matches = resp;
-        this.displayedMatches = this.matches.slice(0, this.initialMatchesCount);
+        this.calculateTotalPages(resp.length);
+        this.matches = resp.slice(startIndex, endIndex);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -136,6 +125,33 @@ export class UpcomingMatchesComponent implements OnInit {
         return of(null);
       })
     ).subscribe();
+  }
+
+  calculateTotalPages(totalMatches: number) {
+    this.totalPages = Math.ceil(totalMatches / this.matchesPerPage);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      if(this.selectedFilter == "Všetky zápasy") {
+        this.getAllMatches();
+      } else {
+        this.getMatchesUhrovec();
+      }
+
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      if(this.selectedFilter == "Všetky zápasy") {
+        this.getAllMatches();
+      } else {
+        this.getMatchesUhrovec();
+      }
+    }
   }
 
   confirmDelete(event: Event, matchN: any): void {
