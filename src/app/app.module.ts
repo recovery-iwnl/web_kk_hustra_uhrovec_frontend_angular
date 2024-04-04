@@ -38,6 +38,7 @@ import { CompareComponent } from './compare/compare.component';
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import { CountUpModule } from 'ngx-countup';
 import { ScrollAnimationDirective } from './directives/scroll-animation.directive';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -85,7 +86,8 @@ import { ScrollAnimationDirective } from './directives/scroll-animation.directiv
     MatNativeDateModule,
     MatCardModule,
     CanvasJSAngularChartsModule,
-    CountUpModule
+    CountUpModule,
+    MatProgressSpinnerModule
   ],
   providers: [ { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, DatePipe ],
   bootstrap: [AppComponent]
