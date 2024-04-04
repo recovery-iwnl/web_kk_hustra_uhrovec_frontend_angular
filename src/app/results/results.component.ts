@@ -1,14 +1,13 @@
-import {ChangeDetectorRef, Component, HostListener, NgZone, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
 import {ResultService} from "../services/resultService/result.service";
 import {catchError, tap} from "rxjs/operators";
-import {map, Observable, of} from "rxjs";
+import {of} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {TeamService} from "../services/teamService/team.service";
 import {DatePipe} from "@angular/common";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {LeagueYearService} from "../services/leagueYearService/league-year.service";
-import {MatSelectChange} from "@angular/material/select";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {CookieService} from "ngx-cookie-service";
 
@@ -87,11 +86,12 @@ export class ResultsComponent implements OnInit{
 
   isCollapsed: boolean[] = [];
 
-  initialResultsCount: number = 6;
+  currentPage: number = 1;
 
-  additionalResultsCount: number = 6;
+  resultsPerPage: number = 6;
 
-  displayedResults: any[] = [];
+  totalPages: any;
+
 
 
   /**
@@ -124,18 +124,6 @@ export class ResultsComponent implements OnInit{
     });
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight-400) {
-      this.loadMoreResults();
-    }
-  }
-
-  loadMoreResults() {
-    const startIndex = this.displayedResults.length;
-    const endIndex = startIndex + this.additionalResultsCount;
-    this.displayedResults = this.displayedResults.concat(this.results.slice(startIndex, endIndex));
-  }
 
   toggleCollapse(index: number): void {
     this.isCollapsed[index] = !this.isCollapsed[index];
@@ -147,6 +135,8 @@ export class ResultsComponent implements OnInit{
 
   setSelectedFilter(filter : string) {
     this.selectedFilter = filter;
+    this.currentPage = 1;
+    this.totalPages = 1;
   }
 
   getAllYearsAndResultsForFirstYear() {
@@ -176,7 +166,6 @@ export class ResultsComponent implements OnInit{
     this.resultService.deleteResult(result.resultId).pipe(
       tap((resp: any) => {
         this.results = this.results.filter(r => r.resultId !== result.resultId);
-        this.displayedResults = this.displayedResults.filter(r => r.resultId !== result.resultId);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -348,14 +337,11 @@ export class ResultsComponent implements OnInit{
    * @returns True if the teams or players are the same, false otherwise.
    */
   areTeamsOrPlayersSame(): boolean {
-    const areTeamsOrPlayersSame =
-      this.teamHome &&
+    return this.teamHome &&
       this.teamAway &&
       (this.teamHome.teamId === this.teamAway.teamId ||
         this.arePlayersOnSameSideSame('Home') ||
-        this.arePlayersOnSameSideSame('Away'))
-
-    return areTeamsOrPlayersSame;
+        this.arePlayersOnSameSideSame('Away'));
   }
 
   /**
@@ -515,14 +501,26 @@ export class ResultsComponent implements OnInit{
     this.getPlayersByTeamAway(this.teamAway.teamId);
   }
 
+
   /**
-   * Fetches all sports results.
+   * Resets the form for adding a sports result.
    */
-  getAllResults() {
-    this.resultService.getAllResults().pipe(
+  resetForm() {
+    this.result = {};
+    this.teamHome = {};
+    this.teamAway = {};
+    this.dateShow = {};
+  }
+
+
+  getResultsByYear(id : any) {
+    const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+    const endIndex = startIndex + this.resultsPerPage;
+    this.resultService.getResultsByYear(id).pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.results = resp;
+        this.calculateTotalPages(resp.length);
+        this.results = resp.slice(startIndex, endIndex);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -532,12 +530,16 @@ export class ResultsComponent implements OnInit{
     ).subscribe();
   }
 
-  getResultsByYear(id : any) {
-    this.resultService.getResultsByYear(id).pipe(
+  /**
+   * Fetches results specific to Uhrovec.
+   */
+  getResultsUhrovec(id : any) {
+    const startIndex = (this.currentPage - 1) * this.resultsPerPage;
+    const endIndex = startIndex + this.resultsPerPage;
+    this.resultService.getResultsUhrovec(id).pipe(
       tap((resp: any) => {
         console.log(resp);
-        this.results = resp;
-        this.displayedResults = this.results.slice(0, this.initialResultsCount);
+        this.results = resp.slice(startIndex, endIndex);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -545,6 +547,38 @@ export class ResultsComponent implements OnInit{
         return of(null);
       })
     ).subscribe();
+  }
+
+  calculateTotalPages(totalResults: number) {
+    if(totalResults == 0) {
+      this.totalPages = 1;
+    } else {
+      this.totalPages = Math.ceil(totalResults / this.resultsPerPage);
+    }
+
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      if(this.selectedFilter == "Všetky výsledky") {
+        this.getResultsByYear(this.selectedYear.yearId);
+      } else {
+        this.getResultsUhrovec(this.selectedYear.yearId)
+      }
+
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      if(this.selectedFilter == "Všetky výsledky") {
+        this.getResultsByYear(this.selectedYear.yearId);
+      } else {
+        this.getResultsUhrovec(this.selectedYear.yearId)
+      }
+    }
   }
 
   /**
@@ -567,33 +601,8 @@ export class ResultsComponent implements OnInit{
     ).subscribe();
   }
 
-  /**
-   * Resets the form for adding a sports result.
-   */
-  resetForm() {
-    this.result = {};
-    this.teamHome = {};
-    this.teamAway = {};
-    this.dateShow = {};
-  }
 
-  /**
-   * Fetches results specific to Uhrovec.
-   */
-  getResultsUhrovec(id : any) {
-    this.resultService.getResultsUhrovec(id).pipe(
-      tap((resp: any) => {
-        console.log(resp);
-        this.results = resp;
-        this.displayedResults = this.results.slice(0, this.initialResultsCount);
-        this.detectChanges();
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    ).subscribe();
-  }
+
 
   /**
    * Manually triggers change detection to update the view.
@@ -627,6 +636,8 @@ export class ResultsComponent implements OnInit{
 
   setSelectedYear(year: any) {
     this.selectedYear = year;
+    this.currentPage = 1;
+    this.totalPages = 1;
     if (this.selectedFilter == "Všetky výsledky") {
       this.getResultsByYear(year.yearId);
     } else {

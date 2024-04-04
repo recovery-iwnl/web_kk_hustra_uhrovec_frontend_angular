@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {TeamService} from "../services/teamService/team.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
 import {MatchService} from "../services/matchService/match.service";
 import {catchError, tap} from "rxjs/operators";
-import {map, Observable, of} from "rxjs";
+import {of} from "rxjs";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {CookieService} from "ngx-cookie-service";
 
@@ -53,6 +53,8 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   setSelectedFilter(filter: string) {
+    this.currentPage = 1;
+    this.totalPages = 1;
     this.selectedFilter = filter;
   }
 
@@ -81,7 +83,7 @@ export class UpcomingMatchesComponent implements OnInit {
 
   deleteMatch(match: any) {
     this.matchService.deleteMatch(match.matchId).pipe(
-      tap((resp: any) => {
+      tap(() => {
         this.matches = this.matches.filter(m => m.matchId !== match.matchId);
         this.detectChanges();
       }),
@@ -128,7 +130,11 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   calculateTotalPages(totalMatches: number) {
-    this.totalPages = Math.ceil(totalMatches / this.matchesPerPage);
+    if(totalMatches == 0) {
+      this.totalPages = 1;
+    } else {
+      this.totalPages = Math.ceil(totalMatches / this.matchesPerPage);
+    }
   }
 
   previousPage() {

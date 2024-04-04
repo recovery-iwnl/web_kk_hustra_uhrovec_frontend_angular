@@ -48,7 +48,9 @@
     </div>
     <div class="col-md-3 mt-4 mt-md-0">
       <div class="text-center">
-          <img src="assets/images/user_profile.jpg" class="img-fluid img-thumbnail" alt="avatar">
+          <img *ngIf="userDetails.role === 'ADMIN'" src="assets/images/adminLOGO.png" class="img-fluid img-thumbnail" alt="avatar" title="Admin">
+          <img *ngIf="userDetails.role === 'FAN'" src="assets/images/fanLOGO.png" class="img-fluid img-thumbnail" alt="avatar" title="Fanúšik">
+          <img *ngIf="userDetails.role === 'PLAYER'" src="assets/images/playerLOGO.png" class="img-fluid img-thumbnail" alt="avatar" title="Hráč klubu">
       </div>
     </div>
   </div>

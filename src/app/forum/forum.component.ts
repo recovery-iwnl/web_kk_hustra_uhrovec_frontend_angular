@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../services/auth/auth.service";
 import {ForumService} from "../services/forumService/forum.service";
-import {catchError, tap} from "rxjs/operators";
+import {catchError, filter, tap} from "rxjs/operators";
 import {forkJoin, map, Observable, of, switchMap} from "rxjs";
 import {DatePipe} from "@angular/common";
 import * as moment from 'moment';
@@ -157,7 +157,12 @@ export class ForumComponent {
     this.detectChanges();
   }
   calculateTotalPages(totalComments: number) {
-    this.totalPages = Math.ceil(totalComments / this.commentsPerPage);
+    if(totalComments == 0) {
+      this.totalPages = 1;
+    } else {
+      this.totalPages = Math.ceil(totalComments / this.commentsPerPage);
+    }
+
   }
 
 
@@ -183,6 +188,8 @@ export class ForumComponent {
 
   setType(value: string) {
     this.type = value;
+    this.currentPage = 1;
+    this.totalPages = 1;
     this.getComments();
   }
 
@@ -251,6 +258,7 @@ export class ForumComponent {
     this.forumService.deleteComment(id).pipe(
       tap((resp: any) => {
         console.log(resp);
+        this.comments = this.comments.filter(c => c.id !== id);
         this.getComments();
         this.detectChanges();
       }),
