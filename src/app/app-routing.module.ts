@@ -15,6 +15,7 @@ import {GalleryComponent} from "./gallery/gallery.component";
 import {ForumComponent} from "./forum/forum.component";
 import {AuthGuard} from "./auth.guard";
 import {CompareComponent} from "./compare/compare.component";
+import {NewsDetailComponent} from "./news-detail/news-detail.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/domov', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'news/:id', component: NewsDetailComponent }
 ];
 
 @NgModule({

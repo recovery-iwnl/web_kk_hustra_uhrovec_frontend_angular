@@ -1,0 +1,20 @@
+<div class="container px-3 py-5 body-min-height">
+  <div class="pb-2 d-flex align-items-center justify-content-between border-bottom">
+    <h2 style="color: rgb(38, 44, 72);">{{ news?.subject }}</h2>
+  </div>
+  <div class="article">
+    <div class="article-row mt-4">
+      <div class=" article-col article-col-2 justify-text  mb-4">
+        <img [src]="url + news?.image.name" loading="lazy" class="d-block mx-auto my-auto rounded" alt="news Image">
+      </div>
+      <div class="article-col article-col-1 justify-text">
+        <p> {{news?.text}} </p>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 10px">
+        Vytvorené: {{ news?.date }}
+      </p>
+    </div>
+  </div>
+</div>

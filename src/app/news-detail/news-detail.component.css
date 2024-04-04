@@ -1,0 +1,76 @@
+img {
+  width: 100%;
+}
+
+.article {
+  font-size: 1.8rem;
+  line-height: 2;
+}
+
+.justify-text {
+  width : 100%;
+  white-space: pre;           /* CSS 2.0 */
+  white-space: pre-wrap;      /* CSS 2.1 */
+  white-space: pre-line;      /* CSS 3.0 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  word-wrap: break-word;
+  -moz-hyphens:auto;
+  -webkit-hyphens:auto;
+  -o-hyphens:auto;
+  hyphens:auto;
+  text-align: justify;
+}
+
+.article-para-1 {
+  font-size: 2rem;
+  line-height: 1.5;
+  color: gray;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+.article-row {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: stretch;
+}
+.article-col {
+  flex: 1 1;
+  justify-content: stretch;
+}
+
+
+@media screen and (min-width: 768px) {
+
+  .article-para-1 {
+    font-size: 1.4rem;
+  }
+
+  .article-col {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .article-col {
+    font-size: 1rem;
+  }
+
+  .article-para-1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+
+  .article-row {
+    flex-direction: row;
+  }
+  .article-col-1,
+  .article-col-2 {
+    margin-right: 2rem;
+  }
+
+}

@@ -31,6 +31,11 @@ export class NewsService {
     return this.http.get(this.API + '/api/v1/news/getAllNews');
   }
 
+  public getNews(id : any) {
+    const params =  { id };
+    return this.http.get(this.API + '/api/v1/news/getNews', { params });
+  }
+
   public deleteNews(id: any) {
     return this.http.delete(this.API + '/api/v1/news/delete?id="'+ id, {
       headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}

@@ -35,7 +35,7 @@ export class RegisterComponent {
    */
   registerForm = new FormGroup({
     userName: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/), Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     passwordSame: new FormControl('', [Validators.required]),
   }, {validators: passwordMatchValidator});

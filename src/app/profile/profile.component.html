@@ -10,7 +10,7 @@
             <label class="col-lg-3 control-label">Používateľské meno:</label>
             <div class="col-lg-8">
               <input class="form-control" type="text" [(ngModel)]="userDetails.userName"
-                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onUsernameChange()">
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onUsernameChange()" maxlength="255">
               <div *ngIf="isUsernameInvalid()" class="text-danger">Používateľské meno musí byť dlhé aspoň 8 znakov.</div>
               <div *ngIf="usernameErrorMessage" class="text-danger">{{ usernameErrorMessage }}</div>
             </div>
@@ -19,7 +19,7 @@
             <label class="col-lg-3 control-label">Email:</label>
             <div class="col-lg-8">
               <input class="form-control" type="text" [(ngModel)]="userDetails.email"
-                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onEmailChange()">
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onEmailChange()" maxlength="255">
               <div *ngIf="isEmailInvalid()" class="text-danger">Neplatná e-mailová adresa.</div>
               <div *ngIf="emailErrorMessage" class="text-danger">{{ emailErrorMessage }}</div>
             </div>
@@ -29,7 +29,7 @@
             <div class="col-lg-8">
               <input class="form-control" type="password" [(ngModel)]="passwordInput"
                      [ngModelOptions]="{standalone: true}" (focus)="clearPassword()" (blur)="hidePassword()"
-                     [attr.placeholder]="passwordPlaceholder" (ngModelChange)="onPasswordChange()">
+                     [attr.placeholder]="passwordPlaceholder" (ngModelChange)="onPasswordChange()" maxlength="255">
               <div *ngIf="isPasswordInvalid()" class="text-danger">Heslo musí byť dlhé aspoň 8 znakov.</div>
             </div>
           </div>

@@ -39,6 +39,7 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import { CountUpModule } from 'ngx-countup';
 import { ScrollAnimationDirective } from './directives/scroll-animation.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NewsDetailComponent } from './news-detail/news-detail.component';
 
 
 
@@ -61,7 +62,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     GalleryComponent,
     ForumComponent,
     CompareComponent,
-    ScrollAnimationDirective
+    ScrollAnimationDirective,
+    NewsDetailComponent
   ],
   imports: [
     BrowserModule,

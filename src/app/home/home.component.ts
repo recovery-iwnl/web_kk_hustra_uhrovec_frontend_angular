@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toastr.success('', 'Úspešne ste pridali fotku do fotogalérie!', {
+    this.toastr.success('', 'Fotka sa automaticky nahrala do galérie!', {
       positionClass: 'toast-center-center',
       timeOut: 2000,
       closeButton: true,
