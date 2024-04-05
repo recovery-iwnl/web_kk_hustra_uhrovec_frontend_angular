@@ -55,11 +55,11 @@ img {
 
 .justify-text {
   width : 100%;
-  white-space: pre;           /* CSS 2.0 */
-  white-space: pre-wrap;      /* CSS 2.1 */
-  white-space: pre-line;      /* CSS 3.0 */
-  white-space: -o-pre-wrap;   /* Opera 7 */
-  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  white-space: -o-pre-wrap;
+  white-space: -moz-pre-wrap;
   word-wrap: break-word;
   -moz-hyphens:auto;
   -webkit-hyphens:auto;

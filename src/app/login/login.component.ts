@@ -6,8 +6,6 @@ import {AuthService} from "../services/auth/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../services/userService/user.service";
 import {CookieService} from "ngx-cookie-service";
-import {catchError, tap} from "rxjs/operators";
-import {of} from "rxjs";
 
 
 /**
@@ -30,7 +28,7 @@ export class LoginComponent {
     }
   );
 
-  account : any = {};
+  account: any = {};
 
 
   /**

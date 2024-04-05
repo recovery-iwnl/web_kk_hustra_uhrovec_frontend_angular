@@ -98,7 +98,7 @@
     </div>
     <!-- /End of post 1 -->
 
-    <div class="d-flex justify-content-center ">
+    <div class="d-flex justify-content-center " *ngIf="totalPages > 1">
       <button class="btn" style="margin: 3rem;background-color: rgb(38, 44, 72); color: white" (click)="previousPage()"
               [disabled]="currentPage === 1"><i class="bi bi-caret-left"></i></button>
       <button class="btn" style="margin: 3rem; background-color: rgb(38, 44, 72);  color: white" (click)="nextPage()"

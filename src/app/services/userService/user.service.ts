@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
-import {catchError} from "rxjs/operators";
+import {HttpClient,} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {ConfigService} from "../configService/config.service";
 import {CookieService} from "ngx-cookie-service";
 
@@ -23,6 +22,8 @@ export class UserService {
    * Creates an instance of UserService.
    *
    * @param http - Reference to the Angular HttpClient for making HTTP requests.
+   * @param config
+   * @param cookie
    */
   constructor(private http: HttpClient, private config: ConfigService,
               private cookie: CookieService) {
