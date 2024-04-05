@@ -8,49 +8,38 @@
 <body class="body-min-height">
 <div id="carouselExampleAutoplaying" class="carousel slide bg-light" data-bs-ride="carousel">
   <div class="carousel-inner ">
-    <div class="carousel-item active">
-      <a routerLink="/vysledky" >
-      <div class="carousel-image">
-        <img src="assets/images/pobedim_zapas.png" class="d-block mx-auto w-75 rounded-custom" alt="zapas-car">
-        <div class="overlay"></div>
-      </div>
-      <div class="carousel-caption">
-        <h3>KK Hustra Uhrovec - MKK Slovan Galanta A</h3>
-      </div>
-      </a>
-    </div>
-    <div class="carousel-item">
+    <div class="carousel-item active ">
       <a routerLink="/historia">
-      <div class="carousel-image">
-        <img src="assets/images/history.jpg" class="d-block mx-auto w-75 rounded-custom" alt="history-car">
-        <div class="overlay"></div>
-      </div>
-      <div class="carousel-caption">
-        <h3>50 rokov kolkov v Uhrovci</h3>
-      </div>
+        <div class="carousel-image">
+          <img src="assets/images/history.jpg" class="d-block mx-auto w-75 rounded-custom" alt="history-car">
+          <div class="overlay"></div>
+        </div>
+        <div class="carousel-caption">
+          <h3>50 rokov kolkov v Uhrovci</h3>
+        </div>
       </a>
     </div>
-    <div class="carousel-item">
-      <a routerLink="/galeria">
-      <div class="carousel-image">
-        <img src="assets/images/kolkaren2.jpg" class="d-block mx-auto w-75 rounded-custom" alt="kolkaren-car">
-        <div class="overlay"></div>
-      </div>
-      <div class="carousel-caption">
-      <h3>Novo-prerobená kolkáreň</h3>
-    </div>
+    <div class="carousel-item  " *ngFor="let article of news | slice:0:2">
+      <a class="text-reset text-decoration-none" [routerLink]="['/news', article.newsID]">
+        <div class="carousel-image">
+          <img [src]="url + article.image.name" class="d-block mx-auto w-75 rounded-custom" alt="car-image">
+          <div class="overlay"></div>
+        </div>
+        <div class="carousel-caption">
+          <h3>{{ article.subject }}</h3>
+        </div>
       </a>
+    </div>
   </div>
-</div>
 
-<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Next</span>
-</button>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
 <div class="album py-5 bg-body-tertiary">
@@ -61,10 +50,16 @@
       <div class="col" *ngFor="let article of news">
         <a class="text-reset text-decoration-none" [routerLink]="['/news', article.newsID]">
           <div class="card shadow-sm">
-            <img [src]="url + article.image.name" alt="news1" class="bd-placeholder-img card-img-top image-300-height">
+            <button type="button" class="btn-close" aria-label="Close" *ngIf="isAdmin()"
+                    (click)="confirmDelete($event,article)"
+                    style="position: absolute; top: 0; right: 0;background-color: white;">
+            </button>
+            <img [src]="url + article.image.name" alt="news1" class="bd-placeholder-img card-img-top "
+                 style="max-height: 300px">
             <div class="card-body">
               <p class="card-title" style="font-weight: bold; font-size: 1.1rem;">{{ article.subject }}</p>
-              <p class="card-text">{{ article.text.length > 190 ? (article.text | slice:0:190) + '...' : article.text }}</p>
+              <p
+                class="card-text">{{ article.text.length > 190 ? (article.text | slice:0:190) + '...' : article.text }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-body-secondary">{{ article.date }}</small>
               </div>
@@ -92,32 +87,41 @@
       </div>
       <div class="modal-body text-center">
 
-        <img *ngIf="newNews.image" [src]="url + newNews.image.name" alt="Uploaded Photo" class="mb-3" style="width: auto; max-height: 250px">
+        <img *ngIf="newNews.image" [src]="url + newNews.image.name" alt="Uploaded Photo" class="mb-3 rounded"
+             style="width: auto; max-height: 250px">
 
 
         <div class="mb-4">
-          <div class="mb-3">
-            <label for="fileInput" class="form-label">Vyberte súbor s fotkou:</label>
-            <input type="file" class="form-control" id="fileInput" (change)="selectFile($event)" accept="image/*" />
+          <div class="mb-3 d-flex align-items-center justify-content-center">
+            <div>
+              <label for="fileInput" class="form-label">Vyberte súbor s fotkou:</label>
+              <input type="file" class="form-control" style="max-width: 350px" id="fileInput"
+                     (change)="selectFile($event)" accept="image/*"/>
+            </div>
           </div>
           <div class="d-flex align-items-center justify-content-center">
-            <button type="button" class="btn btn-outline-primary" style="max-width: 250px" (click)="uploadFile()">Upload</button>
+            <button type="button" class="btn btn-outline-primary" style="max-width: 250px" (click)="uploadFile()">Nahrať
+              fotku
+            </button>
           </div>
         </div>
 
-        <form (ngSubmit)="addNews()"  #newsForm="ngForm">
+        <form (ngSubmit)="addNews()" #newsForm="ngForm">
           <div class="mb-3 text-start">
             <label for="title" class="form-label">Nadpis:</label>
-            <input type="text" class="form-control" id="title" name="title" maxlength="255" [(ngModel)]="newNews.subject" required>
+            <input type="text" class="form-control" id="title" name="title" maxlength="255"
+                   [(ngModel)]="newNews.subject" required>
           </div>
           <div class="mb-3 text-start">
             <label for="content" class="form-label">Kontent:</label>
-            <textarea type="text" class="form-control" id="content" name="content" maxlength="10000" [(ngModel)]="newNews.text" required></textarea>
+            <textarea type="text" class="form-control" id="content" name="content" maxlength="10000"
+                      [(ngModel)]="newNews.text" required></textarea>
           </div>
 
 
           <div class="d-flex justify-content-end">
-            <button type="submit" mat-raised-button color="basic" [disabled]="newsForm.invalid || newNews.image === undefined"
+            <button type="submit" mat-raised-button color="basic"
+                    [disabled]="newsForm.invalid || newNews.image === undefined"
                     data-bs-dismiss="modal">Pridať novinku
             </button>
           </div>

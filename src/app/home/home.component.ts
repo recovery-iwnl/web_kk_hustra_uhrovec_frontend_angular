@@ -7,6 +7,8 @@ import {ConfigService} from "../services/configService/config.service";
 import {DatePipe} from "@angular/common";
 import {FileUploadService} from "../services/fileUploadService/file-upload.service";
 import {ToastrService} from "ngx-toastr";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -30,7 +32,7 @@ export class HomeComponent implements OnInit {
   constructor(private newsService: NewsService, private cdRef: ChangeDetectorRef,
               private cookie: CookieService, private configService: ConfigService,
               private datePipe: DatePipe, private fileUploadService: FileUploadService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.newsService.addNews(this.newNews).pipe(
       tap((resp: any) => {
         this.news.push(resp);
+        this.getNews();
         this.newNews = {};
         this.detectChanges();
       }),
@@ -104,6 +107,36 @@ export class HomeComponent implements OnInit {
         return of(null);
       })
     ).subscribe();
+  }
+
+  deleteNews(news : any) {
+    this.newsService.deleteNews(news.newsID).pipe(
+      tap((resp: any) => {
+        this.news = this.news.filter(n => n.newsID !== news.newsID);;
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  confirmDelete(event: Event, newsN: any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Upozornenie!',
+        content: 'Naozaj chcete vymazať novinku "' + newsN.subject + '" ?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteNews(newsN);
+      }
+    });
   }
 
 

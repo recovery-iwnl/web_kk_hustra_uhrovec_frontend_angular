@@ -37,7 +37,7 @@ export class NewsService {
   }
 
   public deleteNews(id: any) {
-    return this.http.delete(this.API + '/api/v1/news/delete?id="'+ id, {
+    return this.http.delete(this.API + '/api/v1/news/delete?id='+ id, { responseType:"text",
       headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
     })
   }
