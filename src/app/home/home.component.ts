@@ -20,7 +20,15 @@ export class HomeComponent implements OnInit {
 
   news: any[] = [];
 
+  newsCarousel: any[] = [];
+
   newNews: any = {};
+
+  currentPage: number = 1;
+
+  newsPerPage: number = 6;
+
+  totalPages: any;
 
   /**
    * The selected file to be uploaded.
@@ -97,9 +105,13 @@ export class HomeComponent implements OnInit {
   }
 
   getNews() {
+    const startIndex = (this.currentPage - 1) * this.newsPerPage;
+    const endIndex = startIndex + this.newsPerPage;
     this.newsService.getAllNews().pipe(
       tap((resp: any) => {
-        this.news = resp;
+        this.calculateTotalPages(resp.length);
+        this.newsCarousel = resp;
+        this.news = resp.slice(startIndex, endIndex);
         this.detectChanges();
       }),
       catchError((err) => {
@@ -109,10 +121,32 @@ export class HomeComponent implements OnInit {
     ).subscribe();
   }
 
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getNews();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getNews();
+    }
+  }
+
+  calculateTotalPages(totalResults: number) {
+    if(totalResults == 0) {
+      this.totalPages = 1;
+    } else {
+      this.totalPages = Math.ceil(totalResults / this.newsPerPage);
+    }
+  }
+
   deleteNews(news : any) {
     this.newsService.deleteNews(news.newsID).pipe(
       tap((resp: any) => {
-        this.news = this.news.filter(n => n.newsID !== news.newsID);;
+        this.news = this.news.filter(n => n.newsID !== news.newsID);
         this.detectChanges();
       }),
       catchError((err) => {
