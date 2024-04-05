@@ -5,29 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
 </head>
-<body class="body-min-height">
-<div id="carouselExampleAutoplaying" class="carousel slide bg-light" data-bs-ride="carousel">
+<body class="body-min-height ">
+<div id="carouselExampleAutoplaying" class="carousel  slide bg-light" data-bs-ride="carousel">
   <div class="carousel-inner ">
     <div class="carousel-item active ">
       <a routerLink="/historia">
         <div class="carousel-image">
           <img src="assets/images/history.jpg" class="d-block mx-auto w-75 rounded-custom" alt="history-car">
-          <div class="overlay"></div>
+          <div class="overlay  carousel-caption d-flex justify-content-center align-items-center ">
+            <div class="w-50">
+              <p>50 rokov kolkov v Uhrovci</p>
+            </div>
+          </div>
         </div>
-        <div class="carousel-caption">
-          <h3>50 rokov kolkov v Uhrovci</h3>
-        </div>
+
       </a>
     </div>
     <div class="carousel-item  " *ngFor="let article of newsCarousel | slice:0:3">
       <a class="text-reset text-decoration-none" [routerLink]="['/news', article.newsID]">
         <div class="carousel-image">
           <img [src]="url + article.image.name" class="d-block mx-auto w-75 rounded-custom" alt="car-image">
-          <div class="overlay"></div>
+          <div class="overlay carousel-caption d-flex justify-content-center align-items-center ">
+            <div class="w-50">
+              <p>{{ article.subject }}</p>
+            </div>
+          </div>
         </div>
-        <div class="carousel-caption">
-          <h3>{{ article.subject }}</h3>
-        </div>
+
       </a>
     </div>
   </div>
@@ -57,7 +61,7 @@
             <img [src]="url + article.image.name" alt="news1" class="bd-placeholder-img card-img-top "
                  style="max-height: 300px">
             <div class="card-body">
-              <p class="card-title" style="font-weight: bold; font-size: 1.1rem;">{{ article.subject }}</p>
+              <p class="card-title" style="font-weight: 500; font-size: 1.1rem;">{{ article.subject }}</p>
               <p
                 class="card-text">{{ article.text.length > 190 ? (article.text | slice:0:190) + '...' : article.text }}</p>
               <div class="d-flex justify-content-between align-items-center">
@@ -67,7 +71,7 @@
           </div>
         </a>
       </div>
-      <button class="btn btn-circle btn-light btn-lg add-button" style="height: 500px;" data-bs-toggle="modal"
+      <button class="btn btn-circle btn-light btn-lg add-button" data-bs-toggle="modal"
               data-bs-target="#addNewsModal" *ngIf="isAdmin()">
         <span class="fw-bold text-black">+</span>Pridať
       </button>
@@ -94,7 +98,7 @@
       <div class="modal-body text-center">
 
         <img *ngIf="newNews.image" [src]="url + newNews.image.name" alt="Uploaded Photo" class="mb-3 rounded"
-             style="width: auto; max-height: 250px">
+             style="max-width: 275px; max-height: 250px">
 
 
         <div class="mb-4">
@@ -115,13 +119,13 @@
         <form (ngSubmit)="addNews()" #newsForm="ngForm">
           <div class="mb-3 text-start">
             <label for="title" class="form-label">Nadpis:</label>
-            <input type="text" class="form-control" id="title" name="title" maxlength="255"
+            <input type="text" class="form-control" id="title" name="title" maxlength="85"
                    [(ngModel)]="newNews.subject" required>
           </div>
           <div class="mb-3 text-start">
             <label for="content" class="form-label">Kontent:</label>
             <textarea type="text" class="form-control" id="content" name="content" maxlength="10000"
-                      [(ngModel)]="newNews.text" required></textarea>
+                      [(ngModel)]="newNews.text" required rows="8"></textarea>
           </div>
 
 

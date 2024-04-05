@@ -106,18 +106,6 @@ export class GalleryComponent implements OnInit{
     ).subscribe();
   }
 
-  loadImage(name :any) : any {
-    this.fileUploadService.getImageByName(name).pipe(
-      tap((resp: any) => {
-        return resp;
-      }),
-      catchError((err) => {
-        console.log(err);
-        return of(null);
-      })
-    ).subscribe();
-  }
-
   /**
    * Opens a confirmation dialog to confirm image deletion.
    * If the user confirms, deletes the image with the specified ID.
@@ -158,6 +146,11 @@ export class GalleryComponent implements OnInit{
       }),
       catchError((err) => {
         console.log(err);
+        if (err && err.message) {
+          this.showError('Obrázok nie je možné vymazať pretože, je súčasťou novinky!', 'Chyba');
+        } else {
+          this.showError('Nastala chyba pri mazaní obrázka!.', 'Chyba');
+        }
         return of(null);
       })
     ).subscribe();
@@ -170,6 +163,15 @@ export class GalleryComponent implements OnInit{
     this.toastr.success('', 'Úspešne ste pridali fotku do fotogalérie!', {
       positionClass: 'toast-center-center',
       timeOut: 2000,
+      closeButton: true,
+      progressBar: true
+    });
+  }
+
+  showError(message: string, title: string) {
+    this.toastr.error(message, title, {
+      positionClass: 'toast-center-center',
+      timeOut: 3000,
       closeButton: true,
       progressBar: true
     });
