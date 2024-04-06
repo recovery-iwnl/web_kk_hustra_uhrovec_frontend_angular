@@ -99,11 +99,13 @@ export class ResultsComponent implements OnInit{
    *
    * @param datePipe - Reference to the DatePipe for formatting dates.
    * @param teamService - Reference to the TeamService for managing team-related operations.
+   * @param leagueYearService
    * @param dialog - Reference to the MatDialog for displaying dialogs.
    * @param authService - Reference to the AuthService for handling user authentication.
    * @param resultService - Reference to the ResultService for managing result-related operations.
    * @param cdRef - Reference to the ChangeDetectorRef for manually detecting changes.
    * @param ngZone - Reference to the NgZone for managing change detection within or outside Angular zones.
+   * @param cookie
    */
   constructor(private datePipe: DatePipe, private teamService: TeamService, private leagueYearService: LeagueYearService,
               private dialog: MatDialog, private authService: AuthService,

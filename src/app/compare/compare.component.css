@@ -37,7 +37,7 @@
 
 @media (max-width: 768px) {
   .team-photo {
-    max-width: 100%; /* This ensures the image will be responsive on smaller screens */
+    max-width: 100%;
     height: auto;
   }
 }

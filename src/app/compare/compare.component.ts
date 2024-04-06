@@ -6,8 +6,9 @@ import {TeamResultService} from "../services/teamResultService/team-result.servi
 import {PlayerResultService} from "../services/playerResultService/player-result.service";
 import {catchError, tap} from "rxjs/operators";
 import {forkJoin, Observable, of} from "rxjs";
-
-
+/**
+ * Component responsible for comparing teams and players.
+ */
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
@@ -141,6 +142,9 @@ export class CompareComponent implements OnInit {
     }]
   };
 
+  /**
+   * Initializes the component.
+   */
   ngOnInit() {
     this.getAllTeams();
     this.getAllPlayers();
@@ -243,7 +247,7 @@ export class CompareComponent implements OnInit {
       this.playerService.getTeamNameByPlayer(playerId),
     ]).pipe(
       tap(([matchesPlayed, duelsWon, duelsDrawn, duelsLost, playerBest, playerWorst, average, age, teamName ]) => {
-        this.player1Object = { // Assign fetched statistics to team1Object
+        this.player1Object = {
           teamName,
           matchesPlayed,
           duelsWon,
@@ -277,7 +281,7 @@ export class CompareComponent implements OnInit {
       this.playerService.getTeamNameByPlayer(playerId),
     ]).pipe(
       tap(([matchesPlayed, duelsWon, duelsDrawn, duelsLost, playerBest, playerWorst, average, age, teamName ]) => {
-        this.player2Object = { // Assign fetched statistics to team1Object
+        this.player2Object = {
           teamName,
           matchesPlayed,
           duelsWon,
@@ -420,7 +424,7 @@ export class CompareComponent implements OnInit {
       tap((resp: any) => {
         console.log(resp);
         const teamId = resp.teamId;
-        this.fetchTeam1Statistics(teamId, selectedYearId).subscribe(); // Fetch statistics for the selected team
+        this.fetchTeam1Statistics(teamId, selectedYearId).subscribe();
       }),
       catchError((err) => {
         console.log(err);
@@ -435,7 +439,7 @@ export class CompareComponent implements OnInit {
       tap((resp: any) => {
         console.log(resp);
         const teamId = resp.teamId;
-        this.fetchTeam2Statistics(teamId, selectedYearId).subscribe(); // Fetch statistics for the selected team
+        this.fetchTeam2Statistics(teamId, selectedYearId).subscribe();
       }),
       catchError((err) => {
         console.log(err);
@@ -446,13 +450,13 @@ export class CompareComponent implements OnInit {
 
   getPlayer1StatisticsByName(name: any) {
     const selectedYearId = this.selectedYear1.yearId;
-    const [firstName, lastName] = name.split(' '); // Split name into first name and last name
+    const [firstName, lastName] = name.split(' ');
     console.log(firstName, lastName);
     this.playerService.getPlayerByName(firstName, lastName).pipe(
       tap((resp: any) => {
         console.log(resp);
         const playerId = resp.playerID;
-        this.fetchPlayer1Statistics(playerId, selectedYearId).subscribe(); // Fetch statistics for the selected team
+        this.fetchPlayer1Statistics(playerId, selectedYearId).subscribe();
       }),
       catchError((err) => {
         console.log(err);
@@ -463,12 +467,12 @@ export class CompareComponent implements OnInit {
 
   getPlayer2StatisticsByName(name: any) {
     const selectedYearId = this.selectedYear2.yearId;
-    const [firstName, lastName] = name.split(' '); // Split name into first name and last name
+    const [firstName, lastName] = name.split(' ');
     this.playerService.getPlayerByName(firstName, lastName).pipe(
       tap((resp: any) => {
         console.log(resp);
         const playerId = resp.playerID;
-        this.fetchPlayer2Statistics(playerId, selectedYearId).subscribe(); // Fetch statistics for the selected team
+        this.fetchPlayer2Statistics(playerId, selectedYearId).subscribe();
       }),
       catchError((err) => {
         console.log(err);
