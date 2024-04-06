@@ -32,7 +32,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
-  { path: 'news/:id', component: NewsDetailComponent }
+  { path: 'news/:id', component: NewsDetailComponent },
+  { path: '**', redirectTo: '/domov' }
 ];
 
 @NgModule({

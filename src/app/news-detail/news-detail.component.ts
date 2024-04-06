@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NewsService} from "../services/newsService/news.service";
 import {ConfigService} from "../services/configService/config.service";
 
@@ -13,7 +13,7 @@ export class NewsDetailComponent implements OnInit {
   news: any;
 
   url = this.configService.apiUrl + '/api/v1/image/';
-  constructor(private route: ActivatedRoute, private newsService: NewsService, private configService: ConfigService) { }
+  constructor(private route: ActivatedRoute, private newsService: NewsService, private configService: ConfigService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -23,8 +23,14 @@ export class NewsDetailComponent implements OnInit {
   }
 
   getNews() {
-    this.newsService.getNews(this.newsId).subscribe(news => {
-      this.news = news;
-    });
+    this.newsService.getNews(this.newsId).subscribe(
+      (news) => {
+        if (news === null) {
+          this.router.navigateByUrl('/domov');
+        } else {
+          this.news = news;
+        }
+      }
+    );
   }
 }
