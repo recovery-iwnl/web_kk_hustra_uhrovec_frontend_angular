@@ -12,7 +12,7 @@ import { LeagueYearService } from "../services/leagueYearService/league-year.ser
 })
 export class TableComponent implements OnInit {
   teams: any[] = [];
-  columns: string[] = ['#', 'Klub', 'Záp', 'V', 'R', 'P', 'Priemer', 'Body'];
+  columns: string[] = ['#', 'Klub', 'Z', 'V', 'R', 'P', 'Priemer', 'Body'];
   matchesPlayed: any;
   years: any[] = [];
   selectedYear: any = {};
