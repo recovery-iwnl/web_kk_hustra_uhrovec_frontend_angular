@@ -4,6 +4,34 @@
 
     <div class="mx-4">
 
+      <button
+        id="updateLeagueYear"
+        class="btn me-2 btn-margin-admin"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="modal"
+        data-bs-target="#updateYearModal"
+        style="background-color: rgb(38, 44, 72);color:white;"
+        *ngIf="isAdmin()"
+      >
+        <i class="bi bi-pencil-square"></i>
+        Upraviť ročník
+      </button>
+
+      <button
+        id="addLeagueYear"
+        class="btn me-2 btn-margin-admin"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="modal"
+        data-bs-target="#addYearModal"
+        style="background-color: rgb(38, 44, 72);color:white;"
+        *ngIf="isAdmin()"
+      >
+        <i class="bi bi-plus"></i>
+        Pridať ročník
+      </button>
+
         <button
           id="leagueDropdown"
           class="btn dropdown-toggle me-2 btn-margin-bottom"
@@ -153,6 +181,78 @@
             [disabled]="currentPage === 1"><i class="bi bi-caret-left"></i></button>
     <button class="btn" style="margin: 3rem; background-color: rgb(38, 44, 72);  color: white" (click)="nextPage()"
             [disabled]="currentPage === totalPages"><i class="bi bi-caret-right"></i></button>
+  </div>
+</div>
+
+
+<div class="modal fade" id="updateYearModal" tabindex="-1" aria-labelledby="updateYearModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateYearLabel">Upraviť ročník</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+
+        <mat-form-field appearance="outline" style="width: 90%;">
+          <mat-label>Ročník Ligy</mat-label>
+          <mat-select [(ngModel)]="pickedYearToUpdate" required>
+            <mat-option *ngFor="let year of years" [value]="year">{{ year.year }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <form (ngSubmit)="updateYear(pickedYearToUpdate.yearId, updatedYearText)" #updateYearForm="ngForm">
+
+
+          <div class="mb-3 text-start">
+            <label for="year" class="form-label">Zmeniť názov ročníka: {{ pickedYearToUpdate.year }}</label>
+            <input type="text" class="form-control" id="year" placeholder="Zadajte rok vo formáte RRRR/RRRR" name="year" [(ngModel)]="updatedYearText" required
+                   pattern="^\d{4}\/\d{4}$">
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic" [disabled]="updateYearForm.invalid"
+                    data-bs-dismiss="modal">Upraviť ročník
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addYearModal" tabindex="-1" aria-labelledby="addYearModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addYearLabel">Pridať ročník</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+
+        <form (ngSubmit)="addYear(addedYearText)" #addYearForm="ngForm">
+
+
+          <div class="mb-3 text-start">
+            <label for="yearAdded" class="form-label">Zadajte názov ročníka:</label>
+            <input type="text" class="form-control" id="yearAdded" placeholder="Zadajte rok vo formáte RRRR/RRRR" name="yearAdded" [(ngModel)]="addedYearText" required
+                   pattern="^\d{4}\/\d{4}$">
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic" [disabled]="addYearForm.invalid"
+                    data-bs-dismiss="modal">Pridať ročník
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 

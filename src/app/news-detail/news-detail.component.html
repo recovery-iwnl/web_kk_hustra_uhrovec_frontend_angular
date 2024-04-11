@@ -1,20 +1,90 @@
 <div class="container px-3 py-5 body-min-height">
   <div class="pb-2 d-flex align-items-center justify-content-between border-bottom">
-    <h2 style="color: rgb(38, 44, 72);">{{ news?.subject }}</h2>
+    <h2 style="color: rgb(38, 44, 72);">{{ news.subject }}</h2>
+    <button
+      id="updateLeagueYear"
+      class="btn me-2"
+      type="button"
+      aria-expanded="false"
+      data-bs-toggle="modal"
+      data-bs-target="#updateNewsModal"
+      style="background-color: rgb(38, 44, 72);color:white;"
+      *ngIf="isAdmin()"
+    >
+      <i class="bi bi-pencil-square"></i>
+      Upraviť
+    </button>
   </div>
   <div class="article">
     <div class="article-row mt-4">
       <div class="article-col article-col-1 justify-text">
-        <p> {{news?.text}} </p>
+        <p> {{news.text}} </p>
       </div>
       <div class=" article-col article-col-2 justify-text  mb-4">
-        <img [src]="url + news?.image.name" loading="lazy" class="d-block mx-auto my-auto rounded" alt="news Image">
+        <img [src]="url + news.image?.name" loading="lazy" class="d-block mx-auto my-auto rounded" alt="news Image">
       </div>
     </div>
     <div>
       <p style="font-size: 10px">
-        Vytvorené: {{ news?.date }}
+        Vytvorené: {{ news.date }}
       </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateNewsModal" tabindex="-1" aria-labelledby="updateNewsModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 1200px; max-height: 400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateNewsLabel">Upraviť novinku</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+
+        <img *ngIf="news.image" [src]="url + news.image.name" alt="Uploaded Photo" class="mb-3 rounded"
+             style="max-width: 275px; max-height: 250px">
+
+
+        <div class="mb-4">
+          <div class="mb-3 d-flex align-items-center justify-content-center">
+            <div>
+              <label for="fileInput" class="form-label">Vyberte súbor s fotkou:</label>
+              <input type="file" class="form-control" style="max-width: 350px" id="fileInput"
+                     (change)="selectFile($event)" accept="image/*"/>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-outline-primary" style="max-width: 250px" (click)="uploadFile()">Nahrať
+              fotku
+            </button>
+          </div>
+        </div>
+
+        <form (ngSubmit)="updateNews(news)" #updateNewsForm="ngForm">
+
+
+          <div class="mb-3 text-start">
+            <label for="title" class="form-label">Nadpis:</label>
+            <input type="text" class="form-control" id="title" name="title" maxlength="85"
+                   [(ngModel)]="news.subject" required>
+          </div>
+          <div class="mb-3 text-start">
+            <label for="content" class="form-label">Kontent:</label>
+            <textarea type="text" class="form-control" id="content" name="content" maxlength="10000"
+                      [(ngModel)]="news.text" required rows="8">
+            </textarea>
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" mat-raised-button color="basic"
+                    [disabled]="updateNewsForm.invalid || news.image === undefined"
+                    data-bs-dismiss="modal">Upraviť novinku
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -82,6 +82,12 @@ export class ResultsComponent implements OnInit{
 
   selectedYear: any = {};
 
+  pickedYearToUpdate: any = {};
+
+  updatedYearText: any;
+
+  addedYearText: any;
+
   selectedFilter: any = {};
 
   isCollapsed: boolean[] = [];
@@ -150,6 +156,48 @@ export class ResultsComponent implements OnInit{
           this.selectedYear = this.years[0];
         }
         console.log(this.years)
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  getAllYears() {
+    this.leagueYearService.getAllYears().pipe(
+      tap((resp: any) => {
+        this.years = resp;
+        console.log(this.years);
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  addYear(year: any) {
+    this.leagueYearService.addLeagueYear(year).pipe(
+      tap(() => {
+        this.getAllYears();
+        this.addedYearText = '';
+        this.detectChanges();
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(null);
+      })
+    ).subscribe();
+  }
+
+  updateYear(id: any, year: any) {
+    this.leagueYearService.updateLeagueYear(id, year).pipe(
+      tap(() => {
+        this.getAllYears();
+        this.pickedYearToUpdate = {};
         this.detectChanges();
       }),
       catchError((err) => {

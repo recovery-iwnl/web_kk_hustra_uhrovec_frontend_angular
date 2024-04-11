@@ -36,6 +36,12 @@ export class NewsService {
     return this.http.get(this.API + '/api/v1/news/getNews', { params });
   }
 
+  public updateNews(news: any) {
+    return this.http.put(this.API + '/api/v1/news/update', news, { responseType:"text",
+      headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
+    })
+  }
+
   public deleteNews(id: any) {
     return this.http.delete(this.API + '/api/v1/news/delete?id='+ id, { responseType:"text",
       headers: {Authorization: `Bearer ${<string>this.cookie.get("token")}`}
