@@ -36,10 +36,10 @@ export class TokenExpirationService {
         (isTokenInValid: boolean) => {
           if (!isTokenInValid) {
           } else {
-            this.tokenExpiredSubject.next(); // Emit token expiration event
+            this.tokenExpiredSubject.next();
             this.toastr.error(
-              "Your session has expired. Please log in again.",
-              "Session Expired",
+              "Vaša relácia vypršala. Prosím prihláste sa znova.",
+              "Relácia vypršala",
               {
                 positionClass: "toast-bottom-right",
               }

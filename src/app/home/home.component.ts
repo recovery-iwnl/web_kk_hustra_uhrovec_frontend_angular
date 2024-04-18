@@ -147,6 +147,7 @@ export class HomeComponent implements OnInit {
     this.newsService.deleteNews(news.newsID).pipe(
       tap((resp: any) => {
         this.news = this.news.filter(n => n.newsID !== news.newsID);
+        this.showSuccessDelete();
         this.detectChanges();
       }),
       catchError((err) => {
@@ -154,6 +155,15 @@ export class HomeComponent implements OnInit {
         return of(null);
       })
     ).subscribe();
+  }
+
+  showSuccessDelete() {
+    this.toastr.success('', 'Úspešne ste vymazali novinku!', {
+      positionClass: 'toast-center-center',
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true
+    });
   }
 
   confirmDelete(event: Event, newsN: any): void {

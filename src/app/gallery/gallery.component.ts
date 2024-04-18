@@ -142,6 +142,7 @@ export class GalleryComponent implements OnInit{
         console.log(resp);
         this.images = this.images.filter(i => i.Id !== i.Id);
         this.detectChanges();
+        this.showSuccessDelete();
         this.loadAllImages();
       }),
       catchError((err) => {
@@ -161,6 +162,15 @@ export class GalleryComponent implements OnInit{
    */
   showSuccess() {
     this.toastr.success('', 'Úspešne ste pridali fotku do fotogalérie!', {
+      positionClass: 'toast-center-center',
+      timeOut: 2000,
+      closeButton: true,
+      progressBar: true
+    });
+  }
+
+  showSuccessDelete() {
+    this.toastr.success('', 'Úspešne ste vymazali fotku z fotogalérie!', {
       positionClass: 'toast-center-center',
       timeOut: 2000,
       closeButton: true,

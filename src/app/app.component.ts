@@ -20,6 +20,7 @@ export class AppComponent {
       this.tokenExpiration.checkTokenExpiration(token).subscribe(
         (isTokenInValid: boolean) => {
           if (!isTokenInValid) {
+            this.tokenExpiration.startTokenCheck();
           } else {
             this.authService.logout();
             this.toastr.error(
